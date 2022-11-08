@@ -7,4 +7,9 @@ public class IntVariable : ScriptableVariable<int>
     {
         Value += 1;
     }
+    
+    public void Decrement()
+    {
+        Value -= 1;
+    }
 }

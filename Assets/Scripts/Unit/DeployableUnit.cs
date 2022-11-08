@@ -25,6 +25,8 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     // Start is called before the first frame update
 
     private float currentCost;
+    [SerializeField] private bool canPurchase;
+
 
     private GameObject deployPreview;
     
@@ -38,20 +40,30 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         archetypeImage.sprite = operatorData.archtetype.image;
         cost.text = operatorData.deployCost.ToString();
         _operatorData = operatorData;
+        UpdateValue();
+
     }
 
     private void OnEnable()
     {
-        _balance.onValueChanged += UpdateDisplay;
+        _balance.onValueChanged += UpdateValue;
     }
     
     private void OnDisable()
     {
-        _balance.onValueChanged -= UpdateDisplay;
+        _balance.onValueChanged -= UpdateValue;
     }
+    private void UpdateValue()
+    {
+        canPurchase = _balance.Value >= _operatorData.deployCost;
+
+
+        UpdateDisplay();
+    }
+
     private void UpdateDisplay()
     {
-        if (_balance.Value >= _operatorData.deployCost)
+        if (canPurchase)
         {
             shadowDisplay.enabled = false;
         }
@@ -62,42 +74,37 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     }
     public void OnDrag(PointerEventData eventData)
     {
-        
-        Vector3 mousePos = Input.mousePosition;
-        //Always set to (0,1)??
+        if(canPurchase){ 
+            Vector3 mousePos = Input.mousePosition;
+            
             if(!Camera.main.orthographic)
             {
                 mousePos.z = 10;
             }
             mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-            Debug.Log(mousePos.x + ", " + mousePos.y);
-
-
-        deployPreview.transform.position = new Vector3(mousePos.x, mousePos.y, deployPreview.transform.localPosition.z);
-     
+            
+            deployPreview.transform.position = new Vector3
+            (
+                mousePos.x,
+                mousePos.y,
+                deployPreview.transform.localPosition.z
+                );
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        deployPreview = Instantiate(draggableObject);
-        
-        Vector3 mousePos = Input.mousePosition;
-
-        if (!Camera.main.orthographic)
-        {
-            mousePos.z = 10;
+        if(canPurchase){
+            deployPreview = Instantiate(draggableObject);
+            deployPreview.GetComponent<SpriteRenderer>().sprite = _operatorData.sprite;
+            _active.Value = _operatorData;
         }
-
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-
-      
-        deployPreview.GetComponent<SpriteRenderer>().sprite = _operatorData.sprite;
-        _active.Value = _operatorData;
-
     }
 
     public void OnEndDrag(PointerEventData eventData)
-    {
-     // Destroy(deployPreview);
+    { 
+        if(deployPreview != null){
+            Destroy(deployPreview);
+        }
     }
 }
