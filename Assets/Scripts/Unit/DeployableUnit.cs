@@ -143,6 +143,7 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
                 }
             }
 
+            _active.Value = null;
             Destroy(deployPreview);
         }
     }

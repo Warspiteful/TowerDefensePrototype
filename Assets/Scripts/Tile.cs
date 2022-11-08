@@ -28,7 +28,7 @@ public class Tile : MonoBehaviour
 
     private void ShowDeployable()
     {
-        if (_activeDrag.Value.locationType == locationType)
+        if (_activeDrag.Value != null && _activeDrag.Value.locationType == locationType)
         {
             deployableIndicator.enabled = true;
         }
