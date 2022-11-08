@@ -22,6 +22,9 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
 
     [SerializeField] private GameObject draggableObject;
+    
+    [SerializeField] private DeployedUnit _deployedUnitPrefab;
+
     // Start is called before the first frame update
 
     private float currentCost;
@@ -76,19 +79,35 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     {
         if(canPurchase){ 
             Vector3 mousePos = Input.mousePosition;
+
             
-            if(!Camera.main.orthographic)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            // Save the info
+            
+            RaycastHit hit;
+            Vector3 dir;
+            if (Physics.Raycast(ray, out hit))
             {
-                mousePos.z = 10;
-            }
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-            
-            deployPreview.transform.position = new Vector3
-            (
-                mousePos.x,
-                mousePos.y,
-                deployPreview.transform.localPosition.z
+                if(hit.collider.gameObject.GetComponent<Tile>() != null && hit.collider.gameObject.GetComponent<Tile>().CanPlace(_operatorData.locationType) ){
+
+                deployPreview.SetActive(true);
+                mousePos = hit.point;
+                mousePos.y += deployPreview.transform.position.y / 2;
+                deployPreview.transform.position = new Vector3
+                (
+                    mousePos.x,
+                    mousePos.y,
+                    mousePos.z
                 );
+                }
+            
+            }
+            else
+            {
+                deployPreview.SetActive(false);
+            }
+
+       
         }
     }
 
@@ -97,13 +116,33 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         if(canPurchase){
             deployPreview = Instantiate(draggableObject);
             deployPreview.GetComponent<SpriteRenderer>().sprite = _operatorData.sprite;
+            deployPreview.gameObject.SetActive(false);
             _active.Value = _operatorData;
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     { 
-        if(deployPreview != null){
+        if(canPurchase && deployPreview != null){ 
+            
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+
+                if (hit.collider.gameObject.GetComponent<Tile>() != null && hit.collider.gameObject
+                        .GetComponent<Tile>().CanPlace(_operatorData.locationType))
+                {
+                    DeployedUnit unit = Instantiate(_deployedUnitPrefab,
+                        hit.collider.gameObject.transform);
+                        unit.gameObject.transform.localPosition = new Vector3(0.5f, 1, 1);
+                    unit.Initialize(_operatorData);
+                    _balance.Value -= _operatorData.deployCost;
+
+                }
+            }
+
             Destroy(deployPreview);
         }
     }

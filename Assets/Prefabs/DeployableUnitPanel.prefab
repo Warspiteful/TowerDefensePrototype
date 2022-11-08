@@ -453,6 +453,9 @@ MonoBehaviour:
   _balance: {fileID: 11400000, guid: 9beeb43f253f3df48894a21172ba829a, type: 2}
   draggableObject: {fileID: 5517015581939196134, guid: fb2c5b1072eaa464a911559ce488e795,
     type: 3}
+  _deployedUnitPrefab: {fileID: 2567947899405570315, guid: 1c122c12f686dfb488b9bc8983dc8714,
+    type: 3}
+  canPurchase: 0
 --- !u!1 &3411767563159012067
 GameObject:
   m_ObjectHideFlags: 0

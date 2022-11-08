@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
@@ -11,11 +12,13 @@ public class Tile : MonoBehaviour
     
     [SerializeField] private SpriteRenderer deployableIndicator;
 
+
     // Start is called before the first frame update
 
     private void OnEnable()
     {
         _activeDrag.onValueChanged += ShowDeployable;
+        ShowDeployable();
     }
 
     private void OnDisable()
@@ -33,6 +36,11 @@ public class Tile : MonoBehaviour
         {
             deployableIndicator.enabled = false;
         }
+    }
+
+    public bool CanPlace(DeployLocationType currentTerrain)
+    {
+        return currentTerrain == locationType;
     }
 
 
