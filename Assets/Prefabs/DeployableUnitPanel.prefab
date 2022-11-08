@@ -447,6 +447,9 @@ MonoBehaviour:
   archetypeImage: {fileID: 3411767562196291472}
   cost: {fileID: 3411767562222669489}
   _operatorData: {fileID: 0}
+  _active: {fileID: 11400000, guid: 4170951543ab75d42a335a22f9a0710b, type: 2}
+  draggableObject: {fileID: 5517015581939196134, guid: fb2c5b1072eaa464a911559ce488e795,
+    type: 3}
 --- !u!1 &3411767563159012067
 GameObject:
   m_ObjectHideFlags: 0

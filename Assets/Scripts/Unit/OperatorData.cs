@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class OperatorData : UnitData
 {
-    public bool isGrounded;
+    public DeployLocationType locationType;
     public float deployTime;
     public int guardedUnitNumber;
     public Archetype archtetype;
