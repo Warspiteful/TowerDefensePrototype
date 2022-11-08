@@ -21,5 +21,6 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: a0b708fa919831447b87298f96806e03, type: 3}
   locationType: 1
   deployTime: 13
+  deployCost: 3
   guardedUnitNumber: 0
   archtetype: {fileID: 11400000, guid: b96dd8171614e1f4d9b2f912e6d06c56, type: 2}

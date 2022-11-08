@@ -19,7 +19,8 @@ MonoBehaviour:
   health: 0
   range: {x: 0, y: 0}
   sprite: {fileID: 21300000, guid: 8e9c337f8f1caad49843ade748713960, type: 3}
-  isGrounded: 0
+  locationType: 0
   deployTime: 14
+  deployCost: 5
   guardedUnitNumber: 0
   archtetype: {fileID: 11400000, guid: 4598e54459bcf8643be9a8821ec15468, type: 2}

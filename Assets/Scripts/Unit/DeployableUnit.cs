@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,10 +12,13 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     [SerializeField] private Image thumbnailImage;
 
     [SerializeField] private Image archetypeImage;
+    [SerializeField] private Image shadowDisplay;
+
     [SerializeField] private TextMeshProUGUI cost;
 
     [SerializeField] private OperatorData _operatorData;
     [SerializeField] private ActiveDrag _active;
+    [SerializeField] private IntVariable _balance;
 
 
     [SerializeField] private GameObject draggableObject;
@@ -32,10 +36,30 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     {
         thumbnailImage.sprite = operatorData.sprite;
         archetypeImage.sprite = operatorData.archtetype.image;
-        cost.text = operatorData.deployTime.ToString();
+        cost.text = operatorData.deployCost.ToString();
         _operatorData = operatorData;
     }
 
+    private void OnEnable()
+    {
+        _balance.onValueChanged += UpdateDisplay;
+    }
+    
+    private void OnDisable()
+    {
+        _balance.onValueChanged -= UpdateDisplay;
+    }
+    private void UpdateDisplay()
+    {
+        if (_balance.Value >= _operatorData.deployCost)
+        {
+            shadowDisplay.enabled = false;
+        }
+        else
+        {
+            shadowDisplay.enabled = true;
+        }
+    }
     public void OnDrag(PointerEventData eventData)
     {
         
@@ -68,7 +92,7 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
       
         deployPreview.GetComponent<SpriteRenderer>().sprite = _operatorData.sprite;
-        _active.Data = _operatorData;
+        _active.Value = _operatorData;
 
     }
 

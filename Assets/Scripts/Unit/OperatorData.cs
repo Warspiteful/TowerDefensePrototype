@@ -7,6 +7,7 @@ public class OperatorData : UnitData
 {
     public DeployLocationType locationType;
     public float deployTime;
+    public int deployCost;
     public int guardedUnitNumber;
     public Archetype archtetype;
 }
