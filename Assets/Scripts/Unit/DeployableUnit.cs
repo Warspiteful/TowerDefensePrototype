@@ -23,6 +23,9 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     private float currentCost;
 
     private GameObject deployPreview;
+    
+    private float startXPos;
+    private float startYPos;
 
 
     public void Initialize(OperatorData operatorData)
@@ -36,16 +39,34 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     public void OnDrag(PointerEventData eventData)
     {
         
+        Vector3 mousePos = Input.mousePosition;
         //Always set to (0,1)??
-        Vector3 convertedPosition = Camera.main.ScreenToWorldPoint(eventData.position);
-        Debug.Log(convertedPosition.x + ", " + convertedPosition.y);
-        deployPreview.transform.position = new Vector3(convertedPosition.x,convertedPosition.y);
+            if(!Camera.main.orthographic)
+            {
+                mousePos.z = 10;
+            }
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            Debug.Log(mousePos.x + ", " + mousePos.y);
+
+
+        deployPreview.transform.position = new Vector3(mousePos.x, mousePos.y, deployPreview.transform.localPosition.z);
      
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         deployPreview = Instantiate(draggableObject);
+        
+        Vector3 mousePos = Input.mousePosition;
+
+        if (!Camera.main.orthographic)
+        {
+            mousePos.z = 10;
+        }
+
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+      
         deployPreview.GetComponent<SpriteRenderer>().sprite = _operatorData.sprite;
         _active.Data = _operatorData;
 
@@ -53,6 +74,6 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     public void OnEndDrag(PointerEventData eventData)
     {
-      Destroy(deployPreview);
+     // Destroy(deployPreview);
     }
 }
