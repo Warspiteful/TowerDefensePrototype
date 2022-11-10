@@ -26,6 +26,7 @@ public class TileManager : MonoBehaviour
 
             for(int j = 0; j < currTransform.childCount; j++){
                 _tileGrid[i][j] = currTransform.GetChild(j).gameObject.GetComponent<Tile>();
+                _tileGrid[i][j].gameObject.name = "Tile " + i + ", " + j;
                 _tileGrid[i][j].SetCoordinates(new Tuple<int,int>(i,j));
                 _tileGrid[i][j].RegisterAttckCallback(RenderAttack);
             }
@@ -67,7 +68,7 @@ public class TileManager : MonoBehaviour
         int xVal = coordinate.Item1 + xOffset;
         int yVal = coordinate.Item2 + yOffset;
         Debug.Log(xVal + ", " + yVal);
-        if(xVal < _tileGrid.Length && xVal > 0 && yVal < _tileGrid[xVal].Length && yVal > 0)
+        if(xVal < _tileGrid.Length && xVal >= 0 && yVal < _tileGrid[xVal].Length && yVal >= 0)
         {
         _tileGrid[coordinate.Item1 + xOffset][coordinate.Item2 + yOffset].RenderAttackDisplay();
     
