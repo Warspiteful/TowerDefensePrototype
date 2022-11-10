@@ -13,12 +13,15 @@ public class Tile : MonoBehaviour
     [SerializeField] private SpriteRenderer deployableIndicator;
     
     [SerializeField] private DeployedUnit deployedUnitPrefab;
+    
+    [SerializeField] private SpriteRenderer attackIndicator;
+
 
     private TileCallback onAttackPreview;
 
     private DeployedUnit _deployedUnit;
     
-    private Vector2 _coordinate;
+    private Tuple<int,int> _coordinate;
 
 
     // Start is called before the first frame update
@@ -34,14 +37,19 @@ public class Tile : MonoBehaviour
         _activeDrag.onValueChanged -= ShowDeployable;
     }
 
-    public Vector2 GetCoordinates()
+    public Tuple<int,int> GetCoordinates()
     {
         return _coordinate;
     }
 
-    public void SetCoordinates(Vector2 coordinate)
+    public void SetCoordinates(Tuple<int,int> coordinate)
     {
         _coordinate = coordinate;
+    }
+
+    public void RenderAttackDisplay()
+    {
+        attackIndicator.enabled = true;
     }
 
     public Direction GetDirection()
