@@ -17,7 +17,7 @@ MonoBehaviour:
   atkSpeed: 0
   def: 0
   health: 0
-  range: {x: 0, y: 0}
+  range: {x: 1, y: 1}
   sprite: {fileID: 21300000, guid: 8e9c337f8f1caad49843ade748713960, type: 3}
   locationType: 0
   deployTime: 14

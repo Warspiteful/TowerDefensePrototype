@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -130,14 +131,10 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-
-                if (hit.collider.gameObject.GetComponent<Tile>() != null && hit.collider.gameObject
-                        .GetComponent<Tile>().CanPlace(_operatorData.locationType))
+                Tile _tile = hit.collider.gameObject.GetComponentInParent<Tile>();
+                if (_tile != null && _tile.CanPlace(_operatorData.locationType))
                 {
-                    DeployedUnit unit = Instantiate(_deployedUnitPrefab,
-                        hit.collider.gameObject.transform);
-                        unit.gameObject.transform.localPosition = new Vector3(0.5f, 1, 1);
-                    unit.Initialize(_operatorData);
+                    _tile.DeployOperator(_operatorData);
                     _balance.Value -= _operatorData.deployCost;
 
                 }
