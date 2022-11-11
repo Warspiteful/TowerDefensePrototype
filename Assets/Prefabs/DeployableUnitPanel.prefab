@@ -455,6 +455,9 @@ MonoBehaviour:
     type: 3}
   _deployedUnitPrefab: {fileID: 2567947899405570315, guid: 1c122c12f686dfb488b9bc8983dc8714,
     type: 3}
+  relevantLayer:
+    serializedVersion: 2
+    m_Bits: 192
   canPurchase: 0
 --- !u!1 &3411767563159012067
 GameObject:

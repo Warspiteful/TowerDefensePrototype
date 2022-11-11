@@ -79,6 +79,7 @@ public class Tile : MonoBehaviour
         _deployedUnit = Instantiate(deployedUnitPrefab,
             this.transform);
         _deployedUnit.gameObject.transform.localPosition = new Vector3(0.5f, 1, 1);
+        _deployedUnit.gameObject.transform.parent = this.transform.parent;
         _deployedUnit.Initialize(_operatorData);
         
     }

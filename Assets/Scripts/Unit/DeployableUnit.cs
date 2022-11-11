@@ -24,7 +24,8 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     [SerializeField] private GameObject draggableObject;
     
-    [SerializeField] private DeployedUnit _deployedUnitPrefab;
+    
+    [SerializeField] LayerMask relevantLayer;
 
     // Start is called before the first frame update
 
@@ -87,28 +88,33 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             
             RaycastHit hit;
             Vector3 dir;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, relevantLayer) && hit.collider.gameObject.GetComponentInParent<Tile>() != null && hit.collider.gameObject.GetComponentInParent<Tile>().CanPlace(_operatorData.locationType))
             {
-                if(hit.collider.gameObject.GetComponent<Tile>() != null && hit.collider.gameObject.GetComponent<Tile>().CanPlace(_operatorData.locationType) ){
+                Debug.DrawLine(Camera.main.transform.position, hit.collider.gameObject.transform.position,Color.red);
+                Debug.Log(hit.collider.gameObject.name);
+          
 
-                deployPreview.SetActive(true);
                 mousePos = hit.point;
                 mousePos.y += deployPreview.transform.position.y / 2;
-                deployPreview.transform.position = new Vector3
-                (
-                    mousePos.x,
-                    mousePos.y,
-                    mousePos.z
-                );
-                }
-            
+                deployPreview.transform.position = hit.collider.transform.position + new Vector3(0.5f,1,1);
             }
             else
             {
-                deployPreview.SetActive(false);
+                
+                mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+             
+         
+                deployPreview.transform.position = new Vector3
+                (
+                    mousePos.x,
+                    0,
+                    mousePos.y
+                );
+                
             }
 
-       
+
+
         }
     }
 
@@ -117,7 +123,6 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         if(canPurchase){
             deployPreview = Instantiate(draggableObject);
             deployPreview.GetComponent<SpriteRenderer>().sprite = _operatorData.sprite;
-            deployPreview.gameObject.SetActive(false);
             _active.Value = _operatorData;
         }
     }
@@ -129,7 +134,7 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, relevantLayer))
             {
                 Tile _tile = hit.collider.gameObject.GetComponentInParent<Tile>();
                 if (_tile != null && _tile.CanPlace(_operatorData.locationType))

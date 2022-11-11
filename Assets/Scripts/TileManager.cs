@@ -30,7 +30,7 @@ public class TileManager : MonoBehaviour
             _tileGrid[i] = new Tile[currTransform.childCount];
 
             for(int j = 0; j < currTransform.childCount; j++){
-                _tileGrid[i][j] = currTransform.GetChild(j).gameObject.GetComponent<Tile>();
+                _tileGrid[i][j] = currTransform.GetChild(j).GetChild(0).gameObject.GetComponent<Tile>();
                 _tileGrid[i][j].gameObject.name = "Tile " + i + ", " + j;
                 _tileGrid[i][j].SetCoordinates(new Tuple<int,int>(i,j));
                 _tileGrid[i][j].RegisterAttckCallback(RenderAttack);

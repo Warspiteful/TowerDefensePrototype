@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2538925768582448227}
   - component: {fileID: 8836805958359814759}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e5e5309f392564f90ae5f0e39d267c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _direction: 0
+  _spriteRenderer: {fileID: 0}
+  attackTilePrefab: {fileID: 0}
+  currentHealth: 0

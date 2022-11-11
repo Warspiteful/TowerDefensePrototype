@@ -54,7 +54,6 @@ public class DeployedUnit : MonoBehaviour
 
     private void GenerateAttackTiles()
     {
-        attackTiles.Add(Instantiate(attackTilePrefab,this.transform));
         
         TryRenderAttack(0, 0);
         
@@ -77,6 +76,7 @@ public class DeployedUnit : MonoBehaviour
     {
         GameObject obj = Instantiate(attackTilePrefab, transform);
         obj.transform.localPosition = new Vector3(x, obj.transform.position.y, y-0.5f);
+        obj.name = "Tile" + x + ", " + y;
         attackTiles.Add(obj);
     }
 }
