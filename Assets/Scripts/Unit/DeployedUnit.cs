@@ -28,6 +28,7 @@ public class DeployedUnit : MonoBehaviour
         currentHealth = _operator.health;
         attackTiles = new List<GameObject>();
         _operatorData = _operator;
+        GenerateAttackTiles();
 
     }
 
@@ -40,21 +41,42 @@ public class DeployedUnit : MonoBehaviour
     { 
         return _operatorData.range;
     }
+    
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("AAAH");
+        }
+    }
 
 
 
     private void GenerateAttackTiles()
     {
         attackTiles.Add(Instantiate(attackTilePrefab,this.transform));
-        for (int x = Mathf.RoundToInt(-_operatorData.range.x/2); x < Mathf.RoundToInt(_operatorData.range.x/2); x++)
+        
+        TryRenderAttack(0, 0);
+        
+        for (int x = 1; x <= Mathf.RoundToInt(_operatorData.range.x); x++)
         {
-            for (int y = Mathf.RoundToInt(-_operatorData.range.y/2); y < Mathf.RoundToInt(_operatorData.range.y/2); y++)
+            TryRenderAttack(x, 0);
+
+            for (int y = 1; y < Mathf.RoundToInt(_operatorData.range.y / 2); y++)
             {
-                GameObject obj = Instantiate(attackTilePrefab, transform);
-                obj.transform.localPosition = new Vector3(x + 1, obj.transform.position.y, y);
-                attackTiles.Add(obj);
+
+                TryRenderAttack(x,y);
+                TryRenderAttack(x,-y);
             }
         }
+  
         
+    }
+
+    private void TryRenderAttack(int x,int y)
+    {
+        GameObject obj = Instantiate(attackTilePrefab, transform);
+        obj.transform.localPosition = new Vector3(x, obj.transform.position.y, y-0.5f);
+        attackTiles.Add(obj);
     }
 }
