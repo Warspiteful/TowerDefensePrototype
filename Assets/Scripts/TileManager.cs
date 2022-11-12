@@ -29,11 +29,17 @@ public class TileManager : MonoBehaviour
             Transform currTransform = transform.GetChild(i);
             _tileGrid[i] = new Tile[currTransform.childCount];
 
-            for(int j = 0; j < currTransform.childCount; j++){
-                _tileGrid[i][j] = currTransform.GetChild(j).GetChild(0).gameObject.GetComponent<Tile>();
-                _tileGrid[i][j].gameObject.name = "Tile " + i + ", " + j;
-                _tileGrid[i][j].SetCoordinates(new Tuple<int,int>(i,j));
-                _tileGrid[i][j].RegisterAttckCallback(RenderAttack);
+            for(int j = 0; j < currTransform.childCount; j++)
+            {
+                Tile currTile = currTransform.GetChild(j).GetChild(0).gameObject
+                    .GetComponent<Tile>();
+                if (currTile != null)
+                {
+                    _tileGrid[i][j] = currTransform.GetChild(j).GetChild(0).gameObject.GetComponent<Tile>();
+                    _tileGrid[i][j].gameObject.name = "Tile " + i + ", " + j;
+                    _tileGrid[i][j].SetCoordinates(new Tuple<int,int>(i,j));
+                    _tileGrid[i][j].RegisterAttckCallback(RenderAttack);
+                }
             }
         }
     }

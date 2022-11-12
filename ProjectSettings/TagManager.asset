@@ -48,3 +48,6 @@ TagManager:
   - name: AttackTile
     uniqueID: 2050367875
     locked: 0
+  - name: Enemy
+    uniqueID: 2866415153
+    locked: 0

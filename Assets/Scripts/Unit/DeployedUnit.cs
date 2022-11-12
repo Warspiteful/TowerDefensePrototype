@@ -20,6 +20,8 @@ public class DeployedUnit : MonoBehaviour
 
     private List<GameObject> attackTiles;
 
+    private OperatorAttack attack;
+
    
 
     public void Initialize(OperatorData _operator)
@@ -28,6 +30,9 @@ public class DeployedUnit : MonoBehaviour
         currentHealth = _operator.health;
         attackTiles = new List<GameObject>();
         _operatorData = _operator;
+
+        attack = GetComponent<OperatorAttack>();
+        attack.Initialize(_operator.atkSpeed, _operator.atkPower );
         GenerateAttackTiles();
 
     }
@@ -75,7 +80,7 @@ public class DeployedUnit : MonoBehaviour
     private void TryRenderAttack(int x,int y)
     {
         GameObject obj = Instantiate(attackTilePrefab, transform);
-        obj.transform.localPosition = new Vector3(x, obj.transform.position.y, y-0.5f);
+        obj.transform.localPosition = new Vector3(x, 0, y-0.5f);
         obj.name = "Tile" + x + ", " + y;
         attackTiles.Add(obj);
     }
