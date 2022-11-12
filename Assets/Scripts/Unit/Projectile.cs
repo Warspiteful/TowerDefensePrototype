@@ -9,10 +9,13 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] private float speed;
 
+    private float _damage;
+
     private Transform _target; 
-    public void Initialize(Transform target)
+    public void Initialize(Transform target, float damage)
     {
         _target = target;
+        _damage = damage;
     }
 
     // Update is called once per frame
@@ -30,6 +33,11 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            Damageable enemyHealth = collision.gameObject.GetComponent<Damageable>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(_damage);
+            }
             Destroy(gameObject);
         }
     }

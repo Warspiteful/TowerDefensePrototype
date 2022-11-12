@@ -18,6 +18,11 @@ MonoBehaviour:
   health: 0
   range: {x: 1, y: 1}
   sprite: {fileID: 21300000, guid: 8e9c337f8f1caad49843ade748713960, type: 3}
+  animationOverrides:
+    m_keys:
+    - 
+    m_values:
+    - {fileID: 0}
   locationType: 0
   deployTime: 14
   deployCost: 5

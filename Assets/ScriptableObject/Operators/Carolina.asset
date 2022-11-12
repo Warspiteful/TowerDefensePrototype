@@ -18,11 +18,16 @@ MonoBehaviour:
   health: 0
   range: {x: 3, y: 3}
   sprite: {fileID: 21300000, guid: a0b708fa919831447b87298f96806e03, type: 3}
+  animationOverrides:
+    m_keys:
+    - AttackPlaceholder
+    m_values:
+    - {fileID: 7400000, guid: 130db0f7f7d1838498e9eb7caa8e4e76, type: 2}
   locationType: 1
   deployTime: 13
   deployCost: 3
   guardedUnitNumber: 0
   archtetype: {fileID: 11400000, guid: b96dd8171614e1f4d9b2f912e6d06c56, type: 2}
-  attackAnimation: {fileID: 7400000, guid: 130db0f7f7d1838498e9eb7caa8e4e76, type: 2}
+  attackAnimation: {fileID: 0}
   projectile: {fileID: 4243036187660964002, guid: 62209ef1c4928f54d83f906b200afc1e,
     type: 3}

@@ -8,5 +8,7 @@ public class UnitData : ScriptableObject
     public int def;
     public int health;
     public Vector2 range;
-    public Sprite sprite; 
+    public Sprite sprite;
+
+    public AnimationOverridesDictionary animationOverrides;
 }

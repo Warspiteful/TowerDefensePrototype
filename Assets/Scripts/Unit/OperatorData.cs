@@ -10,7 +10,6 @@ public class OperatorData : UnitData
     public int deployCost;
     public int guardedUnitNumber;
     public Archetype archtetype;
-    public AnimationClip attackAnimation;
     public Projectile projectile;
 
 }

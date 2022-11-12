@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(OperatorAttack),typeof(Damageable), typeof(UnitAnimator))]
 public class DeployedUnit : MonoBehaviour
 {
     [SerializeField] private Direction _direction;
@@ -13,28 +15,38 @@ public class DeployedUnit : MonoBehaviour
 
     private OperatorData _operatorData;
     
-    [SerializeField] private GameObject attackTilePrefab;
 
 
     [SerializeField] private int currentHealth;
 
-    private List<GameObject> attackTiles;
 
-    private OperatorAttack attack;
+
+    private OperatorAttack _attack;
+    private Damageable _damageable;
+    private UnitAnimator _animator;
+    
 
    
 
     public void Initialize(OperatorData _operator)
     {
         _spriteRenderer.sprite = _operator.sprite;
-        currentHealth = _operator.health;
-        attackTiles = new List<GameObject>();
         _operatorData = _operator;
 
-        attack = GetComponent<OperatorAttack>();
-        attack.Initialize( _operator.atkPower,_operator.attackAnimation, _operator.projectile );
-        GenerateAttackTiles();
 
+        
+        _damageable = GetComponent<Damageable>();
+        _damageable.Initialize(_operator.health);
+
+        _animator = GetComponent<UnitAnimator>();
+        _animator.SetOverrides(_operator.animationOverrides);
+
+        _attack = GetComponent<OperatorAttack>();
+        _attack.Initialize(_operator.range, _operator.atkPower, _operator.projectile );
+
+
+        _attack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);
+        _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
     }
 
     public Direction GetDirection()
@@ -56,32 +68,4 @@ public class DeployedUnit : MonoBehaviour
     }
 
 
-
-    private void GenerateAttackTiles()
-    {
-        
-        TryRenderAttack(0, 0);
-        
-        for (int x = 1; x <= Mathf.RoundToInt(_operatorData.range.x); x++)
-        {
-            TryRenderAttack(x, 0);
-
-            for (int y = 1; y < Mathf.RoundToInt(_operatorData.range.y / 2); y++)
-            {
-
-                TryRenderAttack(x,y);
-                TryRenderAttack(x,-y);
-            }
-        }
-  
-        
-    }
-
-    private void TryRenderAttack(int x,int y)
-    {
-        GameObject obj = Instantiate(attackTilePrefab, transform);
-        obj.transform.localPosition = new Vector3(x, 0, y-0.5f);
-        obj.name = "Tile" + x + ", " + y;
-        attackTiles.Add(obj);
-    }
 }

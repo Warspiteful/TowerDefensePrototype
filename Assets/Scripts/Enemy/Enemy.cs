@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<Damageable>().Initialize(_data.health);
+        Damageable health = GetComponent<Damageable>();
+            health.Initialize(_data.health);
     }
 }

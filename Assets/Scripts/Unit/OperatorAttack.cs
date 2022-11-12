@@ -8,6 +8,7 @@ public class OperatorAttack : MonoBehaviour
 
     private float _attackSpeed;
     private float _attackPower;
+    private Vector2 _range;
 
     private float attacksPerSecond;
 
@@ -18,25 +19,30 @@ public class OperatorAttack : MonoBehaviour
     private Projectile projectilePrefab;
     private Animator _animator;
     protected AnimatorOverrideController animatorOverrideController;
+
+    [SerializeField] private GameObject attackTilePrefab;
+
+    private List<GameObject> attackTiles;
+
+
+    private OnValueChanged onAttack;
+    private OnValueChanged onAttackEnd;
+
     
-    
-    public void Initialize(float attackPower, AnimationClip attackAnimation, Projectile projectile)
+    public void Initialize(Vector2 range, float attackPower, Projectile projectile)
     {
         inRangeEnemies = new List<Damageable>();
 
-        _animator = GetComponent<Animator>();
-        animatorOverrideController =
-            new AnimatorOverrideController(_animator.runtimeAnimatorController);
-        _animator.runtimeAnimatorController = animatorOverrideController;
-        animatorOverrideController["AttackPlaceholder"] = attackAnimation;
-        
 
+        attackTiles = new List<GameObject>();
         _attackPower = attackPower;
         initialized = true;
         
         
         projectilePrefab = projectile;
-        attacksPerSecond = 1 / attackAnimation.length;
+        _range = range;
+        
+        GenerateAttackTiles();
     }
     // Start is called before the first frame update
 
@@ -47,7 +53,7 @@ public class OperatorAttack : MonoBehaviour
         {
             if(targetEnemy == null){
                 targetEnemy = collision.gameObject.GetComponent<Damageable>();
-                _animator.Play("Attack");
+                onAttack?.Invoke();
             }
             else
             {
@@ -58,17 +64,19 @@ public class OperatorAttack : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (initialized && other.gameObject == targetEnemy.gameObject)
-        {
-            if(inRangeEnemies.Count == 0)
+        if(targetEnemy.gameObject != null){
+            if (initialized && other.gameObject == targetEnemy.gameObject)
             {
-                targetEnemy = null;
-                _animator.Play("Idle");
-            }
-            else
-            {
-                targetEnemy = inRangeEnemies[0];
-                inRangeEnemies.Remove(targetEnemy);
+                if(inRangeEnemies.Count == 0)
+                {
+                    targetEnemy = null;
+                    onAttackEnd?.Invoke();
+                }
+                else
+                {
+                    targetEnemy = inRangeEnemies[0];
+                    inRangeEnemies.Remove(targetEnemy);
+                }
             }
         }
     }
@@ -91,14 +99,42 @@ public class OperatorAttack : MonoBehaviour
         }
         else
         {
-            Instantiate(projectilePrefab, transform).Initialize(targetEnemy.transform);
+            Instantiate(projectilePrefab, transform).Initialize(targetEnemy.transform, _attackPower);
         }
     }
-    
-    
 
-    private void RemoveEnemy()
+
+    private void GenerateAttackTiles()
     {
         
+        TryRenderAttack(0, 0);
+        
+        for (int x = 1; x <= Mathf.RoundToInt(_range.x); x++)
+        {
+            TryRenderAttack(x, 0);
+
+            for (int y = 1; y < Mathf.RoundToInt(_range.y / 2); y++)
+            {
+
+                TryRenderAttack(x,y);
+                TryRenderAttack(x,-y);
+            }
+        }
+  
+        
+    }
+
+    private void TryRenderAttack(int x,int y)
+    {
+        GameObject obj = Instantiate(attackTilePrefab, transform);
+        obj.transform.localPosition = new Vector3(x, 0, y-0.5f);
+        obj.name = "Tile" + x + ", " + y;
+        attackTiles.Add(obj);
+    }
+
+    public void RegisterCallbacks(OnValueChanged onAttackFunction, OnValueChanged onAttackEndFunction)
+    {
+        onAttack += onAttackFunction;
+        onAttackEnd += onAttackEndFunction;
     }
 }
