@@ -32,7 +32,7 @@ public class DeployedUnit : MonoBehaviour
         _operatorData = _operator;
 
         attack = GetComponent<OperatorAttack>();
-        attack.Initialize(_operator.atkSpeed, _operator.atkPower );
+        attack.Initialize(_operator.atkSpeed, _operator.atkPower,_operator.attackAnimation, _operator.projectile );
         GenerateAttackTiles();
 
     }

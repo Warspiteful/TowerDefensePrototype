@@ -9,47 +9,57 @@ public class OperatorAttack : MonoBehaviour
     private float _attackSpeed;
     private float _attackPower;
 
-    [SerializeField] private GameObject targetEnemy;
-    private List<GameObject> inRangeEnemies;
+    [SerializeField] private Damageable targetEnemy;
+    private List<Damageable> inRangeEnemies;
     private bool initialized = false;
 
+    private Projectile projectilePrefab;
+    private Animator _animator;
+    protected AnimatorOverrideController animatorOverrideController;
 
     private void Start()
     {
-        inRangeEnemies = new List<GameObject>();
+        inRangeEnemies = new List<Damageable>();
+        _animator = GetComponent<Animator>();
+        animatorOverrideController =
+            new AnimatorOverrideController(_animator.runtimeAnimatorController);
 
     }
 
-    public void Initialize(float attackSpeed, float attackPower)
+    public void Initialize(float attackSpeed, float attackPower, AnimationClip attackAnimation, Projectile projectile)
     {
         _attackPower = attackPower;
         _attackSpeed = attackSpeed;
         initialized = true;
+        animatorOverrideController["Attack"] = attackAnimation;
+        projectilePrefab = projectile;
     }
     // Start is called before the first frame update
 
     private void OnTriggerEnter(Collider collision)
     {
         
-        if(initialized && collision.gameObject.CompareTag("Enemy"))
+        if(initialized && collision.gameObject.CompareTag("Enemy") && collision.gameObject.GetComponent<Damageable>() != null)
         {
             if(targetEnemy == null){
-                targetEnemy = collision.gameObject;
+                targetEnemy = collision.gameObject.GetComponent<Damageable>();
+                _animator.Play("Attack");
             }
             else
             {
-                inRangeEnemies.Add(collision.gameObject);
+                inRangeEnemies.Add(collision.gameObject.GetComponent<Damageable>());
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (initialized && other.gameObject == targetEnemy)
+        if (initialized && other.gameObject == targetEnemy.gameObject)
         {
             if(inRangeEnemies.Count == 0)
             {
                 targetEnemy = null;
+                _animator.Play("Idle");
             }
             else
             {
@@ -65,7 +75,23 @@ public class OperatorAttack : MonoBehaviour
         if(targetEnemy!=null && initialized){
             Debug.DrawLine(transform.position, targetEnemy.transform.position,Color.red);
         }
+        
+        
     }
+
+    private void Attack()
+    {
+        if (projectilePrefab == null)
+        {
+            targetEnemy.TakeDamage(_attackPower);
+        }
+        else
+        {
+            Instantiate(projectilePrefab).Initialize(targetEnemy.transform);
+        }
+    }
+    
+    
 
     private void RemoveEnemy()
     {
