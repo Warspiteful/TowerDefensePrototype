@@ -9,6 +9,8 @@ public class OperatorAttack : MonoBehaviour
     private float _attackSpeed;
     private float _attackPower;
 
+    private float attacksPerSecond;
+
     [SerializeField] private Damageable targetEnemy;
     private List<Damageable> inRangeEnemies;
     private bool initialized = false;
@@ -16,23 +18,25 @@ public class OperatorAttack : MonoBehaviour
     private Projectile projectilePrefab;
     private Animator _animator;
     protected AnimatorOverrideController animatorOverrideController;
-
-    private void Start()
+    
+    
+    public void Initialize(float attackPower, AnimationClip attackAnimation, Projectile projectile)
     {
         inRangeEnemies = new List<Damageable>();
+
         _animator = GetComponent<Animator>();
         animatorOverrideController =
             new AnimatorOverrideController(_animator.runtimeAnimatorController);
+        _animator.runtimeAnimatorController = animatorOverrideController;
+        animatorOverrideController["AttackPlaceholder"] = attackAnimation;
+        
 
-    }
-
-    public void Initialize(float attackSpeed, float attackPower, AnimationClip attackAnimation, Projectile projectile)
-    {
         _attackPower = attackPower;
-        _attackSpeed = attackSpeed;
         initialized = true;
-        animatorOverrideController["Attack"] = attackAnimation;
+        
+        
         projectilePrefab = projectile;
+        attacksPerSecond = 1 / attackAnimation.length;
     }
     // Start is called before the first frame update
 
@@ -87,7 +91,7 @@ public class OperatorAttack : MonoBehaviour
         }
         else
         {
-            Instantiate(projectilePrefab).Initialize(targetEnemy.transform);
+            Instantiate(projectilePrefab, transform).Initialize(targetEnemy.transform);
         }
     }
     

@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Reaper
   atkPower: 0
-  atkSpeed: 0
   def: 0
   health: 0
   range: {x: 1, y: 1}
@@ -24,3 +23,5 @@ MonoBehaviour:
   deployCost: 5
   guardedUnitNumber: 0
   archtetype: {fileID: 11400000, guid: 4598e54459bcf8643be9a8821ec15468, type: 2}
+  attackAnimation: {fileID: 7400000, guid: 130db0f7f7d1838498e9eb7caa8e4e76, type: 2}
+  projectile: {fileID: 0}
