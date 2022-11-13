@@ -7,10 +7,14 @@ public class UnitAnimator : MonoBehaviour
     protected AnimatorOverrideController animatorOverrideController;
 
     private Animator _animator;
+    private SpriteRenderer _renderer;
+
     
     public void SetOverrides(AnimationOverridesDictionary overrides)
     {
         _animator = GetComponent<Animator>();
+        _renderer = GetComponent<SpriteRenderer>();
+
         animatorOverrideController =
             new AnimatorOverrideController(_animator.runtimeAnimatorController);
         _animator.runtimeAnimatorController = animatorOverrideController;
@@ -32,6 +36,8 @@ public class UnitAnimator : MonoBehaviour
 
     public void PlayTakeDamage()
     {
+        Debug.Log("TAKEN DAMAGE in Animator");
         _animator.Play("TakeDamage");
     }
+    
 }

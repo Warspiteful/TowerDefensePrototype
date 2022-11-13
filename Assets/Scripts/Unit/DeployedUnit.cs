@@ -33,20 +33,20 @@ public class DeployedUnit : MonoBehaviour
         _spriteRenderer.sprite = _operator.sprite;
         _operatorData = _operator;
 
-
+        _animator = GetComponent<UnitAnimator>();
+        _animator.SetOverrides(_operator.animationOverrides);
         
         _damageable = GetComponent<Damageable>();
         _damageable.Initialize(_operator.health);
+        _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
 
-        _animator = GetComponent<UnitAnimator>();
-        _animator.SetOverrides(_operator.animationOverrides);
+
 
         _attack = GetComponent<OperatorAttack>();
         _attack.Initialize(_operator.range, _operator.atkPower, _operator.projectile );
 
 
         _attack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);
-        _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
     }
 
     public Direction GetDirection()

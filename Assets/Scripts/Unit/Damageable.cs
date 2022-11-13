@@ -8,13 +8,18 @@ public class Damageable : MonoBehaviour
     [SerializeField] private float currHealth;
     [SerializeField] private float maxHealth;
 
-    private OnValueChanged damageTaken;
+    private OnValueChanged _damageTaken;
 
 
-    public void RegisterDamageTakenCallback(OnValueChanged function)
+    public void RegisterDamageTakenCallback(OnValueChanged damageCallback)
     {
-        damageTaken += function;
+        _damageTaken += damageCallback;
+        foreach (OnValueChanged method in _damageTaken.GetInvocationList())
+        {
+            Debug.Log(method.ToString());
+        }
     }
+    
     public void Initialize(float health)
     {
         maxHealth = health;
@@ -24,8 +29,14 @@ public class Damageable : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        foreach (OnValueChanged method in _damageTaken.GetInvocationList())
+        {
+            Debug.Log(method.ToString());
+        }
         currHealth -= damage;
-        damageTaken?.Invoke();   
+        Debug.Log("Damage taken by Damageable");
+        _damageTaken.Invoke();
+        
     }
 
     public void Heal(float health)

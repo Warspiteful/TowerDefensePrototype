@@ -64,7 +64,7 @@ public class OperatorAttack : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(targetEnemy.gameObject != null){
+        if(targetEnemy != null){
             if (initialized && other.gameObject == targetEnemy.gameObject)
             {
                 if(inRangeEnemies.Count == 0)
