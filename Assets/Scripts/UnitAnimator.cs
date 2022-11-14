@@ -37,7 +37,15 @@ public class UnitAnimator : MonoBehaviour
     public void PlayTakeDamage()
     {
         Debug.Log("TAKEN DAMAGE in Animator");
-        _animator.Play("TakeDamage");
+        StartCoroutine(DamageAnimation());
+    }
+    
+    IEnumerator DamageAnimation()
+    {
+        _renderer.material.color = Color.red;
+        yield return new WaitForSeconds(0.05f);
+        _renderer.material.color = Color.white;
+
     }
     
 }
