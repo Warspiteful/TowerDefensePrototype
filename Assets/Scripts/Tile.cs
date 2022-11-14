@@ -16,6 +16,8 @@ public class Tile : MonoBehaviour
     
     [SerializeField] private SpriteRenderer attackIndicator;
 
+    private bool displayAttackTiles = false;
+
 
     private TileCallback onAttackPreview;
 
@@ -49,8 +51,18 @@ public class Tile : MonoBehaviour
 
     public void RenderAttackDisplay()
     {
+        if(!displayAttackTiles){
         attackIndicator.enabled = true;
+        displayAttackTiles = true;
+        }
+        else
+        {
+            attackIndicator.enabled = false;
+            displayAttackTiles = false;
+        }
     }
+    
+
 
     public Direction GetDirection()
     {
@@ -67,13 +79,16 @@ public class Tile : MonoBehaviour
         _deployedUnit = Instantiate(deployedUnitPrefab,
             this.transform);
         _deployedUnit.gameObject.transform.localPosition = new Vector3(0.5f, 1, 1);
-        _deployedUnit .Initialize(_operatorData);
+        _deployedUnit.gameObject.transform.parent = this.transform.parent;
+        _deployedUnit.Initialize(_operatorData);
+        
     }
 
 
     private void OnMouseDown()
     {
         if(_deployedUnit != null){
+            Debug.Log("MOUSE DOWN");
             onAttackPreview?.Invoke(this);
         }
     }

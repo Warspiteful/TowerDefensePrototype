@@ -1,0 +1,73 @@
+{
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "14851709-1670-497d-bbe4-7c32c6b31f1a",
+            "actions": [
+                {
+                    "name": "OnClick",
+                    "type": "Button",
+                    "id": "0fd0a2e4-f05c-4473-94d7-0ea40f710675",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "923376a7-f9ab-4cc0-ae96-82804e7b750a",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c69bafb5-822a-4131-af59-0bba35568acc",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "New action map1",
+            "id": "d1d3aaa8-3170-4350-8094-bba03d699580",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "d5bf3fe9-222f-4422-83a9-5060800b0675",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "40b2dcf8-f9a2-4016-9dd3-356750bf01d5",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

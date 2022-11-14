@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class TileManager : MonoBehaviour
@@ -13,7 +11,14 @@ public class TileManager : MonoBehaviour
 
     private GameObject testObjectParent;
 
+    private PlayerControls _controls;
+
     private Tile[][] _tileGrid;
+    
+    private Tile renderedTile;
+
+    
+    private delegate void tileOperation(Tuple<int, int> coordinate, int xOffset, int yOffset);
 
     // Start is called before the first frame update
     void Start()
@@ -24,29 +29,53 @@ public class TileManager : MonoBehaviour
             Transform currTransform = transform.GetChild(i);
             _tileGrid[i] = new Tile[currTransform.childCount];
 
-            for(int j = 0; j < currTransform.childCount; j++){
-                _tileGrid[i][j] = currTransform.GetChild(j).gameObject.GetComponent<Tile>();
-                _tileGrid[i][j].gameObject.name = "Tile " + i + ", " + j;
-                _tileGrid[i][j].SetCoordinates(new Tuple<int,int>(i,j));
-                _tileGrid[i][j].RegisterAttckCallback(RenderAttack);
+            for(int j = 0; j < currTransform.childCount; j++)
+            {
+                Tile currTile = currTransform.GetChild(j).GetChild(0).gameObject
+                    .GetComponent<Tile>();
+                if (currTile != null)
+                {
+                    _tileGrid[i][j] = currTransform.GetChild(j).GetChild(0).gameObject.GetComponent<Tile>();
+                    _tileGrid[i][j].gameObject.name = "Tile " + i + ", " + j;
+                    _tileGrid[i][j].SetCoordinates(new Tuple<int,int>(i,j));
+                    _tileGrid[i][j].RegisterAttckCallback(RenderAttack);
+                }
             }
         }
-  
     }
 
     private void RenderAttack(Tile _tile)
     {
-        Tuple<int, int> tileLocation = _tile.GetCoordinates();
+
+        HandleAttackRender(_tile);
+        if (renderedTile != null)
+        {
+            if(renderedTile == _tile)
+            {
+                renderedTile = null;
+            }
+            else
+            {
+                HandleAttackRender(renderedTile);
+            }
+        }
+        
+        renderedTile = _tile;
+    }
+
+    private void HandleAttackRender(Tile _tile)
+    {
+        //  Tuple<int, int> tileLocation = _tile.GetCoordinates();
 
         Vector2 attackRange = _tile.GetAttackRange();
 
-        Direction dir = _tile.GetDirection();
+        //Direction dir = _tile.GetDirection();
 
-        List<Vector2> attackGrid = new List<Vector2>();
+        //List<Vector2> attackGrid = new List<Vector2>();
 
         Tuple<int, int> tileCoordinate = _tile.GetCoordinates();
 
-        Tile currTile;
+        //Tile currTile;
         for (int x = 1; x <= Mathf.RoundToInt(attackRange.x); x++)
         {
             TryRenderAttack(tileCoordinate,x,0);
@@ -59,26 +88,16 @@ public class TileManager : MonoBehaviour
                 TryRenderAttack(tileCoordinate,x,-y);
             }
         }
-
-
     }
     
     private void TryRenderAttack(Tuple<int,int> coordinate, int xOffset,int yOffset)
     {
         int xVal = coordinate.Item1 + xOffset;
         int yVal = coordinate.Item2 + yOffset;
-        Debug.Log(xVal + ", " + yVal);
         if(xVal < _tileGrid.Length && xVal >= 0 && yVal < _tileGrid[xVal].Length && yVal >= 0)
         {
         _tileGrid[coordinate.Item1 + xOffset][coordinate.Item2 + yOffset].RenderAttackDisplay();
     
         }
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(OperatorAttack),typeof(Damageable), typeof(UnitAnimator))]
 public class DeployedUnit : MonoBehaviour
 {
     [SerializeField] private Direction _direction;
@@ -13,22 +15,38 @@ public class DeployedUnit : MonoBehaviour
 
     private OperatorData _operatorData;
     
-    [SerializeField] private GameObject attackTilePrefab;
 
 
     [SerializeField] private int currentHealth;
 
-    private List<GameObject> attackTiles;
+
+
+    private OperatorAttack _attack;
+    private Damageable _damageable;
+    private UnitAnimator _animator;
+    
 
    
 
     public void Initialize(OperatorData _operator)
     {
         _spriteRenderer.sprite = _operator.sprite;
-        currentHealth = _operator.health;
-        attackTiles = new List<GameObject>();
         _operatorData = _operator;
 
+        _animator = GetComponent<UnitAnimator>();
+        _animator.SetOverrides(_operator.animationOverrides);
+        
+        _damageable = GetComponent<Damageable>();
+        _damageable.Initialize(_operator.health);
+        _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
+
+
+
+        _attack = GetComponent<OperatorAttack>();
+        _attack.Initialize(_operator.range, _operator.atkPower, _operator.projectile );
+
+
+        _attack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);
     }
 
     public Direction GetDirection()
@@ -40,21 +58,14 @@ public class DeployedUnit : MonoBehaviour
     { 
         return _operatorData.range;
     }
-
-
-
-    private void GenerateAttackTiles()
+    
+    private void OnCollisionEnter(Collision other)
     {
-        attackTiles.Add(Instantiate(attackTilePrefab,this.transform));
-        for (int x = Mathf.RoundToInt(-_operatorData.range.x/2); x < Mathf.RoundToInt(_operatorData.range.x/2); x++)
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            for (int y = Mathf.RoundToInt(-_operatorData.range.y/2); y < Mathf.RoundToInt(_operatorData.range.y/2); y++)
-            {
-                GameObject obj = Instantiate(attackTilePrefab, transform);
-                obj.transform.localPosition = new Vector3(x + 1, obj.transform.position.y, y);
-                attackTiles.Add(obj);
-            }
+            Debug.Log("AAAH");
         }
-        
     }
+
+
 }

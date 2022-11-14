@@ -10,4 +10,6 @@ public class OperatorData : UnitData
     public int deployCost;
     public int guardedUnitNumber;
     public Archetype archtetype;
+    public Projectile projectile;
+
 }

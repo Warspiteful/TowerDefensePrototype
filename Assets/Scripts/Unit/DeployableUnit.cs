@@ -24,7 +24,8 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     [SerializeField] private GameObject draggableObject;
     
-    [SerializeField] private DeployedUnit _deployedUnitPrefab;
+    
+    [SerializeField] LayerMask relevantLayer;
 
     // Start is called before the first frame update
 
@@ -36,6 +37,8 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     
     private float startXPos;
     private float startYPos;
+
+    private Tile selectedTile;
 
 
     public void Initialize(OperatorData operatorData)
@@ -76,6 +79,8 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             shadowDisplay.enabled = true;
         }
     }
+    
+    //TODO: Split Drag Behavior and Renderer Behavior into Two Scripts
     public void OnDrag(PointerEventData eventData)
     {
         if(canPurchase){ 
@@ -87,28 +92,42 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             
             RaycastHit hit;
             Vector3 dir;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, relevantLayer)){
+            selectedTile = hit.collider.gameObject.GetComponentInParent<Tile>();
+             if(selectedTile != null && selectedTile.CanPlace(_operatorData.locationType))
             {
-                if(hit.collider.gameObject.GetComponent<Tile>() != null && hit.collider.gameObject.GetComponent<Tile>().CanPlace(_operatorData.locationType) ){
-
-                deployPreview.SetActive(true);
+                Debug.DrawLine(Camera.main.transform.position, hit.collider.gameObject.transform.position,Color.red);
+                Debug.Log(hit.collider.gameObject.name);
+          
                 mousePos = hit.point;
+                Vector3 hitPoint = hit.collider.transform.position;
                 mousePos.y += deployPreview.transform.position.y / 2;
-                deployPreview.transform.position = new Vector3
-                (
-                    mousePos.x,
-                    mousePos.y,
-                    mousePos.z
-                );
-                }
-            
+                deployPreview.transform.position = hit.collider.transform.position + new Vector3(0.5f,1,1);
+                float sharedScale = 5.25f / Mathf.Max(hitPoint.z + 5, 1);
+                deployPreview.transform.localScale = new Vector3(sharedScale,sharedScale,sharedScale);
+
+            }
             }
             else
             {
-                deployPreview.SetActive(false);
+                
+                mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+                Debug.Log(mousePos);
+         
+                deployPreview.transform.position = new Vector3
+                (
+                    mousePos.x,
+                    0,
+                    mousePos.z +mousePos.y
+                );
+                float scale = 5.25f/Mathf.Max(mousePos.z + mousePos.y+5,1);
+                deployPreview.transform.localScale = new Vector3(scale, scale, scale);
+
             }
 
-       
+
+
         }
     }
 
@@ -117,31 +136,22 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         if(canPurchase){
             deployPreview = Instantiate(draggableObject);
             deployPreview.GetComponent<SpriteRenderer>().sprite = _operatorData.sprite;
-            deployPreview.gameObject.SetActive(false);
             _active.Value = _operatorData;
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     { 
-        if(canPurchase && deployPreview != null){ 
+        if(canPurchase && deployPreview != null && selectedTile != null){ 
             
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
-                Tile _tile = hit.collider.gameObject.GetComponentInParent<Tile>();
-                if (_tile != null && _tile.CanPlace(_operatorData.locationType))
-                {
-                    _tile.DeployOperator(_operatorData);
+ 
+            selectedTile.DeployOperator(_operatorData);
                     _balance.Value -= _operatorData.deployCost;
-
-                }
-            }
+        }
+        selectedTile = null;
 
             _active.Value = null;
             Destroy(deployPreview);
-        }
+        
     }
 }

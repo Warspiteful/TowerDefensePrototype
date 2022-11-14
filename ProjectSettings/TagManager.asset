@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -12,9 +13,9 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
+  - Tile
+  - Enemy
+  - Operator
   - 
   - 
   - 
@@ -46,4 +47,10 @@ TagManager:
     locked: 0
   - name: AttackTile
     uniqueID: 2050367875
+    locked: 0
+  - name: Enemy
+    uniqueID: 2866415153
+    locked: 0
+  - name: Projectile
+    uniqueID: 1986999315
     locked: 0
