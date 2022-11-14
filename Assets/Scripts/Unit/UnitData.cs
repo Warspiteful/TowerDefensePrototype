@@ -11,4 +11,10 @@ public class UnitData : ScriptableObject
     public Sprite sprite;
 
     public AnimationOverridesDictionary animationOverrides;
+
+    public float GetAnimationDuration(string animation)
+    {
+        return animationOverrides[animation].length;
+    }
+        
 }

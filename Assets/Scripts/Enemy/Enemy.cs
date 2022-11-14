@@ -7,12 +7,14 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private EnemyData _data;
+    [SerializeField] private SpriteRenderer _renderer;
 
     private Damageable _damageable;
     private UnitAnimator _animator;
     
     private void Start()
     {
+        _renderer.sprite = _data.sprite;
         _animator = GetComponent<UnitAnimator>();
         _animator.SetOverrides(_data.animationOverrides);
         
@@ -20,6 +22,7 @@ public class Enemy : MonoBehaviour
         _damageable.Initialize(_data.health);
             
             _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
-
     }
+
+
 }

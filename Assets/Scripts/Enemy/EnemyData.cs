@@ -6,4 +6,5 @@ using UnityEngine;
 public class EnemyData : UnitData
 {
     public float speed;
+    public bool canBeBlocked;
 }
