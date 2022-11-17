@@ -7,19 +7,19 @@
             "actions": [
                 {
                     "name": "OnClick",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "0fd0a2e4-f05c-4473-94d7-0ea40f710675",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "923376a7-f9ab-4cc0-ae96-82804e7b750a",
-                    "path": "<Mouse>/leftButton",
+                    "id": "d198ac9f-9b15-4891-b692-6e8793a01743",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -29,8 +29,8 @@
                 },
                 {
                     "name": "",
-                    "id": "c69bafb5-822a-4131-af59-0bba35568acc",
-                    "path": "<Touchscreen>/Press",
+                    "id": "950f61cd-27eb-4a91-a2fe-dd81dc12333e",
+                    "path": "<Touchscreen>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
