@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 
@@ -24,9 +21,9 @@ public class UnitInput : MonoBehaviour
         Camera.main.eventMask = inputLayerMask;
         _controls = new PlayerControls();
         _controls.Gameplay.Enable();
-        _controls.Gameplay.OnClick.started += ctx => OnClick(ctx);
-        _controls.Gameplay.OnClick.performed += ctx => OnClick(ctx);
-        _controls.Gameplay.OnClick.canceled += ctx => OnClick(ctx);
+        _controls.Gameplay.OnClick.started += ctx => HandleClick(ctx);
+        _controls.Gameplay.MousePosition.performed += ctx => MouseDrag(ctx);
+        _controls.Gameplay.OnClick.canceled += ctx => HandleClick(ctx);
 
     }
 
@@ -82,7 +79,34 @@ public class UnitInput : MonoBehaviour
         }
     }
 
-    public void OnClick(InputAction.CallbackContext ctx)
+    public void HandleClick(InputAction.CallbackContext ctx)
+    {
+        
+        RaycastHit rcHit;
+
+        if (ctx.started)
+        {
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(
+                    Mouse.current.position.ReadValue()), out rcHit, Mathf.Infinity, inputLayerMask))
+            {
+         
+                OnClickVoidCallback?.Invoke();
+                isDragging = true;
+                
+            }
+            else
+            {
+                OnClickElsewhereVoidCallback?.Invoke();
+            }
+        }
+        else if (ctx.canceled)
+        {
+            isDragging = false;
+        }
+
+    }
+
+    public void MouseDrag(InputAction.CallbackContext ctx)
     {
         Camera c = Camera.main;
         RaycastHit rcHit;
@@ -103,33 +127,13 @@ public class UnitInput : MonoBehaviour
             position.y += position.z;
         }
    
-        if (ctx.started)
-        {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(
-                    Mouse.current.position.ReadValue()), out rcHit, Mathf.Infinity, inputLayerMask))
-            {
-         
-                    OnClickVoidCallback?.Invoke();
-                    OnDragBeginVector3Callback?.Invoke(position);
-                    isDragging = true;
-                
-            }
-            else
-            {
-                OnClickElsewhereVoidCallback?.Invoke();
-            }
-        }
-        
-        else if (ctx.performed && isDragging)
+ 
+        if (isDragging)
         {
             OnDragVector3Callback?.Invoke(position);
             Debug.Log("Dragging");
         }
-        else if (ctx.canceled)
-        {
-            OnDragEndVector3Callback?.Invoke(position);
-            isDragging = false;
-        }
+       
        
 
     }

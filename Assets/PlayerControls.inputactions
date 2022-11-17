@@ -6,13 +6,22 @@
             "id": "14851709-1670-497d-bbe4-7c32c6b31f1a",
             "actions": [
                 {
-                    "name": "OnClick",
+                    "name": "MousePosition",
                     "type": "Value",
                     "id": "0fd0a2e4-f05c-4473-94d7-0ea40f710675",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "OnClick",
+                    "type": "Button",
+                    "id": "3ca1dc87-b86f-4fcc-bfdf-f66902ce4591",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -23,7 +32,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OnClick",
+                    "action": "MousePosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -31,6 +40,28 @@
                     "name": "",
                     "id": "950f61cd-27eb-4a91-a2fe-dd81dc12333e",
                     "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MousePosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "058e6f35-0136-4321-8492-0222099c7e24",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2861c05-2d45-4fc9-bc76-603e4e649698",
+                    "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
