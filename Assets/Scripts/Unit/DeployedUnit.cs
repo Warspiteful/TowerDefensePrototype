@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(OperatorAttack),typeof(Damageable), typeof(UnitAnimator))]
+[RequireComponent(typeof(OperatorAttack),typeof(Damageable), typeof(UnitAnimator)), RequireComponent(typeof(UnitInput))]
 public class DeployedUnit : MonoBehaviour
 {
     [SerializeField] private Direction _direction;
@@ -14,8 +11,6 @@ public class DeployedUnit : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
 
     private OperatorData _operatorData;
-    
-
 
     [SerializeField] private int currentHealth;
 
@@ -24,19 +19,25 @@ public class DeployedUnit : MonoBehaviour
     private OperatorAttack _attack;
     private Damageable _damageable;
     private UnitAnimator _animator;
+    private UnitInput _input;
     
 
    
 
     public void Initialize(OperatorData _operator)
     {
+
+        _input = GetComponent<UnitInput>();
+        _animator = GetComponent<UnitAnimator>();         
+        _damageable = GetComponent<Damageable>();
+        
+       
         _spriteRenderer.sprite = _operator.sprite;
         _operatorData = _operator;
 
-        _animator = GetComponent<UnitAnimator>();
+
         _animator.SetOverrides(_operator.animationOverrides);
-        
-        _damageable = GetComponent<Damageable>();
+
         _damageable.Initialize(_operator.health);
         _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
 
@@ -48,7 +49,7 @@ public class DeployedUnit : MonoBehaviour
 
         _attack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);
     }
-
+    
     public Direction GetDirection()
     { 
         return _direction;
@@ -66,6 +67,13 @@ public class DeployedUnit : MonoBehaviour
             Debug.Log("AAAH");
         }
     }
+    
+    
+    public void RegisterOnClickCallback(params VoidCallback[] callback)
+    {
+            _input.RegisterOnClickCallback(callback);
+    }
+
 
 
 }

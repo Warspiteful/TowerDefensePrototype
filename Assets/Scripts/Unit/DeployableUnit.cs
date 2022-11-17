@@ -125,9 +125,6 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
                 deployPreview.transform.localScale = new Vector3(scale, scale, scale);
 
             }
-
-
-
         }
     }
 

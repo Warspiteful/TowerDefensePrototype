@@ -24,5 +24,4 @@ public class Enemy : MonoBehaviour
             _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
     }
 
-
 }

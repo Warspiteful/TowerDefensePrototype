@@ -81,14 +81,14 @@ public class Tile : MonoBehaviour
         _deployedUnit.gameObject.transform.localPosition = new Vector3(0.5f, 1, 1);
         _deployedUnit.gameObject.transform.parent = this.transform.parent;
         _deployedUnit.Initialize(_operatorData);
-        
+        _deployedUnit.RegisterOnClickCallback(DisplayPreview);
+
     }
 
 
-    private void OnMouseDown()
+    private void DisplayPreview()
     {
         if(_deployedUnit != null){
-            Debug.Log("MOUSE DOWN");
             onAttackPreview?.Invoke(this);
         }
     }
