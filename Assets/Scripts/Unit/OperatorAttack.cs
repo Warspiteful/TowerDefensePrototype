@@ -28,8 +28,10 @@ public class OperatorAttack : MonoBehaviour
     private OnValueChanged onAttack;
     private OnValueChanged onAttackEnd;
 
+    private GameObject attackTileParent;
+
     
-    public void Initialize(Vector2 range, float attackPower, Projectile projectile)
+    public void Initialize(Vector2 range, float attackPower, Projectile projectile, Direction dir)
     {
         inRangeEnemies = new List<Damageable>();
 
@@ -42,7 +44,7 @@ public class OperatorAttack : MonoBehaviour
         projectilePrefab = projectile;
         _range = range;
         
-        GenerateAttackTiles();
+        GenerateAttackTiles(dir);
     }
     // Start is called before the first frame update
 
@@ -104,8 +106,9 @@ public class OperatorAttack : MonoBehaviour
     }
 
 
-    private void GenerateAttackTiles()
+    private void GenerateAttackTiles(Direction dir)
     {
+        attackTileParent = Instantiate(new GameObject(), transform);
         
         TryRenderAttack(0, 0);
         
@@ -120,13 +123,33 @@ public class OperatorAttack : MonoBehaviour
                 TryRenderAttack(x,-y);
             }
         }
+
+
+        switch (dir)
+        {
+            case Direction.DOWN:
+                attackTileParent.transform.rotation =  Quaternion.Euler(0, 90, 0);
+                attackTileParent.transform.localPosition = new Vector3(0.5f, 0, -0.5f);
+                break;
+            case Direction.LEFT:
+                attackTileParent.transform.rotation =  Quaternion.Euler(0, 180, 0);
+                attackTileParent.transform.localPosition = new Vector3(-1, 0, 0);
+
+                break;
+            case Direction.UP :
+                attackTileParent.transform.rotation =  Quaternion.Euler(0, 270, 0);
+                attackTileParent.transform.localPosition = new Vector3(-0.5f, 0, -0.5f);
+
+                break;
+        }
+        
   
         
     }
 
     private void TryRenderAttack(int x,int y)
     {
-        GameObject obj = Instantiate(attackTilePrefab, transform);
+        GameObject obj = Instantiate(attackTilePrefab, attackTileParent.transform);
         obj.transform.localPosition = new Vector3(x, 0, y-0.5f);
         obj.name = "Tile" + x + ", " + y;
         attackTiles.Add(obj);

@@ -7,10 +7,11 @@ public enum CallbackType{
     BEGINDRAG, ENDDRAG, DRAG
 }
 
-
 public class UnitInput : MonoBehaviour
 {
     private PlayerControls _controls;
+    
+    
     
     [SerializeField] private LayerMask inputLayerMask;
 
@@ -32,6 +33,8 @@ public class UnitInput : MonoBehaviour
     private Vector3Callback OnDragEndVector3Callback;
     private VoidCallback OnClickVoidCallback;
     private VoidCallback OnClickElsewhereVoidCallback;
+    private VoidCallback OnReleaseVoidCallback;
+
 
 
     public void RegisterMousePositionCallback(CallbackType _callbackType, params Vector3Callback[] callback)
@@ -59,8 +62,16 @@ public class UnitInput : MonoBehaviour
             default:
                 throw new ArgumentException("Invalid callback Type");
         }
+    }
+    
+ 
 
-
+    public void RegisterOnReleaseVoidCallback(params VoidCallback[] callback)
+    {
+        foreach(VoidCallback _callback in callback)
+        {
+            OnReleaseVoidCallback += _callback;
+        }
     }
 
     public void RegisterOnClickCallback(params VoidCallback[] callback)
@@ -79,6 +90,17 @@ public class UnitInput : MonoBehaviour
         }
     }
 
+
+    private void OnDisable()
+    {   
+     OnDragVector3Callback = null;
+    OnDragBeginVector3Callback = null;
+    OnDragEndVector3Callback = null;
+    OnClickVoidCallback = null;
+    OnClickElsewhereVoidCallback = null;
+        
+    }
+
     public void HandleClick(InputAction.CallbackContext ctx)
     {
         
@@ -89,19 +111,22 @@ public class UnitInput : MonoBehaviour
             if (Physics.Raycast(Camera.main.ScreenPointToRay(
                     Mouse.current.position.ReadValue()), out rcHit, Mathf.Infinity, inputLayerMask))
             {
-         
+                Debug.Log("ONCLICK");
                 OnClickVoidCallback?.Invoke();
                 isDragging = true;
                 
             }
             else
             {
+                
+                Debug.Log("ONCLICKELSEWHERE");
                 OnClickElsewhereVoidCallback?.Invoke();
             }
         }
         else if (ctx.canceled)
         {
             isDragging = false;
+            OnReleaseVoidCallback?.Invoke();
         }
 
     }
@@ -116,7 +141,6 @@ public class UnitInput : MonoBehaviour
         
         Ray ray = Camera.main.ScreenPointToRay(position);
         Plane plane = new Plane(new Vector3(0,Mathf.Cos(Mathf.Deg2Rad*45), Mathf.Sin(-Mathf.Deg2Rad*45)), Vector3.zero);
-
         float distance;
         
         if (plane.Raycast(ray, out distance))

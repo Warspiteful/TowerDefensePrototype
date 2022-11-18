@@ -10,18 +10,39 @@ public class PlacementUnit : MonoBehaviour
     private UnitInput _input;
 
     [SerializeField] private Direction dir;
-    
-    // Start is called before the first frame update
-    void Start()
+
+    private DirectionCallback _directionCallback;
+
+    private SpriteRenderer _renderer;
+
+
+
+
+    public void RegisterDirectionCallback(DirectionCallback callback)
     {
-        _input = GetComponent<UnitInput>();
-        _input.RegisterMousePositionCallback(CallbackType.DRAG, ChooseDirection);
-        _input.RegisterOnElsewhereClickCallback(Cancel);
+        _directionCallback += callback;
     }
 
+    public void Initialize(Sprite operatorSprite)
+    {
+        _renderer = GetComponent<SpriteRenderer>();
+        _input = GetComponent<UnitInput>();
+        _input.enabled = true;
+        _input.RegisterMousePositionCallback(CallbackType.DRAG, ChooseDirection);
+        _input.RegisterOnElsewhereClickCallback(Cancel);
+        _input.RegisterOnReleaseVoidCallback(Complete);
+        
+        
+        gameObject.SetActive(true);
+        _renderer.sprite = operatorSprite;
+    }
+    
     public void Cancel()
     {
         Debug.Log("Cancel");
+        _input.enabled = false;
+
+        gameObject.SetActive(false);
     }
 
     public void ChooseDirection(Vector3 direction)
@@ -33,37 +54,41 @@ public class PlacementUnit : MonoBehaviour
         {
             Debug.Log("Direction Right");
             dir = Direction.RIGHT;
+        
         }
         else if (x < 0 && Mathf.Abs(x) > Mathf.Abs(y))
         {
             Debug.Log("Direction Left");
             dir = Direction.LEFT;
+            
         }
         
         else if (y > 0 && Mathf.Abs(y) > Mathf.Abs(x))
         {
             Debug.Log("Direction Up");
             dir = Direction.UP;
+     
 
         }
         else if (y < 0 && Mathf.Abs(y) > Mathf.Abs(x))
         {
             Debug.Log("Direction Down");
              dir = Direction.DOWN;
+        
         }
         else
         {
             Debug.Log("NO DIRECTION");
         }
     }
+    
     public void Complete()
     {
-        
+        Debug.Log("Complete");
+      _directionCallback?.Invoke(dir);
+        _directionCallback = null;
+        gameObject.SetActive(false);
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

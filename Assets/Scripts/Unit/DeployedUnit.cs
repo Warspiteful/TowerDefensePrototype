@@ -24,13 +24,14 @@ public class DeployedUnit : MonoBehaviour
 
    
 
-    public void Initialize(OperatorData _operator)
+    public void Initialize(OperatorData _operator, Direction dir)
     {
 
         _input = GetComponent<UnitInput>();
         _animator = GetComponent<UnitAnimator>();         
         _damageable = GetComponent<Damageable>();
-        
+
+        _direction = dir;
        
         _spriteRenderer.sprite = _operator.sprite;
         _operatorData = _operator;
@@ -44,7 +45,7 @@ public class DeployedUnit : MonoBehaviour
 
 
         _attack = GetComponent<OperatorAttack>();
-        _attack.Initialize(_operator.range, _operator.atkPower, _operator.projectile );
+        _attack.Initialize(_operator.range, _operator.atkPower, _operator.projectile, _direction );
 
 
         _attack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);

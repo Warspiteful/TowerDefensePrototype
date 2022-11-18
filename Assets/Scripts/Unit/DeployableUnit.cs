@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
+//TODO: Combine DisplayPreview and DirectionUnit
 public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
 
@@ -24,6 +26,7 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     [SerializeField] private GameObject draggableObject;
     
+    [SerializeField] private PlacementUnit directionalUnitPrefab;
     
     [SerializeField] LayerMask relevantLayer;
 
@@ -39,6 +42,8 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     private float startYPos;
 
     private Tile selectedTile;
+
+    private PlacementUnit directionalUnit;
 
 
     public void Initialize(OperatorData operatorData)
@@ -97,7 +102,6 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
              if(selectedTile != null && selectedTile.CanPlace(_operatorData.locationType))
             {
                 Debug.DrawLine(Camera.main.transform.position, hit.collider.gameObject.transform.position,Color.red);
-                Debug.Log(hit.collider.gameObject.name);
           
                 mousePos = hit.point;
                 Vector3 hitPoint = hit.collider.transform.position;
@@ -131,7 +135,11 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     public void OnBeginDrag(PointerEventData eventData)
     {
         if(canPurchase){
-            deployPreview = Instantiate(draggableObject);
+            if (deployPreview == null)
+            {
+                deployPreview = Instantiate(draggableObject);
+            }
+            deployPreview.SetActive(true);
             deployPreview.GetComponent<SpriteRenderer>().sprite = _operatorData.sprite;
             _active.Value = _operatorData;
         }
@@ -139,16 +147,24 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
 
     public void OnEndDrag(PointerEventData eventData)
     { 
-        if(canPurchase && deployPreview != null && selectedTile != null){ 
-            
- 
-            selectedTile.DeployOperator(_operatorData);
-                    _balance.Value -= _operatorData.deployCost;
-        }
-        selectedTile = null;
+        if(canPurchase && deployPreview != null && selectedTile != null)
+        {
 
-            _active.Value = null;
-            Destroy(deployPreview);
+
+            directionalUnit = deployPreview.GetComponent<PlacementUnit>();
+            directionalUnit.Initialize(_operatorData.sprite);
+            directionalUnit.RegisterDirectionCallback(DeployOperator);
+        }
+        _active.Value = null;
+
         
+    }
+
+    private void DeployOperator(Direction dir)
+    {
+     
+        selectedTile.DeployOperator(_operatorData, dir);
+        _balance.Value -= _operatorData.deployCost;
+        selectedTile = null;
     }
 }

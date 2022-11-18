@@ -74,13 +74,13 @@ public class Tile : MonoBehaviour
         return Direction.NONE;
     }
 
-    public void DeployOperator(OperatorData _operatorData)
+    public void DeployOperator(OperatorData _operatorData, Direction dir)
     {
         _deployedUnit = Instantiate(deployedUnitPrefab,
             this.transform);
         _deployedUnit.gameObject.transform.localPosition = new Vector3(0.5f, 1, 1);
         _deployedUnit.gameObject.transform.parent = this.transform.parent;
-        _deployedUnit.Initialize(_operatorData);
+        _deployedUnit.Initialize(_operatorData, dir);
         _deployedUnit.RegisterOnClickCallback(DisplayPreview);
 
     }
