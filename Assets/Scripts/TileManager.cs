@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
 
 public class TileManager : MonoBehaviour
 {
@@ -27,8 +29,11 @@ public class TileManager : MonoBehaviour
         for(int i = 0; i < transform.childCount; i++)
         {
             Transform currTransform = transform.GetChild(i);
+            
+            
             _tileGrid[i] = new Tile[currTransform.childCount];
 
+            Debug.Log(currTransform.childCount);
             for(int j = 0; j < currTransform.childCount; j++)
             {
                 Tile currTile = currTransform.GetChild(j).GetChild(0).gameObject
@@ -46,28 +51,35 @@ public class TileManager : MonoBehaviour
 
     private void RenderAttack(Tile _tile)
     {
-
-        HandleAttackRender(_tile);
-        if (renderedTile != null)
+        Debug.Log(_tile);
+        ResetDisplay();
+        if (renderedTile == _tile)
         {
-            if(renderedTile == _tile)
-            {
-                renderedTile = null;
-            }
-            else
-            {
-                HandleAttackRender(renderedTile);
-            }
+            renderedTile = null;
+        }
+        else{
+            HandleAttackRender(_tile);
+            renderedTile = _tile;
         }
         
-        renderedTile = _tile;
+    }
+
+    private void ResetDisplay()
+    {
+        foreach (Tile[] tileList in _tileGrid)
+        {
+            foreach (Tile tile in tileList)
+            {
+                tile.HideAttackDisplay();
+            }
+        }
     }
 
     private void HandleAttackRender(Tile _tile)
     {
         //  Tuple<int, int> tileLocation = _tile.GetCoordinates();
 
-        Vector2 attackRange = _tile.GetAttackRange();
+        Vector2[] attackRange = _tile.GetAttackRange();
 
         //Direction dir = _tile.GetDirection();
 
@@ -76,28 +88,26 @@ public class TileManager : MonoBehaviour
         Tuple<int, int> tileCoordinate = _tile.GetCoordinates();
 
         //Tile currTile;
-        for (int x = 1; x <= Mathf.RoundToInt(attackRange.x); x++)
+        Vector2 currPos;
+        foreach (Vector2 attackTile in attackRange)
         {
-            TryRenderAttack(tileCoordinate,x,0);
-
-
-            for (int y = 1; y < Mathf.RoundToInt(attackRange.y / 2); y++)
-            {
-
-                TryRenderAttack(tileCoordinate,x,y);
-                TryRenderAttack(tileCoordinate,x,-y);
-            }
+            
+            currPos = new Vector2(attackTile.x + tileCoordinate.Item1,
+                attackTile.y + tileCoordinate.Item2);
+            TryRenderAttack(currPos);
         }
+
     }
     
-    private void TryRenderAttack(Tuple<int,int> coordinate, int xOffset,int yOffset)
+    private void TryRenderAttack(Vector2 tileCoordinate)
     {
-        int xVal = coordinate.Item1 + xOffset;
-        int yVal = coordinate.Item2 + yOffset;
-        if(xVal < _tileGrid.Length && xVal >= 0 && yVal < _tileGrid[xVal].Length && yVal >= 0)
+
+        int x = Mathf.RoundToInt(tileCoordinate.x);
+        int y = Mathf.RoundToInt(tileCoordinate.y);
+
+        if(x < _tileGrid.Length && x >= 0 && y < _tileGrid[x].Length && y >= 0)
         {
-        _tileGrid[coordinate.Item1 + xOffset][coordinate.Item2 + yOffset].RenderAttackDisplay();
-    
+        _tileGrid[x][y].RenderAttackDisplay();
         }
     }
 }

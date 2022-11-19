@@ -40,14 +40,13 @@ public class PlacementUnit : MonoBehaviour
     public void Cancel()
     {
         Debug.Log("Cancel");
-        _input.enabled = false;
+        _directionCallback = null;
 
         gameObject.SetActive(false);
     }
 
     public void ChooseDirection(Vector3 direction)
     {
-        Debug.Log(direction.x + ", " + direction.y + ", " + direction.z) ;
         float x = direction.x;
         float y = direction.y + direction.z;
         if (x > 0 && Mathf.Abs(x) > Mathf.Abs(y))

@@ -51,15 +51,14 @@ public class Tile : MonoBehaviour
 
     public void RenderAttackDisplay()
     {
-        if(!displayAttackTiles){
         attackIndicator.enabled = true;
-        displayAttackTiles = true;
-        }
-        else
-        {
+    }
+
+    public void HideAttackDisplay()
+    {
+        
             attackIndicator.enabled = false;
-            displayAttackTiles = false;
-        }
+        
     }
     
 
@@ -93,16 +92,18 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public Vector2 GetAttackRange()
+    public Vector2[] GetAttackRange()
     {
         if (_deployedUnit != null)
         {
             return _deployedUnit.GetRange();
         }
-        else
-        {
-            return new Vector2(0,0);
-        }
+        return new []
+            {
+                new Vector2(0, 0)
+            };
+
+        
     }
 
     public void RegisterAttckCallback(TileCallback callback)

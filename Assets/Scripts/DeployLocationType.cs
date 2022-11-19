@@ -3,4 +3,4 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum DeployLocationType 
-{GROUND, ELEVATED}
+{GROUND, ELEVATED, NONE}

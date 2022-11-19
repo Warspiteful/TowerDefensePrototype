@@ -111,9 +111,10 @@ public class UnitInput : MonoBehaviour
             if (Physics.Raycast(Camera.main.ScreenPointToRay(
                     Mouse.current.position.ReadValue()), out rcHit, Mathf.Infinity, inputLayerMask))
             {
-                Debug.Log("ONCLICK");
+                if(rcHit.collider.gameObject == gameObject){
                 OnClickVoidCallback?.Invoke();
                 isDragging = true;
+                }
                 
             }
             else

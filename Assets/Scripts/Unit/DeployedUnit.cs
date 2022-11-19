@@ -56,9 +56,9 @@ public class DeployedUnit : MonoBehaviour
         return _direction;
     }
     
-    public Vector2 GetRange()
+    public Vector2[] GetRange()
     { 
-        return _operatorData.range;
+        return _attack.GetRange();
     }
     
     private void OnCollisionEnter(Collision other)

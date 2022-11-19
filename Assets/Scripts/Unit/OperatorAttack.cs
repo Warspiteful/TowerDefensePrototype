@@ -22,7 +22,6 @@ public class OperatorAttack : MonoBehaviour
 
     [SerializeField] private GameObject attackTilePrefab;
 
-    private List<GameObject> attackTiles;
 
 
     private OnValueChanged onAttack;
@@ -30,17 +29,18 @@ public class OperatorAttack : MonoBehaviour
 
     private GameObject attackTileParent;
 
+    private List<Vector2> attackTiles;
+
     
     public void Initialize(Vector2 range, float attackPower, Projectile projectile, Direction dir)
     {
         inRangeEnemies = new List<Damageable>();
 
 
-        attackTiles = new List<GameObject>();
         _attackPower = attackPower;
         initialized = true;
-        
-        
+
+        attackTiles = new List<Vector2>();
         projectilePrefab = projectile;
         _range = range;
         
@@ -108,43 +108,90 @@ public class OperatorAttack : MonoBehaviour
 
     private void GenerateAttackTiles(Direction dir)
     {
-        attackTileParent = Instantiate(new GameObject(), transform);
+
+
+        attackTileParent = gameObject;
         
         TryRenderAttack(0, 0);
+
         
-        for (int x = 1; x <= Mathf.RoundToInt(_range.x); x++)
+        int x = Mathf.RoundToInt(_range.x);
+        int y = Mathf.RoundToInt(_range.y);
+
+        Debug.Log(x + ", " + y);
+        int startX, endX, startY, endY;
+        
+        switch (dir)
+        {
+            case Direction.DOWN:
+                startY = -x+1;
+                endY = 0;
+                startX = 1;
+                endX = y;
+                VerticalAttack(startX, endX, startY, endY);
+
+                break;
+            case Direction.LEFT:
+                startX = -x;
+                endX = -1;
+                startY = 1;
+                endY = y;
+                HorizontalAttack(startX, endX, startY, endY);
+
+                break;
+            case Direction.UP :
+                startY = 1;
+                endY = x;
+                startX = 1;
+                endX = y;
+                VerticalAttack(startX, endX, startY, endY);
+
+                break;
+            default:
+                startX = 1;
+                endX = x;
+                startY = 1;
+                endY = y;
+                HorizontalAttack(startX, endX, startY, endY);
+                break;
+        }
+        
+
+
+
+    }
+    
+    private void VerticalAttack(int startX, int endX, int startY,int endY)
+    {
+        Debug.Log(startX +"," + endX + ", " + startY + ", " + endY);
+        for (int y = startY; y <= endY; y++)
+        {
+            TryRenderAttack(0, y);
+            Debug.Log(startX + ", " + endX / 2);
+            
+            for (int x = startX; x <=  Mathf.RoundToInt(endX / 2); x++)
+            {
+                TryRenderAttack(x,y);
+                TryRenderAttack(-x,y);
+            }
+        }
+    }
+
+    private void HorizontalAttack(int startX, int endX, int startY,int endY)
+    {
+        Debug.Log(startX +"," + endX + ", " + startY + ", " + endY);
+
+        for (int x = startX; x <= endX; x++)
         {
             TryRenderAttack(x, 0);
 
-            for (int y = 1; y < Mathf.RoundToInt(_range.y / 2); y++)
+            for (int y = startY; y <= Mathf.RoundToInt(endY / 2); y++)
             {
 
                 TryRenderAttack(x,y);
                 TryRenderAttack(x,-y);
             }
         }
-
-
-        switch (dir)
-        {
-            case Direction.DOWN:
-                attackTileParent.transform.rotation =  Quaternion.Euler(0, 90, 0);
-                attackTileParent.transform.localPosition = new Vector3(0.5f, 0, -0.5f);
-                break;
-            case Direction.LEFT:
-                attackTileParent.transform.rotation =  Quaternion.Euler(0, 180, 0);
-                attackTileParent.transform.localPosition = new Vector3(-1, 0, 0);
-
-                break;
-            case Direction.UP :
-                attackTileParent.transform.rotation =  Quaternion.Euler(0, 270, 0);
-                attackTileParent.transform.localPosition = new Vector3(-0.5f, 0, -0.5f);
-
-                break;
-        }
-        
-  
-        
     }
 
     private void TryRenderAttack(int x,int y)
@@ -152,12 +199,17 @@ public class OperatorAttack : MonoBehaviour
         GameObject obj = Instantiate(attackTilePrefab, attackTileParent.transform);
         obj.transform.localPosition = new Vector3(x, 0, y-0.5f);
         obj.name = "Tile" + x + ", " + y;
-        attackTiles.Add(obj);
+        attackTiles.Add(new Vector2(x,y));
     }
 
     public void RegisterCallbacks(OnValueChanged onAttackFunction, OnValueChanged onAttackEndFunction)
     {
         onAttack += onAttackFunction;
         onAttackEnd += onAttackEndFunction;
+    }
+
+    public Vector2[] GetRange()
+    {
+        return attackTiles.ToArray();
     }
 }
