@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic;   
 using UnityEngine;
 
-[RequireComponent(typeof(Damageable),typeof(UnitAnimator))]
+[RequireComponent(typeof(Damageable),typeof(UnitAnimator),typeof(EnemyAttack))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private EnemyData _data;
@@ -11,7 +11,10 @@ public class Enemy : MonoBehaviour
 
     private Damageable _damageable;
     private UnitAnimator _animator;
-    
+    private EnemyAttack _enemyAttack;
+    private EnemyPathManager _pathManager;
+
+
     private void Start()
     {
         _renderer.sprite = _data.sprite;
@@ -20,8 +23,22 @@ public class Enemy : MonoBehaviour
         
         _damageable = GetComponent<Damageable>();
         _damageable.Initialize(_data.health);
+        
+        _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
+
+
+        _enemyAttack = GetComponent<EnemyAttack>();
+        _enemyAttack.Initialize(_data.atkPower);
+        _enemyAttack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);
+
+        _pathManager = GetComponent<EnemyPathManager>();
+        _enemyAttack.RegisterIsBlockedCallback(_pathManager.ControlMoving);
             
-            _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
+    }
+
+    public void RegisterBlocker(DeployedUnit _operator)
+    {
+        
     }
 
 }

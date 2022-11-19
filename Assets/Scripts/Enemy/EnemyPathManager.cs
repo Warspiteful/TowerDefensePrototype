@@ -11,6 +11,8 @@ public class EnemyPathManager : MonoBehaviour
     [SerializeField] private Vector3 currTarget;
     private Rigidbody _rigidbody;
     private bool initialized = false;
+
+    private bool _isMoving;
     public void Initialize(Vector3[] path)
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -20,12 +22,12 @@ public class EnemyPathManager : MonoBehaviour
         currTarget = new Vector3(pathFinding[pathIndex].x+0.5f, 0, pathFinding[pathIndex].z+1);
 
         initialized = true;
-
+        _isMoving = true;
     }
 
     private void Update()
     {
-        if (initialized && pathIndex < pathFinding.Length )
+        if (initialized && pathIndex < pathFinding.Length && _isMoving )
         {
             Debug.Log("MOVING");
             transform.position = Vector3.MoveTowards(transform.position, currTarget, 0.5f*Time.deltaTime);
@@ -37,8 +39,12 @@ public class EnemyPathManager : MonoBehaviour
                     currTarget = new Vector3(pathFinding[pathIndex].x+0.5f, 0, pathFinding[pathIndex].z+1);
                 }
             }
-            
         }
+    }
+
+    public void ControlMoving(bool isBlocked)
+    {
+        _isMoving = !isBlocked;
     }
 
 

@@ -17,8 +17,6 @@ public class OperatorAttack : MonoBehaviour
     private bool initialized = false;
 
     private Projectile projectilePrefab;
-    private Animator _animator;
-    protected AnimatorOverrideController animatorOverrideController;
 
     [SerializeField] private GameObject attackTilePrefab;
 
@@ -55,6 +53,7 @@ public class OperatorAttack : MonoBehaviour
         {
             if(targetEnemy == null){
                 targetEnemy = collision.gameObject.GetComponent<Damageable>();
+               
                 onAttack?.Invoke();
             }
             else
@@ -82,17 +81,7 @@ public class OperatorAttack : MonoBehaviour
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(targetEnemy!=null && initialized){
-            Debug.DrawLine(transform.position, targetEnemy.transform.position,Color.red);
-        }
-        
-        
-    }
-
+    
     private void Attack()
     {
         if (projectilePrefab == null)
