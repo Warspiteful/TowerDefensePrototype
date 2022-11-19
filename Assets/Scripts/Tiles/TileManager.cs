@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Numerics;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
@@ -19,12 +20,15 @@ public class TileManager : MonoBehaviour
     
     private Tile renderedTile;
 
+    private Pathfinding _pathfindingExample;
+
     
-    private delegate void tileOperation(Tuple<int, int> coordinate, int xOffset, int yOffset);
 
     // Start is called before the first frame update
     void Start()
     {
+        _pathfindingExample = GetComponent<Pathfinding>();
+        
         _tileGrid = new Tile[transform.childCount][];
         for(int i = 0; i < transform.childCount; i++)
         {
@@ -47,6 +51,8 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
+        
+        _pathfindingExample.Initialize(_tileGrid);
     }
 
     private void RenderAttack(Tile _tile)

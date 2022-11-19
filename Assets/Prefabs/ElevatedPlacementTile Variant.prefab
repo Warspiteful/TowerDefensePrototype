@@ -328,6 +328,11 @@ PrefabInstance:
       propertyPath: locationType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1148191198191546801, guid: 96a97cd9a82f5384d9374b15b1ef66e9,
+        type: 3}
+      propertyPath: enemyWalkable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2186731588110478371, guid: 96a97cd9a82f5384d9374b15b1ef66e9,
         type: 3}
       propertyPath: locationType

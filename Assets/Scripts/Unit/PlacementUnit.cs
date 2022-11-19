@@ -15,7 +15,7 @@ public class PlacementUnit : MonoBehaviour
 
     private SpriteRenderer _renderer;
 
-
+    
 
 
     public void RegisterDirectionCallback(DirectionCallback callback)

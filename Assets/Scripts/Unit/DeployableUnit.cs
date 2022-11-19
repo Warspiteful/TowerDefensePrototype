@@ -68,8 +68,7 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
     private void UpdateValue()
     {
         canPurchase = _balance.Value >= _operatorData.deployCost;
-
-
+        
         UpdateDisplay();
     }
 
