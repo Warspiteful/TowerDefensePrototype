@@ -2,5 +2,4 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DeployLocationType 
-{GROUND, ELEVATED, NONE}
+public delegate void Vector3Callback(Vector3 position); 

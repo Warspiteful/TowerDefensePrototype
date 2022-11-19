@@ -28,9 +28,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ""id"": ""14851709-1670-497d-bbe4-7c32c6b31f1a"",
             ""actions"": [
                 {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""0fd0a2e4-f05c-4473-94d7-0ea40f710675"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""OnClick"",
                     ""type"": ""Button"",
-                    ""id"": ""0fd0a2e4-f05c-4473-94d7-0ea40f710675"",
+                    ""id"": ""3ca1dc87-b86f-4fcc-bfdf-f66902ce4591"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -40,7 +49,29 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""923376a7-f9ab-4cc0-ae96-82804e7b750a"",
+                    ""id"": ""d198ac9f-9b15-4891-b692-6e8793a01743"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""950f61cd-27eb-4a91-a2fe-dd81dc12333e"",
+                    ""path"": ""<Touchscreen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""058e6f35-0136-4321-8492-0222099c7e24"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -51,7 +82,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c69bafb5-822a-4131-af59-0bba35568acc"",
+                    ""id"": ""b2861c05-2d45-4fc9-bc76-603e4e649698"",
                     ""path"": ""<Touchscreen>/Press"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -95,6 +126,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
+        m_Gameplay_MousePosition = m_Gameplay.FindAction("MousePosition", throwIfNotFound: true);
         m_Gameplay_OnClick = m_Gameplay.FindAction("OnClick", throwIfNotFound: true);
         // New action map1
         m_Newactionmap1 = asset.FindActionMap("New action map1", throwIfNotFound: true);
@@ -158,11 +190,13 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
+    private readonly InputAction m_Gameplay_MousePosition;
     private readonly InputAction m_Gameplay_OnClick;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MousePosition => m_Wrapper.m_Gameplay_MousePosition;
         public InputAction @OnClick => m_Wrapper.m_Gameplay_OnClick;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
@@ -173,6 +207,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
             {
+                @MousePosition.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMousePosition;
+                @MousePosition.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMousePosition;
+                @MousePosition.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMousePosition;
                 @OnClick.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOnClick;
                 @OnClick.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOnClick;
                 @OnClick.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnOnClick;
@@ -180,6 +217,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @MousePosition.started += instance.OnMousePosition;
+                @MousePosition.performed += instance.OnMousePosition;
+                @MousePosition.canceled += instance.OnMousePosition;
                 @OnClick.started += instance.OnOnClick;
                 @OnClick.performed += instance.OnOnClick;
                 @OnClick.canceled += instance.OnOnClick;
@@ -222,6 +262,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     public Newactionmap1Actions @Newactionmap1 => new Newactionmap1Actions(this);
     public interface IGameplayActions
     {
+        void OnMousePosition(InputAction.CallbackContext context);
         void OnOnClick(InputAction.CallbackContext context);
     }
     public interface INewactionmap1Actions

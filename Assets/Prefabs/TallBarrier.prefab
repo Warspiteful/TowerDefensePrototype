@@ -325,6 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2226999036933837725}
+  - component: {fileID: 4113864724158677917}
   m_Layer: 7
   m_Name: Tile
   m_TagString: Untagged
@@ -349,6 +350,24 @@ Transform:
   m_Father: {fileID: 6297306555825931064}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4113864724158677917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5024167229255547697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf1e2b3ff1a1614f9d3fae476a2bce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationType: 2
+  _activeDrag: {fileID: 11400000, guid: 4170951543ab75d42a335a22f9a0710b, type: 2}
+  deployableIndicator: {fileID: 5670247184662964378}
+  deployedUnitPrefab: {fileID: 2567947899405570315, guid: 1c122c12f686dfb488b9bc8983dc8714,
+    type: 3}
+  attackIndicator: {fileID: 315745532379256024}
 --- !u!1 &5670247184662964375
 GameObject:
   m_ObjectHideFlags: 0

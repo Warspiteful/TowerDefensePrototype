@@ -54,3 +54,6 @@ TagManager:
   - name: Projectile
     uniqueID: 1986999315
     locked: 0
+  - name: Operator
+    uniqueID: 2171898339
+    locked: 0

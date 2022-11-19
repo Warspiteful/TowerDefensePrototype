@@ -5,15 +5,15 @@ using UnityEngine;
 public class UnitAnimator : MonoBehaviour
 {
     protected AnimatorOverrideController animatorOverrideController;
+    
+    [SerializeField] private Animator _animator;
+   [SerializeField] private SpriteRenderer _renderer;
 
-    private Animator _animator;
-    private SpriteRenderer _renderer;
-
+    
     
     public void SetOverrides(AnimationOverridesDictionary overrides)
     {
-        _animator = GetComponent<Animator>();
-        _renderer = GetComponent<SpriteRenderer>();
+ 
 
         animatorOverrideController =
             new AnimatorOverrideController(_animator.runtimeAnimatorController);
