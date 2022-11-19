@@ -10,16 +10,29 @@ public class Pathfinding : MonoBehaviour
     
     private Tile[][] grid;
     private IDictionary<Tile, List<Tile>> nodePaths;
+    private List<Tile> path;
+
+    [SerializeField] private EnemyPathManager _enemyPathManager;
     public void Initialize(Tile[][] tileGrid)
     {
         grid = tileGrid;
-        List<Tile> path = BreadthFirstSearch();
+        path = BreadthFirstSearch();
         Debug.Log(path.Count);
+        _enemyPathManager.Initialize(GetPath());
+        
+    }
 
-        foreach (Tile tile in path)
+    public Vector3[] GetPath()
+    {
+        Vector3[] VectorPath = new Vector3[path.Count];
+
+        for (int i = 0; i < path.Count; i++)
         {
-            tile.WALKEXAMPLE();
+            VectorPath[i] = path[i].transform.parent.position;
+            
         }
+
+        return VectorPath;
     }
 
     private struct TileNode
@@ -87,7 +100,6 @@ public class Pathfinding : MonoBehaviour
                 successors.Add(grid[test.Item1][test.Item2]);
             }
         }
-
         return successors;
     }
 
