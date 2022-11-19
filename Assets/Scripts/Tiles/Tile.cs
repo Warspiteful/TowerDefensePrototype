@@ -16,6 +16,7 @@ public class Tile : MonoBehaviour
     
     [SerializeField] private SpriteRenderer attackIndicator;
 
+    [SerializeField] private bool enemyWalkable;
     private bool displayAttackTiles = false;
 
 
@@ -24,6 +25,9 @@ public class Tile : MonoBehaviour
     private DeployedUnit _deployedUnit;
     
     private Tuple<int,int> _coordinate;
+    
+    
+
 
 
     // Start is called before the first frame update
@@ -44,6 +48,17 @@ public class Tile : MonoBehaviour
         return _coordinate;
     }
 
+    public bool isWalkable()
+    {
+        return enemyWalkable;
+    }
+    
+    public void WALKEXAMPLE()
+    {
+        attackIndicator.material.color = Color.green;
+        attackIndicator.enabled = true;
+        
+    }
     public void SetCoordinates(Tuple<int,int> coordinate)
     {
         _coordinate = coordinate;

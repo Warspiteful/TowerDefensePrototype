@@ -129,6 +129,7 @@ MonoBehaviour:
   deployableIndicator: {fileID: 7325079202159548542}
   deployedUnitPrefab: {fileID: 0}
   attackIndicator: {fileID: 0}
+  enemyWalkable: 0
 --- !u!1 &2629896724895561623
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +182,7 @@ MonoBehaviour:
   deployedUnitPrefab: {fileID: 2567947899405570315, guid: 1c122c12f686dfb488b9bc8983dc8714,
     type: 3}
   attackIndicator: {fileID: 7325079202159548542}
+  enemyWalkable: 1
 --- !u!54 &1623277805190356737
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -645,6 +647,7 @@ MonoBehaviour:
   deployableIndicator: {fileID: 3420180036325741937}
   deployedUnitPrefab: {fileID: 0}
   attackIndicator: {fileID: 0}
+  enemyWalkable: 0
 --- !u!1 &3420180036555973681
 GameObject:
   m_ObjectHideFlags: 0
