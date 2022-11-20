@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     private EnemyPathManager _pathManager;
 
 
-    private void Start()
+    public void Initialize(EnemyData _data, Vector3[] path)
     {
         _renderer.sprite = _data.sprite;
         _animator = GetComponent<UnitAnimator>();
@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
         _enemyAttack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);
 
         _pathManager = GetComponent<EnemyPathManager>();
+        _pathManager.Initialize(path);
         _enemyAttack.RegisterIsBlockedCallback(_pathManager.ControlMoving);
         
         _damageable.RegisterOnDeathCallback(_animator.PlayDeath);

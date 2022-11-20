@@ -5,25 +5,23 @@ using UnityEngine;
 public class Pathfinding : MonoBehaviour
 {
 
-    [SerializeField] private Tile StartTile;
     [SerializeField] private Tile endTile;
     
     private Tile[][] grid;
     private IDictionary<Tile, List<Tile>> nodePaths;
     private List<Tile> path;
 
-    [SerializeField] private EnemyPathManager _enemyPathManager;
     public void Initialize(Tile[][] tileGrid)
     {
         grid = tileGrid;
-        path = BreadthFirstSearch();
-        Debug.Log(path.Count);
-        _enemyPathManager.Initialize(GetPath());
-        
+
+
     }
 
-    public Vector3[] GetPath()
+    public Vector3[] GetPath(Tile _startTile)
     {
+        path = BreadthFirstSearch(_startTile);
+        
         Vector3[] VectorPath = new Vector3[path.Count];
 
         for (int i = 0; i < path.Count; i++)
@@ -46,14 +44,14 @@ public class Pathfinding : MonoBehaviour
             path = _path;
         }
     }
-    private List<Tile> BreadthFirstSearch()
+    private List<Tile> BreadthFirstSearch(Tile _startTile)
     {
         Queue<TileNode> frontier = new Queue<TileNode>();
         List<Tile> exploredNodes = new List<Tile>();
         List<Tile> expandedNodes = new List<Tile>();
 
         TileNode currTile = new TileNode(null, null);
-        frontier.Enqueue(new TileNode(StartTile, new List<Tile>()));
+        frontier.Enqueue(new TileNode(_startTile, new List<Tile>()));
         while (frontier.Count != 0)
         {
             currTile = frontier.Dequeue();

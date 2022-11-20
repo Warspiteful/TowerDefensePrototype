@@ -21,14 +21,22 @@ public class TileManager : MonoBehaviour
     private Tile renderedTile;
 
     private Pathfinding _pathfindingExample;
+    
+    private EnemySpawnerManager _enemySpawner;
 
+
+    
     
 
     // Start is called before the first frame update
     void Start()
     {
         _pathfindingExample = GetComponent<Pathfinding>();
-        
+        _enemySpawner = GetComponent<EnemySpawnerManager>();
+        List<EnemySpawner> _spawner = new List<EnemySpawner>();
+
+        List<Tuple<Tile, EnemySpawner>> TileToSpawner = new List<Tuple<Tile, EnemySpawner>>();
+
         _tileGrid = new Tile[transform.childCount][];
         for(int i = 0; i < transform.childCount; i++)
         {
@@ -48,11 +56,31 @@ public class TileManager : MonoBehaviour
                     _tileGrid[i][j].gameObject.name = "Tile " + i + ", " + j;
                     _tileGrid[i][j].SetCoordinates(new Tuple<int,int>(i,j));
                     _tileGrid[i][j].RegisterAttckCallback(RenderAttack);
+                    if(currTransform.GetChild(j).childCount > 1){
+                    EnemySpawner _currSpawner = currTransform.GetChild(j).GetChild(1).gameObject
+                        .GetComponent<EnemySpawner>();
+                    if (_currSpawner != null)
+                    {
+                        TileToSpawner.Add(new Tuple<Tile, EnemySpawner>(currTile, _currSpawner));
+                        _spawner.Add(_currSpawner);
+                    }
+                    }
                 }
             }
+            
+            
+            
         }
         
         _pathfindingExample.Initialize(_tileGrid);
+        foreach (Tuple<Tile,EnemySpawner> TileEnemy in TileToSpawner)
+        {
+            TileEnemy.Item2.Initialize(_pathfindingExample.GetPath(TileEnemy.Item1));
+        }
+            
+            _enemySpawner.Initialize(_spawner);
+
+
     }
 
     private void RenderAttack(Tile _tile)
