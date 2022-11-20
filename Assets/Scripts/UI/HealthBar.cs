@@ -8,6 +8,9 @@ public class HealthBar : MonoBehaviour
    [SerializeField] private SpriteRenderer HealthIndicator;
 
    [SerializeField] private GameObject healthbar;
+
+   [SerializeField]
+   private bool displayByDefault;
    private Damageable _damageable;
    
    
@@ -16,7 +19,7 @@ public class HealthBar : MonoBehaviour
    {
       _damageable = GetComponentInParent<Damageable>();
       _damageable.RegisterHealthUpdateCallback(UpdateDisplay);
-      healthbar.SetActive(false);
+      healthbar.SetActive(displayByDefault);
       
    }
 

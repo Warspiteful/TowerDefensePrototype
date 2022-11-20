@@ -34,14 +34,11 @@ public class Enemy : MonoBehaviour
         _pathManager = GetComponent<EnemyPathManager>();
         _enemyAttack.RegisterIsBlockedCallback(_pathManager.ControlMoving);
         
-        _damageable.RegisterOnDeathCallback(placeholder);
+        _damageable.RegisterOnDeathCallback(_animator.PlayDeath);
 
     }
 
-    private void placeholder()
-    {
-        Destroy(gameObject);
-    }
+
     
 
 

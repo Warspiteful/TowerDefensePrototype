@@ -53,12 +53,6 @@ public class Tile : MonoBehaviour
         return enemyWalkable;
     }
     
-    public void WALKEXAMPLE()
-    {
-        attackIndicator.material.color = Color.green;
-        attackIndicator.enabled = true;
-        
-    }
     public void SetCoordinates(Tuple<int,int> coordinate)
     {
         _coordinate = coordinate;
@@ -76,18 +70,6 @@ public class Tile : MonoBehaviour
         
     }
     
-
-
-    public Direction GetDirection()
-    {
-        if (_deployedUnit != null)
-        {
-            return _deployedUnit.GetDirection();
-        }
-
-        return Direction.NONE;
-    }
-
     public void DeployOperator(OperatorData _operatorData, Direction dir)
     {
         _deployedUnit = Instantiate(deployedUnitPrefab,
@@ -142,15 +124,5 @@ public class Tile : MonoBehaviour
     public bool CanPlace(DeployLocationType currentTerrain)
     {
         return currentTerrain == locationType;
-    }
-
-    public string Test()
-    {
-        return "Testing";
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        
     }
 }

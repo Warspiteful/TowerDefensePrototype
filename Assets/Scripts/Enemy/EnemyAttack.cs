@@ -49,9 +49,18 @@ public class EnemyAttack : MonoBehaviour
     
     private void Attack()
     {
-
+        if (targetEnemy != null)
+        {
             targetEnemy.TakeDamage(_attackPower);
- 
+        }
+        else
+        {
+            isBlocked.Invoke(false);
+            onAttackEnd?.Invoke();
+        }
+
+
+
     }
     
     public void RegisterCallbacks(OnValueChanged onAttackFunction, OnValueChanged onAttackEndFunction)

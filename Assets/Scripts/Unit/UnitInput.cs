@@ -22,9 +22,9 @@ public class UnitInput : MonoBehaviour
         Camera.main.eventMask = inputLayerMask;
         _controls = new PlayerControls();
         _controls.Gameplay.Enable();
-        _controls.Gameplay.OnClick.started += ctx => HandleClick(ctx);
-        _controls.Gameplay.MousePosition.performed += ctx => MouseDrag(ctx);
-        _controls.Gameplay.OnClick.canceled += ctx => HandleClick(ctx);
+        _controls.Gameplay.OnClick.started += HandleClick;
+        _controls.Gameplay.MousePosition.performed +=  MouseDrag;
+        _controls.Gameplay.OnClick.canceled += HandleClick;
 
     }
 
@@ -91,14 +91,16 @@ public class UnitInput : MonoBehaviour
     }
 
 
-    private void OnDisable()
+    private void OnDestroy()
     {   
      OnDragVector3Callback = null;
     OnDragBeginVector3Callback = null;
     OnDragEndVector3Callback = null;
     OnClickVoidCallback = null;
     OnClickElsewhereVoidCallback = null;
-        
+    _controls.Gameplay.OnClick.started -= HandleClick;
+    _controls.Gameplay.MousePosition.performed -= MouseDrag;
+    _controls.Gameplay.OnClick.canceled -= HandleClick;
     }
 
     public void HandleClick(InputAction.CallbackContext ctx)
