@@ -53,7 +53,7 @@ public class OperatorAttack : MonoBehaviour
         {
             if(targetEnemy == null){
                 targetEnemy = collision.gameObject.GetComponent<Damageable>();
-               
+               targetEnemy.RegisterOnDeathCallback(GetNextEnemy);
                 onAttack?.Invoke();
             }
             else
@@ -65,25 +65,40 @@ public class OperatorAttack : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(targetEnemy != null){
-            if (initialized && other.gameObject == targetEnemy.gameObject)
+        Damageable exitingEnemy = other.GetComponent<Damageable>();
+
+        if(targetEnemy != null && exitingEnemy != null){
+            if (initialized && exitingEnemy == targetEnemy)
             {
-                if(inRangeEnemies.Count == 0)
-                {
-                    targetEnemy = null;
-                    onAttackEnd?.Invoke();
-                }
-                else
-                {
-                    targetEnemy = inRangeEnemies[0];
-                    inRangeEnemies.Remove(targetEnemy);
-                }
+                GetNextEnemy();
             }
+            else
+            {
+                inRangeEnemies.Remove(exitingEnemy);
+            }
+        }
+    }
+
+    private void GetNextEnemy()
+    {
+        if(inRangeEnemies.Count == 0)
+        {
+            targetEnemy = null;
+            onAttackEnd?.Invoke();
+        }
+        else
+        {
+            targetEnemy = inRangeEnemies[0];
+            inRangeEnemies.Remove(targetEnemy);
         }
     }
     
     private void Attack()
     {
+        if (targetEnemy != null)
+        {
+        
+
         if (projectilePrefab == null)
         {
             targetEnemy.TakeDamage(_attackPower);
@@ -91,6 +106,7 @@ public class OperatorAttack : MonoBehaviour
         else
         {
             Instantiate(projectilePrefab, transform).Initialize(targetEnemy.transform, _attackPower);
+        }
         }
     }
 

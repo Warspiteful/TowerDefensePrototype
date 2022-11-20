@@ -13,11 +13,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
   - Tile
+  - Preview
   - Enemy
   - Operator
-  - 
+  - Test
   - 
   - 
   - 
@@ -43,9 +43,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Preview
-    uniqueID: 3250511703
-    locked: 0
   - name: AttackTile
     uniqueID: 2050367875
     locked: 0
@@ -57,4 +54,7 @@ TagManager:
     locked: 0
   - name: Operator
     uniqueID: 2171898339
+    locked: 0
+  - name: Preview
+    uniqueID: 3250511703
     locked: 0

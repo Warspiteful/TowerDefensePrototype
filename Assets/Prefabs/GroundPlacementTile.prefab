@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7325079202159548542}
   - component: {fileID: 3476781062950161686}
   - component: {fileID: 6938878043158805774}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: HitTile (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 9160826909861846843}
   - component: {fileID: 1148191198191546801}
   - component: {fileID: 1623277805190356737}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 3420180036262731102}
   - component: {fileID: 3420180036262731089}
   - component: {fileID: 3420180036262731088}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -530,7 +530,7 @@ GameObject:
   - component: {fileID: 3420180036325741937}
   - component: {fileID: 3420180036325741936}
   - component: {fileID: 3420180036325741939}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: HitTile (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -659,7 +659,7 @@ GameObject:
   - component: {fileID: 3420180036555973694}
   - component: {fileID: 3420180036555973692}
   - component: {fileID: 3420180036555973695}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: HitTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -768,7 +768,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3936901062212833182}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: GroundPlacementTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

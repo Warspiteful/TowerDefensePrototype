@@ -98,23 +98,25 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             Vector3 dir;
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, relevantLayer)){
             selectedTile = hit.collider.gameObject.GetComponentInParent<Tile>();
-             if(selectedTile != null && selectedTile.CanPlace(_operatorData.locationType))
+            if (selectedTile != null && selectedTile.CanPlace(_operatorData.locationType))
             {
-                Debug.DrawLine(Camera.main.transform.position, hit.collider.gameObject.transform.position,Color.red);
-          
+                Debug.DrawLine(Camera.main.transform.position,
+                    hit.collider.gameObject.transform.position, Color.red);
+
                 mousePos = hit.point;
                 Vector3 hitPoint = hit.collider.transform.position;
                 mousePos.y += deployPreview.transform.position.y / 2;
-                deployPreview.transform.position = hit.collider.transform.position + new Vector3(0.5f,1,1);
+                deployPreview.transform.position =
+                    hit.collider.transform.position + new Vector3(0.5f, 1, 1);
                 float sharedScale = 5.25f / Mathf.Max(hitPoint.z + 5, 1);
-                deployPreview.transform.localScale = new Vector3(sharedScale,sharedScale,sharedScale);
+                deployPreview.transform.localScale =
+                    new Vector3(sharedScale, sharedScale, sharedScale);
+                return;
 
             }
             }
-            else
-            {
-                
-                mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
 
                 Debug.Log(mousePos);
          
@@ -127,7 +129,7 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
                 float scale = 5.25f/Mathf.Max(mousePos.z + mousePos.y+5,1);
                 deployPreview.transform.localScale = new Vector3(scale, scale, scale);
 
-            }
+            
         }
     }
 
