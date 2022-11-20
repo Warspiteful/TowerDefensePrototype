@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5173689567524442017}
   - component: {fileID: 6694842947578659958}
   - component: {fileID: 5738216954256966165}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2226999036933837725}
   - component: {fileID: 4113864724158677917}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,6 +368,7 @@ MonoBehaviour:
   deployedUnitPrefab: {fileID: 2567947899405570315, guid: 1c122c12f686dfb488b9bc8983dc8714,
     type: 3}
   attackIndicator: {fileID: 315745532379256024}
+  enemyWalkable: 0
 --- !u!1 &5670247184662964375
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,7 +380,7 @@ GameObject:
   - component: {fileID: 5670247184662964376}
   - component: {fileID: 5670247184662964378}
   - component: {fileID: 5670247184662964377}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: HitTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -490,7 +491,7 @@ GameObject:
   - component: {fileID: 5670247184850196948}
   - component: {fileID: 5670247184850196951}
   - component: {fileID: 5670247184850196950}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: HitTile (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -603,7 +604,7 @@ GameObject:
   - component: {fileID: 5670247184921072120}
   - component: {fileID: 5670247184921072119}
   - component: {fileID: 5670247184921072118}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -918,7 +919,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6297306555825931064}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: TallBarrier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -952,7 +953,7 @@ GameObject:
   - component: {fileID: 8168581790027507695}
   - component: {fileID: 315745532379256024}
   - component: {fileID: 5874428592431071664}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: HitTile (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

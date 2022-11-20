@@ -45,7 +45,16 @@ public class UnitAnimator : MonoBehaviour
         _renderer.material.color = Color.red;
         yield return new WaitForSeconds(0.05f);
         _renderer.material.color = Color.white;
+    }
 
+    public void PlayDeath()
+    {
+        _animator.Play("Death");
+    }
+
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
     }
     
 }

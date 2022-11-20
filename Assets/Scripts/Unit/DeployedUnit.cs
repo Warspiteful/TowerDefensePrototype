@@ -49,27 +49,15 @@ public class DeployedUnit : MonoBehaviour
 
 
         _attack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);
+        
+        _damageable.RegisterOnDeathCallback(_animator.PlayDeath);
     }
-    
-    public Direction GetDirection()
-    { 
-        return _direction;
-    }
-    
+
     public Vector2[] GetRange()
     { 
         return _attack.GetRange();
     }
-    
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("AAAH");
-        }
-    }
-    
-    
+
     public void RegisterOnClickCallback(params VoidCallback[] callback)
     {
             _input.RegisterOnClickCallback(callback);

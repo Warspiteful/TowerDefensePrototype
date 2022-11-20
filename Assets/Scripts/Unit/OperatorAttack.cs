@@ -17,8 +17,6 @@ public class OperatorAttack : MonoBehaviour
     private bool initialized = false;
 
     private Projectile projectilePrefab;
-    private Animator _animator;
-    protected AnimatorOverrideController animatorOverrideController;
 
     [SerializeField] private GameObject attackTilePrefab;
 
@@ -55,6 +53,7 @@ public class OperatorAttack : MonoBehaviour
         {
             if(targetEnemy == null){
                 targetEnemy = collision.gameObject.GetComponent<Damageable>();
+               targetEnemy.RegisterOnDeathCallback(GetNextEnemy);
                 onAttack?.Invoke();
             }
             else
@@ -66,35 +65,40 @@ public class OperatorAttack : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(targetEnemy != null){
-            if (initialized && other.gameObject == targetEnemy.gameObject)
+        Damageable exitingEnemy = other.GetComponent<Damageable>();
+
+        if(targetEnemy != null && exitingEnemy != null){
+            if (initialized && exitingEnemy == targetEnemy)
             {
-                if(inRangeEnemies.Count == 0)
-                {
-                    targetEnemy = null;
-                    onAttackEnd?.Invoke();
-                }
-                else
-                {
-                    targetEnemy = inRangeEnemies[0];
-                    inRangeEnemies.Remove(targetEnemy);
-                }
+                GetNextEnemy();
+            }
+            else
+            {
+                inRangeEnemies.Remove(exitingEnemy);
             }
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void GetNextEnemy()
     {
-        if(targetEnemy!=null && initialized){
-            Debug.DrawLine(transform.position, targetEnemy.transform.position,Color.red);
+        if(inRangeEnemies.Count == 0)
+        {
+            targetEnemy = null;
+            onAttackEnd?.Invoke();
         }
-        
-        
+        else
+        {
+            targetEnemy = inRangeEnemies[0];
+            inRangeEnemies.Remove(targetEnemy);
+        }
     }
-
+    
     private void Attack()
     {
+        if (targetEnemy != null)
+        {
+        
+
         if (projectilePrefab == null)
         {
             targetEnemy.TakeDamage(_attackPower);
@@ -102,6 +106,7 @@ public class OperatorAttack : MonoBehaviour
         else
         {
             Instantiate(projectilePrefab, transform).Initialize(targetEnemy.transform, _attackPower);
+        }
         }
     }
 
