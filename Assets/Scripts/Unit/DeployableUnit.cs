@@ -95,13 +95,11 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
             // Save the info
             
             RaycastHit hit;
-            Vector3 dir;
+            
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, relevantLayer)){
             selectedTile = hit.collider.gameObject.GetComponentInParent<Tile>();
             if (selectedTile != null && selectedTile.CanPlace(_operatorData.locationType))
             {
-                Debug.DrawLine(Camera.main.transform.position,
-                    hit.collider.gameObject.transform.position, Color.red);
 
                 mousePos = hit.point;
                 Vector3 hitPoint = hit.collider.transform.position;
