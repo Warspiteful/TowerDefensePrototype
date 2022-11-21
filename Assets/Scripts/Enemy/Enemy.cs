@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private EnemyData _data;
     [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] private IntVariable killCount;
 
     private Damageable _damageable;
     private UnitAnimator _animator;
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
         _enemyAttack.RegisterIsBlockedCallback(_pathManager.ControlMoving);
         
         _damageable.RegisterOnDeathCallback(_animator.PlayDeath);
+        _damageable.RegisterOnDeathCallback(killCount.Increment);
 
     }
 

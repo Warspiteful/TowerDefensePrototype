@@ -14,7 +14,8 @@ public class EnemySpawner : MonoBehaviour
    }
    public void SpawnEnemy(EnemyData _data)
    {
-      Instantiate(_enemyPrefab).Initialize(_data, _path);
-      
+        Instantiate(_enemyPrefab).Initialize(_data, _path);
+ 
+
    }
 }

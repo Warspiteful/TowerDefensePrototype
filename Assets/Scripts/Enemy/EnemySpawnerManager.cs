@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class EnemySpawnerManager : MonoBehaviour
 {
+
+    [SerializeField]
+    private IntVariable totalEnemies;
+    [SerializeField]
+    private IntVariable EnemyKillCount;
+    
     [SerializeField] private List<Timestamp> _spawnTimes;
 
     [SerializeField] private List<EnemySpawner> _spawnList;
@@ -16,8 +22,16 @@ public class EnemySpawnerManager : MonoBehaviour
 
     public void Initialize(List<EnemySpawner> _spawners)
     {
+        int enemyCount = 0;
         _spawnList = _spawners;
         initialized = true;
+        foreach (Timestamp _timestamp in _spawnTimes)
+        {
+            enemyCount = _timestamp._spawnDatas.Count;
+        }
+
+        totalEnemies.Value = enemyCount;
+        EnemyKillCount.Value = 0;
     }
 
     private void Update()

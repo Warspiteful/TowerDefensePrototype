@@ -22,11 +22,12 @@ public class Pathfinding : MonoBehaviour
     {
         path = BreadthFirstSearch(_startTile);
         
-        Vector3[] VectorPath = new Vector3[path.Count];
+        Vector3[] VectorPath = new Vector3[path.Count+1];
 
-        for (int i = 0; i < path.Count; i++)
+        VectorPath[0] = _startTile.gameObject.transform.parent.position;
+        for (int i = 1; i < path.Count+1; i++)
         {
-            VectorPath[i] = path[i].transform.parent.position;
+            VectorPath[i] = path[i-1].transform.parent.position;
             
         }
 

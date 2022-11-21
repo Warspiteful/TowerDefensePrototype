@@ -17,10 +17,11 @@ public class EnemyPathManager : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         pathFinding = path;
-        Debug.Log(path.Length);
-        pathIndex = 0;
-        currTarget = new Vector3(pathFinding[pathIndex].x+0.5f, 0, pathFinding[pathIndex].z+1);
 
+        transform.position = SetOffset(pathFinding[0]);
+        pathIndex = 1;
+        currTarget = SetOffset(pathFinding[pathIndex]);
+        
         initialized = true;
         _isMoving = true;
     }
@@ -36,7 +37,7 @@ public class EnemyPathManager : MonoBehaviour
                 
                 pathIndex += 1;
                 if(pathIndex < pathFinding.Length){
-                    currTarget = new Vector3(pathFinding[pathIndex].x+0.5f, 0, pathFinding[pathIndex].z+1);
+                    currTarget = SetOffset(pathFinding[pathIndex]);
                 }
             }
         }
@@ -45,6 +46,11 @@ public class EnemyPathManager : MonoBehaviour
     public void ControlMoving(bool isBlocked)
     {
         _isMoving = !isBlocked;
+    }
+
+    private Vector3 SetOffset(Vector3 position)
+    {
+        return new Vector3(position.x + 0.5f, transform.position.y, position.z + 1);
     }
 
 
