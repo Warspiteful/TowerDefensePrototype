@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyAttack : MonoBehaviour
+public class MeleeEnemyAttack : MonoBehaviour
 {
     
 
@@ -14,9 +15,19 @@ public class EnemyAttack : MonoBehaviour
     private bool initialized = false;
     
     private float _attackPower;
+
+
+    private OperatorAttack attack;
     
     [SerializeField] private Damageable targetEnemy;
 
+    private void OnDestroy()
+    {
+        if (attack != null)
+        {
+            attack.StopGuard();
+        }
+    }
 
     public void Initialize(float attackPower)
     {
@@ -28,7 +39,8 @@ public class EnemyAttack : MonoBehaviour
         Debug.Log(collision.gameObject.name);
         if(initialized && collision.gameObject.CompareTag("Operator") && collision.gameObject.GetComponentInParent<Damageable>() != null)
         {
-            if(targetEnemy == null){
+            attack = collision.gameObject.GetComponentInParent<OperatorAttack>();
+            if(targetEnemy == null && attack != null && attack.CanGuard()){
                 targetEnemy = collision.gameObject.GetComponent<Damageable>();
                 onAttack?.Invoke();
                 isBlocked?.Invoke(true);

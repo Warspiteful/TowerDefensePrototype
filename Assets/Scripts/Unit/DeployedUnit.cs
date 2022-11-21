@@ -45,7 +45,7 @@ public class DeployedUnit : MonoBehaviour
 
 
         _attack = GetComponent<OperatorAttack>();
-        _attack.Initialize(_operator.range, _operator.atkPower, _operator.projectile, _direction );
+        _attack.Initialize(_operator.range, _operator.atkPower, _operator.guardedUnitNumber, _operator.projectile, _direction );
 
 
         _attack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);

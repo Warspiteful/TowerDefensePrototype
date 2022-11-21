@@ -61,8 +61,8 @@ public class EnemySpawnerManager : MonoBehaviour
             {
                 Debug.LogError("Invalid Spawn Index " + _spawnData.spawnerIndex + " for Timestamp " + _timestamp.timestamp);
             }
-            yield return new WaitForSeconds(1);
 
+            yield return new WaitForSeconds(1);
         }
     }
     }

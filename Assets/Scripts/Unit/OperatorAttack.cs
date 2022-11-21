@@ -28,9 +28,12 @@ public class OperatorAttack : MonoBehaviour
     private GameObject attackTileParent;
 
     private List<Vector2> attackTiles;
+    
+    private int guardableUnitNum;
+
 
     
-    public void Initialize(Vector2 range, float attackPower, Projectile projectile, Direction dir)
+    public void Initialize(Vector2 range, float attackPower, int guardNum, Projectile projectile, Direction dir)
     {
         inRangeEnemies = new List<Damageable>();
 
@@ -41,6 +44,7 @@ public class OperatorAttack : MonoBehaviour
         attackTiles = new List<Vector2>();
         projectilePrefab = projectile;
         _range = range;
+        guardableUnitNum = guardNum;
         
         GenerateAttackTiles(dir);
     }
@@ -77,6 +81,22 @@ public class OperatorAttack : MonoBehaviour
                 inRangeEnemies.Remove(exitingEnemy);
             }
         }
+    }
+
+    public bool CanGuard()
+    {
+        if (guardableUnitNum - 1 >= 0)
+        {
+            guardableUnitNum--;
+            return true;
+        }
+
+        return false;
+    }
+
+    public void StopGuard()
+    {
+        guardableUnitNum++;
     }
 
     private void GetNextEnemy()

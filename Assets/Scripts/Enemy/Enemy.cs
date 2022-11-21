@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;   
 using UnityEngine;
 
-[RequireComponent(typeof(Damageable),typeof(UnitAnimator),typeof(EnemyAttack))]
+[RequireComponent(typeof(Damageable),typeof(UnitAnimator),typeof(MeleeEnemyAttack))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private EnemyData _data;
@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
 
     private Damageable _damageable;
     private UnitAnimator _animator;
-    private EnemyAttack _enemyAttack;
+    private MeleeEnemyAttack _enemyAttack;
     private EnemyPathManager _pathManager;
 
 
@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
 
 
-        _enemyAttack = GetComponent<EnemyAttack>();
+        _enemyAttack = GetComponent<MeleeEnemyAttack>();
         _enemyAttack.Initialize(_data.atkPower);
         _enemyAttack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);
 
