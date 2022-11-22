@@ -9,23 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e31da1e6dc4f504bb8e3f3671238f8c, type: 3}
-  m_Name: Reaper
+  m_Script: {fileID: 11500000, guid: db022ca5bc5c3644c9613cad0c1ec2a0, type: 3}
+  m_Name: WaterElemental
   m_EditorClassIdentifier: 
-  name: Reaper
-  atkPower: 2
+  name: Golden Brick
+  atkPower: 3
   def: 0
   health: 20
-  range: {x: 1, y: 1}
-  sprite: {fileID: 21300000, guid: 8e9c337f8f1caad49843ade748713960, type: 3}
+  range: {x: 0, y: 0}
+  sprite: {fileID: 21300000, guid: 4ee3a327166fe164eb133222cc46349a, type: 3}
   animationOverrides:
     m_keys:
     - AttackPlaceholder
     m_values:
     - {fileID: 7400000, guid: 130db0f7f7d1838498e9eb7caa8e4e76, type: 2}
-  locationType: 0
-  deployTime: 14
-  deployCost: 5
-  guardedUnitNumber: 1
-  archtetype: {fileID: 11400000, guid: 4598e54459bcf8643be9a8821ec15468, type: 2}
-  projectile: {fileID: 0}
+  speed: 3
+  canBeBlocked: 0
