@@ -27,6 +27,10 @@ public class Projectile : MonoBehaviour
             this.transform.position += dirNormalized * speed * Time.deltaTime;
             
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider collision)

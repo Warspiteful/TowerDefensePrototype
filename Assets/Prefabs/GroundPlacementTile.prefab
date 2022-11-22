@@ -179,7 +179,7 @@ MonoBehaviour:
   locationType: 0
   _activeDrag: {fileID: 11400000, guid: 4170951543ab75d42a335a22f9a0710b, type: 2}
   deployableIndicator: {fileID: 3420180036325741937}
-  deployedUnitPrefab: {fileID: 2567947899405570315, guid: 1c122c12f686dfb488b9bc8983dc8714,
+  deployedUnitPrefab: {fileID: 1865344554126928419, guid: 1c122c12f686dfb488b9bc8983dc8714,
     type: 3}
   attackIndicator: {fileID: 7325079202159548542}
   enemyWalkable: 1
