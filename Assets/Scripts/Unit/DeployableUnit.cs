@@ -90,7 +90,6 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
         if(canPurchase){ 
             Vector3 mousePos = Input.mousePosition;
 
-            
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             // Save the info
             
@@ -105,10 +104,8 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
                 Vector3 hitPoint = hit.collider.transform.position;
                 mousePos.y += deployPreview.transform.position.y / 2;
                 deployPreview.transform.position =
-                    hit.collider.transform.position + new Vector3(0.5f, 1, 1);
-                float sharedScale = 5.25f / Mathf.Max(hitPoint.z + 5, 1);
-                deployPreview.transform.localScale =
-                    new Vector3(sharedScale, sharedScale, sharedScale);
+                    hit.collider.transform.position + new Vector3(0.5f, 1, 0.5f);
+        
                 return;
 
             }
@@ -122,12 +119,8 @@ public class DeployableUnit : MonoBehaviour, IDragHandler, IBeginDragHandler, IE
                 (
                     mousePos.x,
                     0,
-                    mousePos.z +mousePos.y
+                    mousePos.z + mousePos.y*Mathf.Cos(Mathf.Deg2Rad*Camera.main.transform.rotation.eulerAngles.x) 
                 );
-                float scale = 5.25f/Mathf.Max(mousePos.z + mousePos.y+5,1);
-                deployPreview.transform.localScale = new Vector3(scale, scale, scale);
-
-            
         }
     }
 
