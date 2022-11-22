@@ -36,7 +36,6 @@ public class MeleeEnemyAttack : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log(collision.gameObject.name);
         if(initialized && collision.gameObject.CompareTag("Operator") && collision.gameObject.GetComponentInParent<Damageable>() != null)
         {
             attack = collision.gameObject.GetComponentInParent<OperatorAttack>();

@@ -16,6 +16,7 @@ public class EnemyDefeatedTracker : MonoBehaviour
     {
         totalEnemies.onValueChanged += UpdateDisplay;
         enemiesKilled.onValueChanged += UpdateDisplay;
+        UpdateDisplay();
     }
 
     // Update is called once per frame

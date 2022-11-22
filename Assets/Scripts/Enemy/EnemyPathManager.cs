@@ -30,15 +30,18 @@ public class EnemyPathManager : MonoBehaviour
     {
         if (initialized && pathIndex < pathFinding.Length && _isMoving )
         {
-            Debug.Log("MOVING");
             transform.position = Vector3.MoveTowards(transform.position, currTarget, 0.5f*Time.deltaTime);
             if(currTarget.x == transform.position.x && currTarget.z == transform.position.z)
             {
                 
                 pathIndex += 1;
-                if(pathIndex < pathFinding.Length){
+                if(pathIndex < pathFinding.Length-1){
                     currTarget = SetOffset(pathFinding[pathIndex]);
                 }
+                else if (pathIndex == pathFinding.Length - 1)
+                {
+                    currTarget = SetOffset(pathFinding[pathIndex])+new Vector3(0.5f,0,0);
+                }    
             }
         }
     }
@@ -50,7 +53,7 @@ public class EnemyPathManager : MonoBehaviour
 
     private Vector3 SetOffset(Vector3 position)
     {
-        return new Vector3(position.x + 0.5f, transform.position.y, position.z + 1);
+        return new Vector3(position.x+0.5f, transform.position.y, position.z+0.5f);
     }
 
 

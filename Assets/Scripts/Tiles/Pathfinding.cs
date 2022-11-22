@@ -27,8 +27,8 @@ public class Pathfinding : MonoBehaviour
         VectorPath[0] = _startTile.gameObject.transform.parent.position;
         for (int i = 1; i < path.Count+1; i++)
         {
-            VectorPath[i] = path[i-1].transform.parent.position;
-            
+            VectorPath[i] = path[i - 1].transform.parent.position;
+
         }
 
         return VectorPath;
