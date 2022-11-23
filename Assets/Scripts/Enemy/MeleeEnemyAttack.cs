@@ -37,21 +37,22 @@ public class MeleeEnemyAttack : MonoBehaviour
         _attackPower = attackPower;
         initialized = true;
     }
-    private void OnTriggerEnter(Collider collision)
+
+    private void OnTriggerStay(Collider collision)
     {
         if(initialized && collision.gameObject.CompareTag("Operator") && collision.gameObject.GetComponentInParent<Damageable>() != null)
         {
             attack = collision.gameObject.GetComponentInParent<OperatorAttack>();
             if(attack != null && attack.CanGuard()){
-               if(targetEnemy == null){
-                targetEnemy = collision.gameObject.GetComponent<Damageable>();
-                onAttack?.Invoke();
-                isBlocked?.Invoke(true);
-               }
+                if(targetEnemy == null){
+                    targetEnemy = collision.gameObject.GetComponent<Damageable>();
+                    onAttack?.Invoke();
+                    isBlocked?.Invoke(true);
+                }
             }
         }
     }
-    
+
     private void OnTriggerExit(Collider other)
     {
         if(targetEnemy != null){
