@@ -453,11 +453,10 @@ MonoBehaviour:
   _balance: {fileID: 11400000, guid: 9beeb43f253f3df48894a21172ba829a, type: 2}
   draggableObject: {fileID: 7872348191136255068, guid: 1910e822213da0847beb5b0eb9dc926f,
     type: 3}
-  directionalUnitPrefab: {fileID: 7872348191136255070, guid: 1910e822213da0847beb5b0eb9dc926f,
-    type: 3}
+  directionalUnitPrefab: {fileID: 0}
   relevantLayer:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 64
   canPurchase: 0
 --- !u!1 &3411767563159012067
 GameObject:

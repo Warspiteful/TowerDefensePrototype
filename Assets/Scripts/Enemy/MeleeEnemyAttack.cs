@@ -20,6 +20,9 @@ public class MeleeEnemyAttack : MonoBehaviour
     private OperatorAttack attack;
     
     [SerializeField] private Damageable targetEnemy;
+    
+        private List<Damageable> inRangeEnemies;
+
 
     private void OnDestroy()
     {
@@ -39,11 +42,12 @@ public class MeleeEnemyAttack : MonoBehaviour
         if(initialized && collision.gameObject.CompareTag("Operator") && collision.gameObject.GetComponentInParent<Damageable>() != null)
         {
             attack = collision.gameObject.GetComponentInParent<OperatorAttack>();
-            if(targetEnemy == null && attack != null && attack.CanGuard()){
+            if(attack != null && attack.CanGuard()){
+               if(targetEnemy == null){
                 targetEnemy = collision.gameObject.GetComponent<Damageable>();
                 onAttack?.Invoke();
                 isBlocked?.Invoke(true);
-
+               }
             }
         }
     }
