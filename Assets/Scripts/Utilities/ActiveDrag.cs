@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class ActiveDrag : ScriptableVariable<OperatorData>
+public class ActiveDrag : ScriptableVariable<DeployLocationType>
 {
 }
