@@ -6,9 +6,11 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour
 {
     [SerializeField] private IntVariable lives;
+    [SerializeField] private int startingLives;
+
 
     private void Awake()
     {
-        lives.Value = 5;
+        lives.Value = startingLives;
     }
 }
