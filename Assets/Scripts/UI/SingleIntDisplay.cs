@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class LivesDisplay : MonoBehaviour
+public class SingleIntDisplay : MonoBehaviour
 {
        [SerializeField] private IntVariable Lives;
        [SerializeField] private TextMeshProUGUI textDisplay;

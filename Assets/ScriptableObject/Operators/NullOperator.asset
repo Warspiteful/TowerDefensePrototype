@@ -10,22 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e31da1e6dc4f504bb8e3f3671238f8c, type: 3}
-  m_Name: Reaper
+  m_Name: NullOperator
   m_EditorClassIdentifier: 
-  name: Reaper
-  atkPower: 6
-  def: 7
-  health: 18
-  range: {x: 1, y: 1}
-  sprite: {fileID: 21300000, guid: 8e9c337f8f1caad49843ade748713960, type: 3}
+  name: 
+  atkPower: 0
+  def: 0
+  health: 0
+  range: {x: 0, y: 0}
+  sprite: {fileID: 0}
   animationOverrides:
-    m_keys:
-    - AttackPlaceholder
-    m_values:
-    - {fileID: 7400000, guid: 720f20440a75d3c4b8bc6b6172e71f5d, type: 2}
+    m_keys: []
+    m_values: []
   locationType: 0
-  deployTime: 6
-  deployCost: 6
-  guardedUnitNumber: 1
-  archtetype: {fileID: 11400000, guid: 4598e54459bcf8643be9a8821ec15468, type: 2}
+  deployTime: 0
+  deployCost: 0
+  guardedUnitNumber: 0
+  archtetype: {fileID: 0}
   projectile: {fileID: 0}
