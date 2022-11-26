@@ -15,6 +15,16 @@ public class AvailableUnits : ScriptableObject
 
     public OperatorData[] ReturnRandomOperators(int numOfItems)
     {
+        remainingOperators.Shuffle();
+        
+        Debug.Log("Starting List");
+        foreach (OperatorData op in remainingOperators)
+        {
+            Debug.Log(op.name);
+        }
+        
+        
+        
         //TODO: Add Empty Operator ?
         OperatorData[] returnValue = new OperatorData[numOfItems];
         if (remainingOperators.Count < numOfItems)
@@ -22,15 +32,13 @@ public class AvailableUnits : ScriptableObject
             int i;
             for (i = 0; i < remainingOperators.Count; i++)
             {
-                returnValue[i] = remainingOperators[Random.Range(0, remainingOperators.Count)];
+                returnValue[i] = remainingOperators[i];
             }
         } 
         else{
             for (int i = 0; i < numOfItems; i++)
             {
-                Debug.Log(i);
-                OperatorData data = remainingOperators[Random.Range(0, remainingOperators.Count-1)];
-                returnValue[i] = data;
+                returnValue[i] = remainingOperators[i];
             }
         }
 

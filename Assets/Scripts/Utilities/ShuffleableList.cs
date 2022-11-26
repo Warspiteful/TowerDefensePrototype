@@ -13,18 +13,19 @@ public class ShuffleableList<T> : List<T>
             this.Add(item);
         }
     }
-    public List<T> Shuffle()
+    public void Shuffle()
     {
         List<T> newList = new List<T>(this);
         for (int i = 0; i < Count - 1; i++)
         {
-            T temp = this[i];
+            T temp = newList[i];
             int randIndex = Random.Range(i, Count);
-            newList[i] = this[randIndex];
+            newList[i] = newList[randIndex];
             newList[randIndex] = temp;
         }
 
-        return newList;
+        Clear();
+        AddRange(newList);
     }
 
 }

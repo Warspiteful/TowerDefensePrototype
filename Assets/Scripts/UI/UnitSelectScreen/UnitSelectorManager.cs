@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RoboRyanTron.Unite2017.Events;
 using UnityEngine;
 
 public class UnitSelectorManager : MonoBehaviour
@@ -16,8 +17,11 @@ public class UnitSelectorManager : MonoBehaviour
     [SerializeField] private IntVariable currentChoiceNum;
 
     private List<UnitSelector> displayedPanels;
+
+    [SerializeField] private GameEvent onChoiceFinish;
     [Header("PLACEHOLDER")]
     [SerializeField] private int totalChoices;
+    
 
 
     //PLACEHOLDER
@@ -31,13 +35,17 @@ public class UnitSelectorManager : MonoBehaviour
         displayedPanels = new List<UnitSelector>();
         for (int i = 0; i < unitsToDisplay; i++)
         {
-            displayedPanels.Add(Instantiate(selectorPrefab, transform));
+            UnitSelector currSelector = Instantiate(selectorPrefab, transform);
+            displayedPanels.Add(currSelector);
+            currSelector.RegisterOnClick(AddToSquad);
+
         }
         
         if (totalChoiceNums.Value > 0)
         {
             GenerateChoices();
         }
+        
 
 
     }
@@ -50,6 +58,9 @@ public class UnitSelectorManager : MonoBehaviour
             ResetUI();
             GenerateChoices();
         }
+        else{
+        onChoiceFinish.Raise();
+        }
     }
 
     private void ResetUI()
@@ -57,6 +68,7 @@ public class UnitSelectorManager : MonoBehaviour
         for (int i = 0; i < unitsToDisplay; i++)
         {
             displayedPanels[i].gameObject.SetActive(false);
+
         }
     }
 
@@ -68,7 +80,6 @@ public class UnitSelectorManager : MonoBehaviour
         for(int i = 0; i < pickedUnits.Length; i++)
         {
             displayedPanels[i].Initialize(pickedUnits[i]);
-            displayedPanels[i].RegisterOnClick(AddToSquad);
             displayedPanels[i].gameObject.SetActive(true);
         }
     }
