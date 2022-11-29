@@ -49,8 +49,11 @@ public class AvailableUnits : ScriptableObject
     {
         remainingOperators.Remove(data);
     }
-    
-    
+
+    public int GetNumberOfAvailableOperators()
+    {
+        return remainingOperators.Count;
+    }
     
 
 }

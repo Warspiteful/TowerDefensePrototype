@@ -30,7 +30,8 @@ public class UnitSelectorManager : MonoBehaviour
         //TODO: REMOVE PLACEHOLDER
         totalChoiceNums.Value = totalChoices;
         unitManager.ResetChoices();
-        
+
+        totalChoiceNums.Value = Mathf.Clamp(totalChoiceNums.Value, 0, unitManager.GetNumberOfAvailableOperators()-1);
         currentChoiceNum.Value = 0;
         displayedPanels = new List<UnitSelector>();
         for (int i = 0; i < unitsToDisplay; i++)
@@ -53,7 +54,7 @@ public class UnitSelectorManager : MonoBehaviour
     private void IterateChoice()
     {
         currentChoiceNum.Value += 1;
-        if (currentChoiceNum.Value < totalChoiceNums.Value)
+        if (currentChoiceNum.Value <= totalChoiceNums.Value && unitManager.GetNumberOfAvailableOperators() > 0)
         {
             ResetUI();
             GenerateChoices();
@@ -79,6 +80,10 @@ public class UnitSelectorManager : MonoBehaviour
         
         for(int i = 0; i < pickedUnits.Length; i++)
         {
+            if (pickedUnits[i] == null)
+            {
+                continue;
+            }
             displayedPanels[i].Initialize(pickedUnits[i]);
             displayedPanels[i].gameObject.SetActive(true);
         }

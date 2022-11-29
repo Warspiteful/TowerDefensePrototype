@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e31da1e6dc4f504bb8e3f3671238f8c, type: 3}
   m_Name: NullOperator
   m_EditorClassIdentifier: 
-  name: 
+  name: NullOperator
   atkPower: 0
   def: 0
   health: 0
   range: {x: 0, y: 0}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 9aebd705574f9e642aef1e5f59b3e4d8, type: 3}
   animationOverrides:
     m_keys: []
     m_values: []
