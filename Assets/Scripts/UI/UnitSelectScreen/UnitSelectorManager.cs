@@ -32,7 +32,7 @@ public class UnitSelectorManager : MonoBehaviour
         unitManager.ResetChoices();
 
         totalChoiceNums.Value = Mathf.Clamp(totalChoiceNums.Value, 0, unitManager.GetNumberOfAvailableOperators()-1);
-        currentChoiceNum.Value = 0;
+        currentChoiceNum.Value = 1;
         displayedPanels = new List<UnitSelector>();
         for (int i = 0; i < unitsToDisplay; i++)
         {
