@@ -125,7 +125,7 @@ public class OperatorAttack : MonoBehaviour
         }
         else
         {
-            Instantiate(projectilePrefab, transform).Initialize(targetEnemy.transform, _attackPower);
+            Instantiate(projectilePrefab, transform).Initialize(targetEnemy, _attackPower);
         }
         }
     }

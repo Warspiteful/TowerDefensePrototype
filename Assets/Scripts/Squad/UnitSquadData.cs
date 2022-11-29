@@ -6,4 +6,9 @@ using UnityEngine;
 public class UnitSquadData : ScriptableObject
 {
     public List<OperatorData> squadList;
+
+    public void AddToSquad(OperatorData operatorData)
+    {
+        squadList.Add(operatorData);
+    }
 }

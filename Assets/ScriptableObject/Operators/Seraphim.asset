@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e31da1e6dc4f504bb8e3f3671238f8c, type: 3}
-  m_Name: Reaper
+  m_Name: Seraphim
   m_EditorClassIdentifier: 
-  name: Reaper
+  name: Seraphim
   atkPower: 6
   def: 7
   health: 18
-  range: {x: 1, y: 1}
-  sprite: {fileID: 21300000, guid: 8e9c337f8f1caad49843ade748713960, type: 3}
+  range: {x: 0, y: 0}
+  sprite: {fileID: 21300000, guid: ac4739de4fe0ccd4eb0dd192a74b0329, type: 3}
   animationOverrides:
     m_keys:
     - AttackPlaceholder
     m_values:
-    - {fileID: 7400000, guid: 720f20440a75d3c4b8bc6b6172e71f5d, type: 2}
-  locationType: 0
-  deployTime: 6
+    - {fileID: 7400000, guid: ffb6f1a9159667a46bbae9b710742ea0, type: 2}
+  locationType: 1
+  deployTime: 0
   deployCost: 6
-  guardedUnitNumber: 1
-  archtetype: {fileID: 11400000, guid: 4598e54459bcf8643be9a8821ec15468, type: 2}
+  guardedUnitNumber: 2
+  archtetype: {fileID: 11400000, guid: b84a6479955863e42b18157912a6fe85, type: 2}
   projectile: {fileID: 0}

@@ -12,10 +12,12 @@ public class Projectile : MonoBehaviour
     private float _damage;
 
     private Transform _target; 
-    public void Initialize(Transform target, float damage)
+    private Damageable _targetHealth; 
+    public void Initialize(Damageable target, float damage)
     {
-        _target = target;
+        _target = target.transform;
         _damage = damage;
+        _targetHealth = target;
     }
 
     // Update is called once per frame
@@ -37,12 +39,11 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Damageable enemyHealth = collision.gameObject.GetComponent<Damageable>();
-            if (enemyHealth != null)
+            if(collision.gameObject.GetComponent<Damageable>() == _targetHealth)
             {
-                enemyHealth.TakeDamage(_damage);
+                _targetHealth.TakeDamage(_damage);
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
     }
 }
