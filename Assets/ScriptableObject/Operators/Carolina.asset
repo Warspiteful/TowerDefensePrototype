@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e31da1e6dc4f504bb8e3f3671238f8c, type: 3}
   m_Name: Carolina
   m_EditorClassIdentifier: 
+  AttackSound:
+    Guid:
+      Data1: 486665799
+      Data2: 1171123803
+      Data3: 730397859
+      Data4: 768937267
+    Path: event:/Attacks/ConstantAttack
   name: Carolina
   atkPower: 4
   def: 5

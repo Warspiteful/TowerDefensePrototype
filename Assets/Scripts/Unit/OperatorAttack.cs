@@ -12,7 +12,7 @@ public class OperatorAttack : MonoBehaviour
 
     private float attacksPerSecond;
 
-    [SerializeField] private Damageable targetEnemy;
+    private Damageable targetEnemy;
     private List<Damageable> inRangeEnemies;
     private bool initialized = false;
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -20,9 +21,21 @@ public class DeployedUnit : MonoBehaviour
     private Damageable _damageable;
     private UnitAnimator _animator;
     private UnitInput _input;
-    
 
-   
+
+    private VoidCallback onDestroy;
+
+
+
+    public void RegisterOnDestroyCallback(VoidCallback callback)
+    {
+        onDestroy += callback;
+    }
+    private void OnDestroy()
+    {
+        onDestroy?.Invoke();
+    }
+
 
     public void Initialize(OperatorData _operator, Direction dir)
     {

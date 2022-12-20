@@ -15,8 +15,13 @@ public class PlacementUnit : MonoBehaviour
 
     private SpriteRenderer _renderer;
 
-    
+    private VoidCallback onCancel;
 
+
+    public void RegisterOnCancelCallback(VoidCallback callback)
+    {
+        onCancel += callback;
+    }
 
     public void RegisterDirectionCallback(DirectionCallback callback)
     {
@@ -41,7 +46,7 @@ public class PlacementUnit : MonoBehaviour
     {
         Debug.Log("Cancel");
         _directionCallback = null;
-
+        onCancel?.Invoke();
         gameObject.SetActive(false);
     }
 

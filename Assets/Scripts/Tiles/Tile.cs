@@ -70,13 +70,14 @@ public class Tile : MonoBehaviour
         
     }
     
-    public void DeployOperator(OperatorData _operatorData, Direction dir)
+    public void DeployOperator(OperatorData _operatorData, Direction dir, VoidCallback onDestroy)
     {
         _deployedUnit = Instantiate(deployedUnitPrefab,
             this.transform);
         _deployedUnit.gameObject.transform.localPosition = new Vector3(0.5f, 1, 0.5f);
         _deployedUnit.gameObject.transform.parent = this.transform.parent;
         _deployedUnit.Initialize(_operatorData, dir);
+        _deployedUnit.RegisterOnDestroyCallback(onDestroy);
         _deployedUnit.RegisterOnClickCallback(DisplayPreview);
 
     }

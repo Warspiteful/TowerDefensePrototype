@@ -15,13 +15,3 @@ MonoBehaviour:
   squadList:
   - {fileID: 11400000, guid: 0c5b56c06ce8aa04983ea881449c358d, type: 2}
   - {fileID: 11400000, guid: b0a81e67a4d348743a94a4ef515346b1, type: 2}
-  - {fileID: 11400000, guid: e221cc7297c7187419e896a7397ebbd6, type: 2}
-  - {fileID: 11400000, guid: bbf33308eda8a784aa01041da90ad957, type: 2}
-  - {fileID: 11400000, guid: 0c5b56c06ce8aa04983ea881449c358d, type: 2}
-  - {fileID: 11400000, guid: e221cc7297c7187419e896a7397ebbd6, type: 2}
-  - {fileID: 11400000, guid: b0a81e67a4d348743a94a4ef515346b1, type: 2}
-  - {fileID: 11400000, guid: bbf33308eda8a784aa01041da90ad957, type: 2}
-  - {fileID: 11400000, guid: c266eb9ea8412014dac313c580c7277c, type: 2}
-  - {fileID: 11400000, guid: b0a81e67a4d348743a94a4ef515346b1, type: 2}
-  - {fileID: 11400000, guid: bbf33308eda8a784aa01041da90ad957, type: 2}
-  - {fileID: 11400000, guid: c266eb9ea8412014dac313c580c7277c, type: 2}

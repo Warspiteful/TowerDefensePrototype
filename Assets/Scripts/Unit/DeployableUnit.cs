@@ -14,6 +14,8 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 {
 
     [SerializeField] private Image thumbnailImage;
+
+    [SerializeField] private GameObject unitPanel; 
     
 
 
@@ -24,8 +26,9 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     [SerializeField] private OperatorData _operatorData;
 
-    private VoidOperatorCallback _operatorCallback;
+    private DeployableUnitCallback _operatorCallback;
 
+    private LayoutElement _layoutElement;
     private VoidCallback _EndDragVoidCallback;
 
 
@@ -37,6 +40,7 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void Initialize(OperatorData operatorData)
     {
+        _layoutElement = GetComponent<LayoutElement>();
         thumbnailImage.sprite = operatorData.sprite;
         archetypeImage.sprite = operatorData.archtetype.image;
         cost.text = operatorData.deployCost.ToString();
@@ -48,6 +52,11 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         canPurchase = bal >= _operatorData.deployCost;
         
         UpdateDisplay();
+    }
+
+    public OperatorData getOperatorData()
+    {
+        return _operatorData;
     }
 
     private void UpdateDisplay()
@@ -62,7 +71,7 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         }
     }
 
-    public void RegisterOperatorCallback(VoidOperatorCallback _callback)
+    public void RegisterOperatorCallback(DeployableUnitCallback _callback)
     {
         _operatorCallback += _callback;
     }
@@ -74,8 +83,9 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     
     public void OnBeginDrag(PointerEventData eventData)
     {
+        HideMenu();
         Debug.Log("Start Drag");
-        _operatorCallback?.Invoke(_operatorData);
+        _operatorCallback?.Invoke(this);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -87,5 +97,23 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     {
         Debug.Log("ENDDRAG");
         _EndDragVoidCallback?.Invoke();
+    }
+
+    public void ShowMenu()
+    {
+        _layoutElement.ignoreLayout = false;
+        unitPanel.SetActive(true);
+    }
+
+    public void DisplaySelect()
+    {
+        
+    }
+
+    
+    public void HideMenu()
+    {
+        _layoutElement.ignoreLayout = true;
+        unitPanel.SetActive(false);
     }
 }

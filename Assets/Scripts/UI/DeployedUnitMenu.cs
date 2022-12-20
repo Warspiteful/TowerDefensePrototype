@@ -9,7 +9,9 @@ public class DeployedUnitMenu : MonoBehaviour
     [SerializeField] private UnitSquadData squadData;
     [SerializeField] private DeployableUnit deployPanelPrefab;
 
-    
+
+    private DeployableUnit currentUnitPanel;
+
      private VoidIntCallback _balanceCallback;
 
     private PlayerControls _controls;
@@ -64,16 +66,18 @@ public class DeployedUnitMenu : MonoBehaviour
     [SerializeField] private OperatorData _operatorData;
 
 
-    private void UpdatePreview(OperatorData _operatorData)
+    private void UpdatePreview(DeployableUnit value)
     {
         if (deployPreview == null)
         {
             deployPreview = Instantiate(draggableObject);
         }
+
+        currentUnitPanel = value;
         deployPreview.SetActive(true);
-        deployPreview.GetComponent<SpriteRenderer>().sprite = _operatorData.sprite;
-        _active.Value = _operatorData.locationType;
-        this._operatorData = _operatorData;
+        deployPreview.GetComponent<SpriteRenderer>().sprite = value.getOperatorData().sprite;
+        _active.Value = value.getOperatorData().locationType;
+        this._operatorData = value.getOperatorData();
         
         isDragging = true;
     }
@@ -126,6 +130,7 @@ public class DeployedUnitMenu : MonoBehaviour
         {
             directionalUnit = deployPreview.GetComponent<PlacementUnit>();
             directionalUnit.Initialize(_operatorData.sprite);
+            directionalUnit.RegisterOnCancelCallback(currentUnitPanel.ShowMenu);
             directionalUnit.RegisterDirectionCallback(DeployOperator);
             isDragging = false;
         }
@@ -133,16 +138,21 @@ public class DeployedUnitMenu : MonoBehaviour
         {
             deployPreview.SetActive(false);
             isDragging = false;
-
+            currentUnitPanel = null;
+            currentUnitPanel.ShowMenu();
         }
+        
         _active.Value = DeployLocationType.NONE;
     }
 
+
+
     private void DeployOperator(Direction dir)
     {
-     
-        selectedTile.DeployOperator(_operatorData, dir);
+        currentUnitPanel.HideMenu();
+        selectedTile.DeployOperator(_operatorData, dir, currentUnitPanel.ShowMenu);
         _balance.Value -= _operatorData.deployCost;
+        currentUnitPanel = null;
         selectedTile = null;
     }
 }
