@@ -15,8 +15,8 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     [SerializeField] private Image thumbnailImage;
 
-    [SerializeField] private GameObject unitPanel; 
-    
+    [SerializeField] private GameObject unitPanel;
+
 
 
     [SerializeField] private Image archetypeImage;
@@ -49,11 +49,11 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         cost.text = operatorData.deployCost.ToString();
         _operatorData = operatorData;
     }
-    
+
     public void UpdateValue(int bal)
     {
         canPurchase = bal >= _operatorData.deployCost;
-        
+
         UpdateDisplay();
     }
 
@@ -78,12 +78,12 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     {
         _operatorCallback += _callback;
     }
-    
+
     public void RegisterEndDragHandler(VoidCallback _callback)
     {
         _EndDragVoidCallback += _callback;
     }
-    
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         _animator.Play("Selected");
@@ -98,9 +98,17 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        _animator.Play("Default");
-        Debug.Log("ENDDRAG");
         _EndDragVoidCallback?.Invoke();
+    }
+    
+    public void OnSelect()
+    {
+        _animator.Play("Selected");
+    }
+
+    public void OnDeselect()
+    {
+        _animator.Play("Default");
     }
 
     public void ShowMenu()
@@ -115,6 +123,7 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     public void HideMenu()
     {
         _layoutElement.ignoreLayout = true;
+        OnDeselect();
         unitPanel.SetActive(false);
     }
 }

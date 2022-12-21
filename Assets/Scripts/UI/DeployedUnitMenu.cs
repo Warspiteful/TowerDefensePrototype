@@ -130,7 +130,7 @@ public class DeployedUnitMenu : MonoBehaviour
         {
             directionalUnit = deployPreview.GetComponent<PlacementUnit>();
             directionalUnit.Initialize(_operatorData.sprite);
-            directionalUnit.RegisterOnCancelCallback(currentUnitPanel.ShowMenu);
+            directionalUnit.RegisterOnCancelCallback(currentUnitPanel.OnDeselect);
             directionalUnit.RegisterDirectionCallback(DeployOperator);
             isDragging = false;
         }
@@ -139,6 +139,7 @@ public class DeployedUnitMenu : MonoBehaviour
             deployPreview.SetActive(false);
             isDragging = false;
             currentUnitPanel.ShowMenu();
+            currentUnitPanel.OnDeselect();
             currentUnitPanel = null;
         }
         

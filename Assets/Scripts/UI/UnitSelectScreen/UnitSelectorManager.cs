@@ -53,11 +53,13 @@ public class UnitSelectorManager : MonoBehaviour
 
     private void IterateChoice()
     {
-        currentChoiceNum.Value += 1;
-        if (currentChoiceNum.Value <= totalChoiceNums.Value && unitManager.GetNumberOfAvailableOperators() > 0)
+        
+        if (currentChoiceNum.Value < totalChoiceNums.Value && unitManager.GetNumberOfAvailableOperators() > 0)
         {
             ResetUI();
             GenerateChoices();
+            currentChoiceNum.Value += 1;
+
         }
         else{
         onChoiceFinish.Raise();
