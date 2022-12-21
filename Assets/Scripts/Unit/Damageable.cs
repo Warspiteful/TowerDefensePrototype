@@ -9,10 +9,10 @@ public class Damageable : MonoBehaviour
     [SerializeField] private float currHealth;
     [SerializeField] private float maxHealth;
 
-    private OnValueChanged _damageTaken;
-    private OnValueChanged _healthHealed;
+    private VoidCallback _damageTaken;
+    private VoidCallback _healthHealed;
     
-    private OnValueChanged _onDeath;
+    private VoidCallback _onDeath;
 
 
     private void OnDestroy()
@@ -22,24 +22,24 @@ public class Damageable : MonoBehaviour
         _onDeath = null;
     }
 
-    public void RegisterDamageTakenCallback(OnValueChanged damageCallback)
+    public void RegisterDamageTakenCallback(VoidCallback damageCallback)
     {
         _damageTaken += damageCallback;
 
     }
     
-    public void RegisterHealthHealedCallback(OnValueChanged healCallback)
+    public void RegisterHealthHealedCallback(VoidCallback healCallback)
     {
         _healthHealed += healCallback;
     }
 
-    public void RegisterHealthUpdateCallback(OnValueChanged healthChangeCallback)
+    public void RegisterHealthUpdateCallback(VoidCallback healthChangeCallback)
     {
         _healthHealed += healthChangeCallback;
         _damageTaken += healthChangeCallback;
     }
     
-    public void RegisterOnDeathCallback(OnValueChanged deathCallback)
+    public void RegisterOnDeathCallback(VoidCallback deathCallback)
     {
         _onDeath += deathCallback;
     }

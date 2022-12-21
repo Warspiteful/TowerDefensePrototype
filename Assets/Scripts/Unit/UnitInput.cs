@@ -36,6 +36,14 @@ public class UnitInput : MonoBehaviour
     private VoidCallback OnReleaseVoidCallback;
 
 
+    private void OnDisable()
+    {
+        OnDragVector3Callback = delegate(Vector3 position) {  };
+        OnClickVoidCallback = delegate {  };
+        OnClickElsewhereVoidCallback = delegate {  };
+        OnClickVoidCallback = delegate {  };
+        OnReleaseVoidCallback = delegate {  };
+    }
 
     public void RegisterMousePositionCallback(CallbackType _callbackType, params Vector3Callback[] callback)
     {

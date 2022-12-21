@@ -29,6 +29,8 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     private DeployableUnitCallback _operatorCallback;
 
     private LayoutElement _layoutElement;
+    private Animator _animator;
+
     private VoidCallback _EndDragVoidCallback;
 
 
@@ -40,6 +42,7 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void Initialize(OperatorData operatorData)
     {
+        _animator = GetComponent<Animator>();
         _layoutElement = GetComponent<LayoutElement>();
         thumbnailImage.sprite = operatorData.sprite;
         archetypeImage.sprite = operatorData.archtetype.image;
@@ -83,7 +86,7 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     
     public void OnBeginDrag(PointerEventData eventData)
     {
-        HideMenu();
+        _animator.Play("Selected");
         Debug.Log("Start Drag");
         _operatorCallback?.Invoke(this);
     }
@@ -95,6 +98,7 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        _animator.Play("Default");
         Debug.Log("ENDDRAG");
         _EndDragVoidCallback?.Invoke();
     }
@@ -105,10 +109,7 @@ public class DeployableUnit : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         unitPanel.SetActive(true);
     }
 
-    public void DisplaySelect()
-    {
-        
-    }
+
 
     
     public void HideMenu()

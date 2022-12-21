@@ -29,12 +29,9 @@ public class DeployedUnit : MonoBehaviour
 
     public void RegisterOnDestroyCallback(VoidCallback callback)
     {
-        onDestroy += callback;
+        _damageable.RegisterOnDeathCallback(callback);
     }
-    private void OnDestroy()
-    {
-        onDestroy?.Invoke();
-    }
+
 
 
     public void Initialize(OperatorData _operator, Direction dir)
@@ -64,6 +61,8 @@ public class DeployedUnit : MonoBehaviour
         _attack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);
         
         _damageable.RegisterOnDeathCallback(_animator.PlayDeath);
+
+        
     }
 
     public Vector2[] GetRange()

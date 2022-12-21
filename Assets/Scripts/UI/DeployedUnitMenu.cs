@@ -10,7 +10,7 @@ public class DeployedUnitMenu : MonoBehaviour
     [SerializeField] private DeployableUnit deployPanelPrefab;
 
 
-    private DeployableUnit currentUnitPanel;
+    [SerializeField] private DeployableUnit currentUnitPanel;
 
      private VoidIntCallback _balanceCallback;
 
@@ -138,8 +138,8 @@ public class DeployedUnitMenu : MonoBehaviour
         {
             deployPreview.SetActive(false);
             isDragging = false;
-            currentUnitPanel = null;
             currentUnitPanel.ShowMenu();
+            currentUnitPanel = null;
         }
         
         _active.Value = DeployLocationType.NONE;
@@ -152,6 +152,7 @@ public class DeployedUnitMenu : MonoBehaviour
         currentUnitPanel.HideMenu();
         selectedTile.DeployOperator(_operatorData, dir, currentUnitPanel.ShowMenu);
         _balance.Value -= _operatorData.deployCost;
+        directionalUnit = null;
         currentUnitPanel = null;
         selectedTile = null;
     }

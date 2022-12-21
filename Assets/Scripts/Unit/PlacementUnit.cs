@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,15 @@ public class PlacementUnit : MonoBehaviour
         _directionCallback += callback;
     }
 
+    private void OnDisable()
+    {
+        Debug.Log("Disabled!!!!");
+        _directionCallback = delegate(Direction direction) {  };
+        onCancel  = delegate {  };
+        _input.enabled = false;
+
+    }
+
     public void Initialize(Sprite operatorSprite)
     {
         _renderer = GetComponent<SpriteRenderer>();
@@ -46,8 +56,12 @@ public class PlacementUnit : MonoBehaviour
     {
         Debug.Log("Cancel");
         _directionCallback = null;
-        onCancel?.Invoke();
+        
+     
+            onCancel?.Invoke();
+
         gameObject.SetActive(false);
+        
     }
 
     public void ChooseDirection(Vector3 direction)
