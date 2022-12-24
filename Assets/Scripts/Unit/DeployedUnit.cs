@@ -49,7 +49,7 @@ public class DeployedUnit : MonoBehaviour
 
         _animator.SetOverrides(_operator.animationOverrides);
 
-        _damageable.Initialize(_operator.health);
+        _damageable.Initialize(_operator.currentHealth);
         _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
 
 

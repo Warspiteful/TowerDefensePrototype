@@ -93,6 +93,7 @@ public class UnitSelectorManager : MonoBehaviour
 
     private void AddToSquad(OperatorData selectedOperator)
     {
+        selectedOperator.RestoreHealthToMax();
         squadData.AddToSquad(selectedOperator);
         unitManager.RemoveOperator(selectedOperator);
         IterateChoice();

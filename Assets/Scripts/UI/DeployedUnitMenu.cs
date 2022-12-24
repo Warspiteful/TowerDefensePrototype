@@ -11,6 +11,7 @@ namespace  DeploymentMenu
         [SerializeField] private UnitSquadData squadData;
         [SerializeField] private DeployableUnit deployPanelPrefab;
 
+        private HealingSystem _healing;
 
         [SerializeField] private DeployableUnit currentUnitPanel;
 
@@ -21,6 +22,9 @@ namespace  DeploymentMenu
         
         private void Start()
         {
+
+            _healing = GetComponent<HealingSystem>();
+            
             foreach(OperatorData _operator in squadData.squadList)
             {
                 DeployableUnit _unit = Instantiate(deployPanelPrefab, this.transform);
@@ -28,6 +32,7 @@ namespace  DeploymentMenu
                 _balanceCallback += _unit.CanAfford;
                 _unit.RegisterOperatorCallback(UpdatePreview);
                 _unit.RegisterOnEndDeployCallback(ReleaseDrag);
+                _healing.AddUnit(_unit);
             }
             
             

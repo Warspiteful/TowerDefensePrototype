@@ -33,9 +33,6 @@ namespace  DeploymentMenu
             _panel.Initialize(data.sprite, data.archtetype.image, data.deployCost.ToString());
             
             _controller.RegisterStartDragHandler(()=>ChangeState(DeploymentUnitState.SELECTED));
-            
-      
-            
         }
 
         public OperatorData getOperatorData()
@@ -66,7 +63,11 @@ namespace  DeploymentMenu
         {
             _controller.RegisterEndDragHandler(_callback);
         }
-        
+
+        public DeploymentUnitState GetState()
+        {
+            return _state;
+        }
 
         public void ChangeState(DeploymentUnitState state)
         {
@@ -87,6 +88,8 @@ namespace  DeploymentMenu
                     _panel.OnDeath();
                     break;
             }
+
+            _state = state;
         }
 
        
