@@ -38,10 +38,15 @@ public class PlacementUnit : MonoBehaviour
 
     }
 
-    public void Initialize(Sprite operatorSprite)
+    private void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
         _input = GetComponent<UnitInput>();
+    }
+
+    public void Initialize(Sprite operatorSprite)
+    {
+  
         _input.enabled = true;
         _input.RegisterMousePositionCallback(CallbackType.DRAG, ChooseDirection);
         _input.RegisterOnElsewhereClickCallback(Cancel);
@@ -54,7 +59,6 @@ public class PlacementUnit : MonoBehaviour
     
     public void Cancel()
     {
-        Debug.Log("Cancel");
         _directionCallback = null;
         
      
