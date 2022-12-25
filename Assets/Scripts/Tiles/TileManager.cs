@@ -45,7 +45,6 @@ public class TileManager : MonoBehaviour
             
             _tileGrid[i] = new Tile[currTransform.childCount];
 
-            Debug.Log(currTransform.childCount);
             for(int j = 0; j < currTransform.childCount; j++)
             {
                 Tile currTile = currTransform.GetChild(j).GetChild(0).gameObject

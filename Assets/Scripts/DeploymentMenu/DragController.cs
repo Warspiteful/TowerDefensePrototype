@@ -10,11 +10,16 @@ public class DragController : MonoBehaviour,  IBeginDragHandler, IDragHandler, I
         private VoidCallback _StartDragVoidCallback;
         private VoidCallback _EndDragVoidCallback;
 
+        private bool _isEnabled;
+
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            _StartDragVoidCallback?.Invoke();
-    
+            if (_isEnabled)
+            {
+                _StartDragVoidCallback?.Invoke();
+            }
+
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -24,12 +29,20 @@ public class DragController : MonoBehaviour,  IBeginDragHandler, IDragHandler, I
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            if(_isEnabled)
+            {
             _EndDragVoidCallback?.Invoke();
+            }
         }
 
         public void RegisterStartDragHandler(VoidCallback _callback)
         {
             _StartDragVoidCallback += _callback;
+        }
+
+        public void Toggle(bool value)
+        {
+            _isEnabled = value;
         }
 
 

@@ -30,7 +30,9 @@ public class HealthBar : MonoBehaviour
       {
          healthbar.SetActive(true);
       }
-
+   
+      Debug.Log(_damageable.GetCurrentHealth());
+      Debug.Log(_damageable.GetMaxHealth());
       HealthIndicator.transform.localScale =
          new Vector3(
             _damageable.GetCurrentHealth() / _damageable.GetMaxHealth(),

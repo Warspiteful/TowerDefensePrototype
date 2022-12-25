@@ -17,7 +17,7 @@ namespace DeploymentMenu
 
         [SerializeField]  private IntVariable healAmount;
 
-        private void Start()
+        public void Initialize()
         {
             _units = new List<DeployableUnit>();
      
@@ -37,9 +37,9 @@ namespace DeploymentMenu
             {
                 if(unit.GetState() == DeploymentUnitState.HELD)
                 {
-                    Mathf.Clamp(
-                        unit.getOperatorData().currentHealth,
+                    unit.getOperatorData().currentHealth = Mathf.Clamp(
                         unit.getOperatorData().currentHealth + healAmount.Value,
+                        unit.getOperatorData().currentHealth,
                         unit.getOperatorData().health
                         );
                 }

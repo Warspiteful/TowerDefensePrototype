@@ -30,6 +30,7 @@ MonoBehaviour:
     - AttackPlaceholder
     m_values:
     - {fileID: 7400000, guid: e54fa20f33573e046b85084ae42bb35b, type: 2}
+  currentHealth: 20
   locationType: 0
   deployTime: 3
   deployCost: 5

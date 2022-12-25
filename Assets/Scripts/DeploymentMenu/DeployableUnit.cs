@@ -18,6 +18,8 @@ namespace  DeploymentMenu
         private DragController _controller;
         private DeploymentMenuPanel _panel;
 
+        private DeployedUnit _deployedUnit;
+
         
         private DeployableUnitCallback _operatorCallback;
 
@@ -31,7 +33,7 @@ namespace  DeploymentMenu
             _data = data;
 
             _panel.Initialize(data.sprite, data.archtetype.image, data.deployCost.ToString());
-            
+            _controller.Toggle(true);
             _controller.RegisterStartDragHandler(()=>ChangeState(DeploymentUnitState.SELECTED));
         }
 
@@ -48,7 +50,7 @@ namespace  DeploymentMenu
 
         public void CanAfford(int balance)
         {
-            if (balance >= _data.deployCost)
+            if (balance >= _data.deployCost && _state != DeploymentUnitState.DEAD)
             {
                 _panel.DisplayPurchaseable(true);
             }
@@ -69,6 +71,15 @@ namespace  DeploymentMenu
             return _state;
         }
 
+        public void SetDeployedUnit(DeployedUnit unit)
+        {
+            if (_deployedUnit != null)
+            {
+                throw new Exception("Multiple Deployments of the Same Unit");
+            }
+            _deployedUnit = unit;
+        }
+
         public void ChangeState(DeploymentUnitState state)
         {
             switch (state)
@@ -78,18 +89,23 @@ namespace  DeploymentMenu
                     break; 
                 case DeploymentUnitState.SELECTED:
                     _panel.OnSelect();
-                    Debug.Log("DEPLOYYYYYING");
                     _operatorCallback?.Invoke(this);
                     break;
                 case DeploymentUnitState.DEPLOYED:
                     _panel.OnDeploy();
                     break;
                 case DeploymentUnitState.DEAD:
+                    _controller.Toggle(false);
                     _panel.OnDeath();
                     break;
             }
 
             _state = state;
+        }
+
+        public void ChangeStateTo()
+        {
+            ChangeState(DeploymentUnitState.DEAD);
         }
 
        

@@ -65,8 +65,9 @@ public class Damageable : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-   
-        currHealth -= damage;
+
+        currHealth  = Mathf.Clamp(currHealth - damage, 0, currHealth);
+        
         Debug.Log("Damage taken by Damageable");
         _damageTaken?.Invoke();
 

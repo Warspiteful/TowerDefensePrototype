@@ -8,8 +8,8 @@ using UnityEngine.UI;
 namespace DeploymentMenu
 {
     public class DeploymentMenuPanel: MonoBehaviour
-    {
-          [SerializeField] private Image thumbnailImage;
+    { 
+        [SerializeField] private Image thumbnailImage;
 
     [SerializeField] private GameObject unitPanel;
 
@@ -17,6 +17,7 @@ namespace DeploymentMenu
 
     [SerializeField] private Image archetypeImage;
     [SerializeField] private Image shadowDisplay;
+    [SerializeField] private Image DeathIndicator;
 
     [SerializeField] private TextMeshProUGUI cost;
 
@@ -81,16 +82,18 @@ namespace DeploymentMenu
     
     public void OnDeath()
     {
+        DeathIndicator.enabled = true;
+        shadowDisplay.enabled = true;
         _layoutElement.ignoreLayout = false;
         unitPanel.SetActive(true);
     }
 
 
-    public void OnDeploy()
-    {
-        _layoutElement.ignoreLayout = true;
-        OnDeselect();
-        unitPanel.SetActive(false);
-    }
+        public void OnDeploy()
+        {
+            _layoutElement.ignoreLayout = true;
+            OnDeselect();
+            unitPanel.SetActive(false);
+        }
     }
 }

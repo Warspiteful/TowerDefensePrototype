@@ -11,19 +11,21 @@ namespace  DeploymentMenu
         [SerializeField] private UnitSquadData squadData;
         [SerializeField] private DeployableUnit deployPanelPrefab;
 
-        private HealingSystem _healing;
-
+        [SerializeField] private DeployedUnit deployedUnitPrefab;
+        
         [SerializeField] private DeployableUnit currentUnitPanel;
 
          private VoidIntCallback _balanceCallback;
 
         private PlayerControls _controls;
         
-        
+        private HealingSystem _healing;
+
         private void Start()
         {
 
             _healing = GetComponent<HealingSystem>();
+            _healing.Initialize();
             
             foreach(OperatorData _operator in squadData.squadList)
             {
@@ -32,6 +34,7 @@ namespace  DeploymentMenu
                 _balanceCallback += _unit.CanAfford;
                 _unit.RegisterOperatorCallback(UpdatePreview);
                 _unit.RegisterOnEndDeployCallback(ReleaseDrag);
+            
                 _healing.AddUnit(_unit);
             }
             
@@ -160,7 +163,15 @@ namespace  DeploymentMenu
         private void DeployOperator(Direction dir)
         {
             currentUnitPanel.ChangeState(DeploymentUnitState.DEPLOYED);
-            selectedTile.DeployOperator(_operatorData, dir, () => currentUnitPanel.ChangeState(DeploymentUnitState.DEAD));
+            DeployedUnit unit = Instantiate(deployedUnitPrefab,
+                selectedTile.transform);
+            unit.Initialize(_operatorData, dir);
+
+            
+            
+            currentUnitPanel.SetDeployedUnit(unit);
+            
+            selectedTile.DeployOperator(unit,currentUnitPanel.ChangeStateTo);
             _balance.Value -= _operatorData.deployCost;
             directionalUnit = null;
             currentUnitPanel = null;
