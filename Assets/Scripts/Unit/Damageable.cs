@@ -6,8 +6,8 @@ using UnityEngine;
 public class Damageable : MonoBehaviour
 {
 
-    [SerializeField] private float currHealth;
-    [SerializeField] private float maxHealth;
+    [SerializeField] private int currHealth;
+    [SerializeField] private int maxHealth;
 
     private VoidCallback _damageTaken;
     private VoidCallback _healthHealed;
@@ -17,9 +17,9 @@ public class Damageable : MonoBehaviour
 
     private void OnDestroy()
     {
-        _damageTaken = null;
-        _healthHealed = null;
-        _onDeath = null;
+        _damageTaken = delegate {  } ;
+        _healthHealed = delegate {  };
+        _onDeath = delegate {  };
     }
 
     public void RegisterDamageTakenCallback(VoidCallback damageCallback)
@@ -45,30 +45,29 @@ public class Damageable : MonoBehaviour
     }
 
     
-    public void Initialize(float health)
+    public void Initialize(int health)
     {
         maxHealth = health;
         currHealth = maxHealth;
     }
 
-    public float GetCurrentHealth()
+    public int GetCurrentHealth()
     {
         return currHealth;
     }
     
-        public float GetMaxHealth()
+        public int GetMaxHealth()
         {
             return maxHealth;
         }
         
     
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
 
         currHealth  = Mathf.Clamp(currHealth - damage, 0, currHealth);
         
-        Debug.Log("Damage taken by Damageable");
         _damageTaken?.Invoke();
 
         if (currHealth <= 0)
@@ -78,7 +77,7 @@ public class Damageable : MonoBehaviour
         
     }
 
-    public void Heal(float health)
+    public void Heal(int health)
     {
         currHealth += health;
         _healthHealed.Invoke();

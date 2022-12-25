@@ -36,7 +36,6 @@ public class UnitAnimator : MonoBehaviour
 
     public void PlayTakeDamage()
     {
-        Debug.Log("TAKEN DAMAGE in Animator");
         StartCoroutine(DamageAnimation());
     }
     

@@ -5571,8 +5571,8 @@ GameObject:
   - component: {fileID: 819060139}
   - component: {fileID: 819060141}
   - component: {fileID: 819060142}
-  - component: {fileID: 819060143}
   - component: {fileID: 819060144}
+  - component: {fileID: 819060143}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -9445,6 +9445,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnemySpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799311771575000787, guid: d2453f3ebd546094598cbf760f08fc7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3999741008698971891, guid: d2453f3ebd546094598cbf760f08fc7a,
         type: 3}

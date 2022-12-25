@@ -7,7 +7,7 @@ public class OperatorAttack : MonoBehaviour
 {
 
     private float _attackSpeed;
-    private float _attackPower;
+    private int _attackPower;
     private Vector2 _range;
 
     private float attacksPerSecond;
@@ -33,7 +33,7 @@ public class OperatorAttack : MonoBehaviour
 
 
     
-    public void Initialize(Vector2 range, float attackPower, int guardNum, Projectile projectile, Direction dir)
+    public void Initialize(Vector2 range, int attackPower, int guardNum, Projectile projectile, Direction dir)
     {
         inRangeEnemies = new List<Damageable>();
 
@@ -143,7 +143,6 @@ public class OperatorAttack : MonoBehaviour
         int x = Mathf.RoundToInt(_range.x);
         int y = Mathf.RoundToInt(_range.y);
 
-        Debug.Log(x + ", " + y);
         int startX, endX, startY, endY;
         
         switch (dir)
@@ -204,7 +203,6 @@ public class OperatorAttack : MonoBehaviour
 
     private void HorizontalAttack(int startX, int endX, int startY,int endY)
     {
-        Debug.Log(startX +"," + endX + ", " + startY + ", " + endY);
 
         for (int x = startX; x <= endX; x++)
         {

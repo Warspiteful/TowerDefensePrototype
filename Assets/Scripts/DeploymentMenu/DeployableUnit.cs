@@ -8,7 +8,7 @@ using UnityEngine;
 //TODO: Combine DisplayPreview and DirectionUnit
 namespace  DeploymentMenu
 {
-    [RequireComponent(typeof(DragController), typeof(DeploymentMenuPanel))]
+    [RequireComponent(typeof(DragController), typeof(DeploymentMenuPanel), typeof(RecallSystem))]
     public class DeployableUnit : MonoBehaviour
     {
 
@@ -20,6 +20,8 @@ namespace  DeploymentMenu
 
         private DeployedUnit _deployedUnit;
 
+        private RecallSystem _recallSystem;
+
         
         private DeployableUnitCallback _operatorCallback;
 
@@ -28,13 +30,18 @@ namespace  DeploymentMenu
         {
             _controller = GetComponent<DragController>();
             _panel = GetComponent<DeploymentMenuPanel>();
+            _recallSystem = GetComponent<RecallSystem>();
   
-            _state = DeploymentUnitState.HELD;
             _data = data;
 
             _panel.Initialize(data.sprite, data.archtetype.image, data.deployCost.ToString());
             _controller.Toggle(true);
-            _controller.RegisterStartDragHandler(()=>ChangeState(DeploymentUnitState.SELECTED));
+            ChangeState(DeploymentUnitState.HELD);
+            
+            _controller.RegisterStateChange(()=>ChangeState(DeploymentUnitState.SELECTED));
+            _recallSystem.RegisterOnRecallCallback(()=>ChangeState(DeploymentUnitState.HELD));
+
+            
         }
 
         public OperatorData getOperatorData()
@@ -78,6 +85,7 @@ namespace  DeploymentMenu
                 throw new Exception("Multiple Deployments of the Same Unit");
             }
             _deployedUnit = unit;
+            _recallSystem.Initialize(_deployedUnit);
         }
 
         public void ChangeState(DeploymentUnitState state)
@@ -85,6 +93,9 @@ namespace  DeploymentMenu
             switch (state)
             {
                 case DeploymentUnitState.HELD:
+                    _controller.Toggle(true);
+
+                    _recallSystem.ToggleRecall(false);
                     _panel.OnHeld();
                     break; 
                 case DeploymentUnitState.SELECTED:
@@ -92,9 +103,13 @@ namespace  DeploymentMenu
                     _operatorCallback?.Invoke(this);
                     break;
                 case DeploymentUnitState.DEPLOYED:
+                    _controller.Toggle(false);
                     _panel.OnDeploy();
+                    _recallSystem.ToggleRecall(true);
                     break;
                 case DeploymentUnitState.DEAD:
+                    _recallSystem.ToggleRecall(false);
+                
                     _controller.Toggle(false);
                     _panel.OnDeath();
                     break;

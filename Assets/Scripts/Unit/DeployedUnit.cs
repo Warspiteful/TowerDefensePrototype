@@ -51,6 +51,7 @@ public class DeployedUnit : MonoBehaviour
 
         _damageable.Initialize(_operator.currentHealth);
         _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
+        _damageable.RegisterDamageTakenCallback(() => _operatorData.currentHealth = _damageable.GetCurrentHealth());
 
 
 
@@ -61,9 +62,9 @@ public class DeployedUnit : MonoBehaviour
         _attack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);
         
         _damageable.RegisterOnDeathCallback(_animator.PlayDeath);
-
-        
     }
+
+
 
     public Vector2[] GetRange()
     { 

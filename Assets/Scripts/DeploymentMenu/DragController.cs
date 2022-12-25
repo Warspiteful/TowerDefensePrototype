@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class DragController : MonoBehaviour,  IBeginDragHandler, IDragHandler, I
     {
     
         private VoidCallback _StartDragVoidCallback;
+        private VoidCallback _stateChangeCallback;
+
         private VoidCallback _EndDragVoidCallback;
 
         private bool _isEnabled;
@@ -18,8 +21,8 @@ public class DragController : MonoBehaviour,  IBeginDragHandler, IDragHandler, I
             if (_isEnabled)
             {
                 _StartDragVoidCallback?.Invoke();
+                _stateChangeCallback?.Invoke();
             }
-
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -35,9 +38,20 @@ public class DragController : MonoBehaviour,  IBeginDragHandler, IDragHandler, I
             }
         }
 
+    
+
         public void RegisterStartDragHandler(VoidCallback _callback)
         {
             _StartDragVoidCallback += _callback;
+        }
+
+        public void RegisterStateChange(VoidCallback _callback)
+        {
+            _stateChangeCallback += _callback;
+        }
+        public void ClearStateChange()
+        {
+            _stateChangeCallback = delegate {  };
         }
 
         public void Toggle(bool value)

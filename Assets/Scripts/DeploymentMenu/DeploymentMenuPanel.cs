@@ -19,8 +19,9 @@ namespace DeploymentMenu
     [SerializeField] private Image shadowDisplay;
     [SerializeField] private Image DeathIndicator;
 
-    [SerializeField] private TextMeshProUGUI cost;
+    [SerializeField] private Image DeployedIndicator;
 
+    [SerializeField] private TextMeshProUGUI cost;
 
 
     private LayoutElement _layoutElement;
@@ -74,6 +75,8 @@ namespace DeploymentMenu
     }
     public void OnHeld()
     {
+        DeployedIndicator.enabled = false;
+
         _layoutElement.ignoreLayout = false;
         unitPanel.SetActive(true);
         OnDeselect();
@@ -82,18 +85,22 @@ namespace DeploymentMenu
     
     public void OnDeath()
     {
-        DeathIndicator.enabled = true;
+        DeathIndicator.enabled = false;
         shadowDisplay.enabled = true;
+        DeployedIndicator.enabled = true;
+
         _layoutElement.ignoreLayout = false;
         unitPanel.SetActive(true);
+
     }
 
 
         public void OnDeploy()
         {
-            _layoutElement.ignoreLayout = true;
+            DeployedIndicator.enabled = true;
+            shadowDisplay.enabled = true;
             OnDeselect();
-            unitPanel.SetActive(false);
         }
+        
     }
 }

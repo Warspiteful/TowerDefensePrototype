@@ -9,11 +9,11 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] private float speed;
 
-    private float _damage;
+    private int _damage;
 
     private Transform _target; 
     private Damageable _targetHealth; 
-    public void Initialize(Damageable target, float damage)
+    public void Initialize(Damageable target, int damage)
     {
         _target = target.transform;
         _damage = damage;
