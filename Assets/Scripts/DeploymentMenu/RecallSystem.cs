@@ -24,7 +24,7 @@ namespace DeploymentMenu
         public void Recall()
         {
             onRecall?.Invoke();
-            Destroy(_unit.gameObject);
+            _unit.gameObject.SetActive(false);
         }
 
         public void RegisterOnRecallCallback(VoidCallback _callback)

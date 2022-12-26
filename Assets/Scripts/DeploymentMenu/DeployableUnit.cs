@@ -22,6 +22,8 @@ namespace  DeploymentMenu
 
         private RecallSystem _recallSystem;
 
+        private UnitHealthIndicator _indicator;
+
         
         private DeployableUnitCallback _operatorCallback;
 
@@ -31,15 +33,18 @@ namespace  DeploymentMenu
             _controller = GetComponent<DragController>();
             _panel = GetComponent<DeploymentMenuPanel>();
             _recallSystem = GetComponent<RecallSystem>();
+            _indicator = GetComponent<UnitHealthIndicator>();
   
             _data = data;
 
             _panel.Initialize(data.sprite, data.archtetype.image, data.deployCost.ToString());
             _controller.Toggle(true);
             ChangeState(DeploymentUnitState.HELD);
-            
+
+            _indicator.UpdateDisplay(_data.currentHealth, _data.health);
             _controller.RegisterStateChange(()=>ChangeState(DeploymentUnitState.SELECTED));
             _recallSystem.RegisterOnRecallCallback(()=>ChangeState(DeploymentUnitState.HELD));
+            
 
             
         }
@@ -54,6 +59,13 @@ namespace  DeploymentMenu
             _operatorCallback += _callback;
         }
 
+
+
+        public DeployedUnit GetDeployedUnit()
+        {
+            
+            return _deployedUnit;
+        }
 
         public void CanAfford(int balance)
         {
@@ -86,6 +98,8 @@ namespace  DeploymentMenu
             }
             _deployedUnit = unit;
             _recallSystem.Initialize(_deployedUnit);
+            _deployedUnit.RegisterHealthChange(_indicator.UpdateDisplay);
+
         }
 
         public void ChangeState(DeploymentUnitState state)

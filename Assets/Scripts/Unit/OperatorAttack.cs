@@ -33,7 +33,7 @@ public class OperatorAttack : MonoBehaviour
 
 
     
-    public void Initialize(Vector2 range, int attackPower, int guardNum, Projectile projectile, Direction dir)
+    public void Initialize(Vector2 range, int attackPower, int guardNum, Projectile projectile)
     {
         inRangeEnemies = new List<Damageable>();
 
@@ -46,10 +46,9 @@ public class OperatorAttack : MonoBehaviour
         _range = range;
         guardableUnitNum = guardNum;
         
-        GenerateAttackTiles(dir);
     }
-    // Start is called before the first frame update
 
+    
     private void OnTriggerEnter(Collider collision)
     {
         
@@ -131,7 +130,7 @@ public class OperatorAttack : MonoBehaviour
     }
 
 
-    private void GenerateAttackTiles(Direction dir)
+    public void GenerateAttackTiles(Direction dir)
     {
 
 
@@ -234,5 +233,10 @@ public class OperatorAttack : MonoBehaviour
     public Vector2[] GetRange()
     {
         return attackTiles.ToArray();
+    }
+
+    private void OnDisable()
+    {
+        
     }
 }

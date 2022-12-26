@@ -55,6 +55,7 @@ public class TileManager : MonoBehaviour
                     _tileGrid[i][j].gameObject.name = "Tile " + i + ", " + j;
                     _tileGrid[i][j].SetCoordinates(new Tuple<int,int>(i,j));
                     _tileGrid[i][j].RegisterAttckCallback(RenderAttack);
+                    _tileGrid[i][j].RegisterAttackResetCallback(RemoveDisplay);
                     if(currTransform.GetChild(j).childCount > 1){
                     EnemySpawner _currSpawner = currTransform.GetChild(j).GetChild(1).gameObject
                         .GetComponent<EnemySpawner>();
@@ -84,21 +85,28 @@ public class TileManager : MonoBehaviour
 
     private void RenderAttack(Tile _tile)
     {
-        Debug.Log(_tile);
         ResetDisplay();
-        if (renderedTile == _tile)
+        if (renderedTile != _tile)
         {
-            renderedTile = null;
-        }
-        else{
             HandleAttackRender(_tile);
             renderedTile = _tile;
         }
-        
+        else
+        {
+            renderedTile = null;
+
+        }
+    }
+
+    private void RemoveDisplay()
+    {
+        renderedTile = null;
+        ResetDisplay();
     }
 
     private void ResetDisplay()
     {
+
         foreach (Tile[] tileList in _tileGrid)
         {
             foreach (Tile tile in tileList)

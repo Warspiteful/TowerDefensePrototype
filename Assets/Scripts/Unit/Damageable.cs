@@ -14,6 +14,8 @@ public class Damageable : MonoBehaviour
     
     private VoidCallback _onDeath;
 
+    private VoidIntInitCallback _onHealthChange;
+
 
     private void OnDestroy()
     {
@@ -38,10 +40,21 @@ public class Damageable : MonoBehaviour
         _healthHealed += healthChangeCallback;
         _damageTaken += healthChangeCallback;
     }
+
+
+    public void RegisterHealthTrackingCallback(VoidIntInitCallback callback)
+    {
+        _onHealthChange += callback;
+    }
     
     public void RegisterOnDeathCallback(VoidCallback deathCallback)
     {
         _onDeath += deathCallback;
+    }
+
+    public void OnDisable()
+    {
+        _onDeath = () => { };
     }
 
     
@@ -69,17 +82,28 @@ public class Damageable : MonoBehaviour
         currHealth  = Mathf.Clamp(currHealth - damage, 0, currHealth);
         
         _damageTaken?.Invoke();
+        _onHealthChange?.Invoke(currHealth, maxHealth);
 
         if (currHealth <= 0)
         {
             _onDeath?.Invoke();
         }
+    }
+
+    public void SetHealth(int health)
+    {
         
+        currHealth = Mathf.Clamp(health, 0, maxHealth);
+        if (currHealth <= 0)
+        {
+            _onDeath?.Invoke();
+        }
     }
 
     public void Heal(int health)
     {
         currHealth += health;
+        _onHealthChange?.Invoke(currHealth, maxHealth);
         _healthHealed.Invoke();
 
     }

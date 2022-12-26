@@ -34,7 +34,10 @@ namespace  DeploymentMenu
                 _balanceCallback += _unit.CanAfford;
                 _unit.RegisterOperatorCallback(UpdatePreview);
                 _unit.RegisterOnEndDeployCallback(ReleaseDrag);
-            
+
+                DeployedUnit _deployed = Instantiate(deployedUnitPrefab);
+                _deployed.Initialize(_operator);
+                _unit.SetDeployedUnit(_deployed);
                 _healing.AddUnit(_unit);
             }
             
@@ -163,13 +166,11 @@ namespace  DeploymentMenu
         private void DeployOperator(Direction dir)
         {
             currentUnitPanel.ChangeState(DeploymentUnitState.DEPLOYED);
-            DeployedUnit unit = Instantiate(deployedUnitPrefab,
-                selectedTile.transform);
-            unit.Initialize(_operatorData, dir);
+            DeployedUnit unit = currentUnitPanel.GetDeployedUnit(); 
+        
+            
+            unit.Deploy(dir);
 
-            
-            
-            currentUnitPanel.SetDeployedUnit(unit);
             
             selectedTile.DeployOperator(unit,currentUnitPanel.ChangeStateTo);
             _balance.Value -= _operatorData.deployCost;

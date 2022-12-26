@@ -20,11 +20,15 @@ public class Tile : MonoBehaviour
 
 
     private TileCallback onAttackPreview;
+    
+    private VoidCallback onAttackReset;
+
 
     private DeployedUnit _deployedUnit;
     
     private Tuple<int,int> _coordinate;
-    
+
+    private bool isDisplayingAttackIndicators;
     
 
 
@@ -40,6 +44,7 @@ public class Tile : MonoBehaviour
     private void OnDisable()
     {
         _activeDrag.onValueChanged -= ShowDeployable;
+        
     }
 
     public Tuple<int,int> GetCoordinates()
@@ -73,18 +78,27 @@ public class Tile : MonoBehaviour
     {
         _deployedUnit = _unit;
         _deployedUnit.RegisterOnDestroyCallback(onDestroy);
-
+        _deployedUnit.RegisterOnDestroyCallback(() => onAttackReset?.Invoke());
+            _deployedUnit.gameObject.transform.parent = this.transform.parent;
         _deployedUnit.gameObject.transform.localPosition = new Vector3(0.5f, 1, 0.5f);
-        _deployedUnit.gameObject.transform.parent = this.transform.parent;
         _deployedUnit.RegisterOnClickCallback(DisplayPreview);
+        _deployedUnit.RegisterOnClickElsewhereCallback(HideDisplayPreview);
+
     }
 
 
     private void DisplayPreview()
     {
-        if(_deployedUnit != null){
+        if (_deployedUnit != null)
+        {
+
             onAttackPreview?.Invoke(this);
         }
+    }
+
+    private void HideDisplayPreview()
+    {
+        onAttackReset?.Invoke();
     }
 
     public Vector2[] GetAttackRange()
@@ -106,6 +120,11 @@ public class Tile : MonoBehaviour
         onAttackPreview += callback;
     }
     
+    public void RegisterAttackResetCallback(VoidCallback callback)
+    {
+        onAttackReset += callback;
+    }
+
     private void ShowDeployable()
     {
         if (_activeDrag.Value != null && _activeDrag.Value == locationType && _activeDrag.Value != DeployLocationType.NONE)

@@ -44,7 +44,7 @@ public class MeleeEnemyAttack : MonoBehaviour
         {
             attack = collision.gameObject.GetComponentInParent<OperatorAttack>();
             if(attack != null && attack.CanGuard()){
-                if(targetEnemy == null){
+                if(targetEnemy == null || !targetEnemy.isActiveAndEnabled){
                     targetEnemy = collision.gameObject.GetComponent<Damageable>();
                     onAttack?.Invoke();
                     isBlocked?.Invoke(true);
