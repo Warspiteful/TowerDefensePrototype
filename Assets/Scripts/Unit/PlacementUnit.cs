@@ -31,7 +31,6 @@ public class PlacementUnit : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("Disabled!!!!");
         _directionCallback = delegate(Direction direction) {  };
         onCancel  = delegate {  };
         _input.enabled = false;

@@ -30,6 +30,8 @@ public class DeployedUnit : MonoBehaviour
     {
         _damageable.RegisterOnDeathCallback(callback);
     }
+    
+    
 
     public void RegisterHealthChange(VoidIntInitCallback _callback)
     {
@@ -38,7 +40,8 @@ public class DeployedUnit : MonoBehaviour
 
 
     public void Initialize(OperatorData _operator)
-    {
+    {        
+
         _input = GetComponent<UnitInput>();
         _animator = GetComponent<UnitAnimator>();         
         _damageable = GetComponent<Damageable>();
@@ -46,9 +49,10 @@ public class DeployedUnit : MonoBehaviour
         _operatorData = _operator;
         _animator.SetOverrides(_operator.animationOverrides);
 
-        _damageable.Initialize(_operator.currentHealth);
+        
+        _damageable.Initialize(_operator.CurrentHealth);
         _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
-        _damageable.RegisterDamageTakenCallback(() => _operatorData.currentHealth = _damageable.GetCurrentHealth());
+        _damageable.RegisterDamageTakenCallback(() => _operatorData.CurrentHealth = _damageable.GetCurrentHealth());
         _attack = GetComponent<OperatorAttack>();
         _attack.Initialize(_operator.range, _operator.atkPower, _operator.guardedUnitNumber, _operator.projectile );
         _attack.RegisterCallbacks(_animator.PlayAttack, _animator.PlayIdle);

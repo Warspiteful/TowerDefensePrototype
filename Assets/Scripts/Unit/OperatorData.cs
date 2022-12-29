@@ -5,7 +5,9 @@ using UnityEngine;
 [CreateAssetMenu]
 public class OperatorData : UnitData
 {
-    public int currentHealth;
+
+    public VoidCallback onHealthChange;
+    private int currentHealth;
     public DeployLocationType locationType;
     public float deployTime;
     public int deployCost;
@@ -18,4 +20,20 @@ public class OperatorData : UnitData
         currentHealth = health;
     }
 
+    public int CurrentHealth
+    {
+        set
+        {
+            onHealthChange?.Invoke();
+            currentHealth = value;
+        }
+
+        get
+        {
+            return currentHealth;
+        }
+    }
+
+    
+    
 }

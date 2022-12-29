@@ -12,7 +12,7 @@ namespace  DeploymentMenu
     public class DeployableUnit : MonoBehaviour
     {
 
-        private DeploymentUnitState _state;
+       [SerializeField] private DeploymentUnitState _state;
         private OperatorData _data;
 
         private DragController _controller;
@@ -41,7 +41,8 @@ namespace  DeploymentMenu
             _controller.Toggle(true);
             ChangeState(DeploymentUnitState.HELD);
 
-            _indicator.UpdateDisplay(_data.currentHealth, _data.health);
+            _data.onHealthChange += (() => _indicator.UpdateDisplay(_data.CurrentHealth, _data.health));
+            
             _controller.RegisterStateChange(()=>ChangeState(DeploymentUnitState.SELECTED));
             _recallSystem.RegisterOnRecallCallback(()=>ChangeState(DeploymentUnitState.HELD));
             
@@ -108,7 +109,6 @@ namespace  DeploymentMenu
             {
                 case DeploymentUnitState.HELD:
                     _controller.Toggle(true);
-
                     _recallSystem.ToggleRecall(false);
                     _panel.OnHeld();
                     break; 
@@ -134,6 +134,7 @@ namespace  DeploymentMenu
 
         public void ChangeStateTo()
         {
+            Debug.Log("DEAD");
             ChangeState(DeploymentUnitState.DEAD);
         }
 

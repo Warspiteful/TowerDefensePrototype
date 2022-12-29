@@ -74,10 +74,10 @@ public class Tile : MonoBehaviour
         
     }
     
-    public void DeployOperator(DeployedUnit _unit, VoidCallback onDestroy)
+    public void DeployOperator(DeployedUnit _unit)
     {
         _deployedUnit = _unit;
-        _deployedUnit.RegisterOnDestroyCallback(onDestroy);
+        
         _deployedUnit.RegisterOnDestroyCallback(() => onAttackReset?.Invoke());
             _deployedUnit.gameObject.transform.parent = this.transform.parent;
         _deployedUnit.gameObject.transform.localPosition = new Vector3(0.5f, 1, 0.5f);

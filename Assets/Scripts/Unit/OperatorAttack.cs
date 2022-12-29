@@ -24,11 +24,13 @@ public class OperatorAttack : MonoBehaviour
 
     private OnValueChanged onAttack;
     private OnValueChanged onAttackEnd;
+    private VoidCallback onRemove;
 
     private GameObject attackTileParent;
 
     private List<Vector2> attackTiles;
-    
+
+    private int maxGuardableUnitNum;
     private int guardableUnitNum;
 
 
@@ -44,6 +46,7 @@ public class OperatorAttack : MonoBehaviour
         attackTiles = new List<Vector2>();
         projectilePrefab = projectile;
         _range = range;
+        maxGuardableUnitNum = guardNum;
         guardableUnitNum = guardNum;
         
     }
@@ -54,7 +57,7 @@ public class OperatorAttack : MonoBehaviour
         
         if(initialized && collision.gameObject.CompareTag("Enemy") && collision.gameObject.GetComponent<Damageable>() != null)
         {
-            if(targetEnemy == null){
+            if(targetEnemy == null){ 
                 targetEnemy = collision.gameObject.GetComponent<Damageable>();
                targetEnemy.RegisterOnDeathCallback(GetNextEnemy);
                 onAttack?.Invoke();
@@ -81,6 +84,18 @@ public class OperatorAttack : MonoBehaviour
             }
         }
     }
+    
+    
+    private void RemoveAttacker()
+    {
+        
+    }
+
+    public void RegisterAttacker(VoidCallback attackerCallback)
+    {
+        onRemove += attackerCallback;
+    }
+
 
     public bool CanGuard()
     {
@@ -128,6 +143,8 @@ public class OperatorAttack : MonoBehaviour
         }
         }
     }
+    
+    
 
 
     public void GenerateAttackTiles(Direction dir)
@@ -237,6 +254,7 @@ public class OperatorAttack : MonoBehaviour
 
     private void OnDisable()
     {
-        
+        onRemove?.Invoke();
+        guardableUnitNum = maxGuardableUnitNum;
     }
 }

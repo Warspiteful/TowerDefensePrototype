@@ -53,7 +53,14 @@ public class UnitAnimator : MonoBehaviour
 
     public void DestroySelf()
     {
+        Debug.Log("DESTROYED UNIT");
         Destroy(gameObject);
+    }
+    
+    public void DisableSelf()
+    {
+        Debug.Log("DESTROYED UNIT");
+        gameObject.SetActive(false);
     }
     
 }

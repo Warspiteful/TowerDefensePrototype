@@ -85,9 +85,9 @@ namespace DeploymentMenu
     
     public void OnDeath()
     {
-        DeathIndicator.enabled = false;
+        DeathIndicator.enabled = true;
         shadowDisplay.enabled = true;
-        DeployedIndicator.enabled = true;
+        DeployedIndicator.enabled = false;
 
         _layoutElement.ignoreLayout = false;
         unitPanel.SetActive(true);
@@ -95,7 +95,7 @@ namespace DeploymentMenu
     }
 
 
-        public void OnDeploy()
+        public void OnDeploy()  
         {
             DeployedIndicator.enabled = true;
             shadowDisplay.enabled = true;

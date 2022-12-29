@@ -49,11 +49,13 @@ public class Damageable : MonoBehaviour
     
     public void RegisterOnDeathCallback(VoidCallback deathCallback)
     {
+
         _onDeath += deathCallback;
     }
 
-    public void OnDisable()
+    public void ResetOnDeathCallback()
     {
+        Debug.Log("RESET DEATH CALLBACK");
         _onDeath = () => { };
     }
 
@@ -86,6 +88,8 @@ public class Damageable : MonoBehaviour
 
         if (currHealth <= 0)
         {
+            Debug.Log("On DEATHHHHHH");
+
             _onDeath?.Invoke();
         }
     }
@@ -96,7 +100,7 @@ public class Damageable : MonoBehaviour
         currHealth = Mathf.Clamp(health, 0, maxHealth);
         if (currHealth <= 0)
         {
-            _onDeath?.Invoke();
+                _onDeath?.Invoke();
         }
     }
 

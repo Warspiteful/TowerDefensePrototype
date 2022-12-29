@@ -172,7 +172,9 @@ namespace  DeploymentMenu
             unit.Deploy(dir);
 
             
-            selectedTile.DeployOperator(unit,currentUnitPanel.ChangeStateTo);
+            unit.RegisterOnDestroyCallback(currentUnitPanel.ChangeStateTo);
+
+            selectedTile.DeployOperator(unit);
             _balance.Value -= _operatorData.deployCost;
             directionalUnit = null;
             currentUnitPanel = null;

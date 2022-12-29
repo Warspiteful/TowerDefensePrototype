@@ -37,11 +37,12 @@ namespace DeploymentMenu
             {
                 if(unit.GetState() == DeploymentUnitState.HELD)
                 {
-                    unit.getOperatorData().currentHealth = Mathf.Clamp(
-                        unit.getOperatorData().currentHealth + healAmount.Value,
-                        unit.getOperatorData().currentHealth,
+                    unit.getOperatorData().CurrentHealth = Mathf.Clamp(
+                        unit.getOperatorData().CurrentHealth + healAmount.Value,
+                        unit.getOperatorData().CurrentHealth,
                         unit.getOperatorData().health
                         );
+
                 }
             }
         }

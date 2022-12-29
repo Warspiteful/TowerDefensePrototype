@@ -11,10 +11,12 @@ public class IntVariableEditor : Editor
 
     private void OnEnable()
     {
+        m_IntProp = serializedObject.FindProperty("_value");
     }
 
     public override void OnInspectorGUI() {
         IntVariable variable = target as IntVariable;
+        EditorGUILayout.PropertyField(m_IntProp, new GUIContent("Int Field"), GUILayout.Height(20));
         if (GUILayout.Button("Increment"))
         {
             variable.Increment();

@@ -21,7 +21,7 @@ public class MeleeEnemyAttack : MonoBehaviour
     
     [SerializeField] private Damageable targetEnemy;
     
-        private List<Damageable> inRangeEnemies;
+    private List<Damageable> inRangeEnemies;
 
 
     private void OnDestroy()
@@ -48,10 +48,20 @@ public class MeleeEnemyAttack : MonoBehaviour
                     targetEnemy = collision.gameObject.GetComponent<Damageable>();
                     onAttack?.Invoke();
                     isBlocked?.Invoke(true);
+                    attack.RegisterAttacker(RemoveAttacker);
+                    
+                    
                 }
             }
         }
     }
+
+    private void RemoveAttacker()
+    {
+        targetEnemy = null;
+    }
+
+
 
     private void OnTriggerExit(Collider other)
     {
@@ -65,7 +75,7 @@ public class MeleeEnemyAttack : MonoBehaviour
     
     private void Attack()
     {
-        if (targetEnemy != null)
+        if (targetEnemy != null && targetEnemy.isActiveAndEnabled)
         {
             targetEnemy.TakeDamage(_attackPower);
         }
