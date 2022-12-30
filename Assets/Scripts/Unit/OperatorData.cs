@@ -25,6 +25,7 @@ public class OperatorData : UnitData
         set
         {
             onHealthChange?.Invoke();
+            Debug.Log("HEALTH CHANGED");
             currentHealth = value;
         }
 

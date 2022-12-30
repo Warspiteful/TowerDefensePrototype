@@ -11,6 +11,7 @@ public class UnitHealthIndicator : MonoBehaviour
 
     public void UpdateDisplay(int currentHealth, int maxHealth)
     {
+
         Vector3 currScale = HealthIndicator.transform.localScale;
         if (!healthbar.activeSelf || currentHealth == 0)
         {

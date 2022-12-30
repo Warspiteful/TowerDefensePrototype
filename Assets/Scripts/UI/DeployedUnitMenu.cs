@@ -29,6 +29,7 @@ namespace  DeploymentMenu
             
             foreach(OperatorData _operator in squadData.squadList)
             {
+                _operator.RestoreHealthToMax();
                 DeployableUnit _unit = Instantiate(deployPanelPrefab, this.transform);
                 _unit.Initialize(_operator);
                 _balanceCallback += _unit.CanAfford;
