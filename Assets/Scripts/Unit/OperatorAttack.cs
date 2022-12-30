@@ -7,7 +7,7 @@ public class OperatorAttack : MonoBehaviour
 {
 
     private float _attackSpeed;
-    private float _attackPower;
+    private int _attackPower;
     private Vector2 _range;
 
     private float attacksPerSecond;
@@ -24,16 +24,18 @@ public class OperatorAttack : MonoBehaviour
 
     private OnValueChanged onAttack;
     private OnValueChanged onAttackEnd;
+    private VoidCallback onRemove;
 
     private GameObject attackTileParent;
 
     private List<Vector2> attackTiles;
-    
+
+    private int maxGuardableUnitNum;
     private int guardableUnitNum;
 
 
     
-    public void Initialize(Vector2 range, float attackPower, int guardNum, Projectile projectile, Direction dir)
+    public void Initialize(Vector2 range, int attackPower, int guardNum, Projectile projectile)
     {
         inRangeEnemies = new List<Damageable>();
 
@@ -44,18 +46,18 @@ public class OperatorAttack : MonoBehaviour
         attackTiles = new List<Vector2>();
         projectilePrefab = projectile;
         _range = range;
+        maxGuardableUnitNum = guardNum;
         guardableUnitNum = guardNum;
         
-        GenerateAttackTiles(dir);
     }
-    // Start is called before the first frame update
 
+    
     private void OnTriggerEnter(Collider collision)
     {
         
         if(initialized && collision.gameObject.CompareTag("Enemy") && collision.gameObject.GetComponent<Damageable>() != null)
         {
-            if(targetEnemy == null){
+            if(targetEnemy == null){ 
                 targetEnemy = collision.gameObject.GetComponent<Damageable>();
                targetEnemy.RegisterOnDeathCallback(GetNextEnemy);
                 onAttack?.Invoke();
@@ -82,6 +84,18 @@ public class OperatorAttack : MonoBehaviour
             }
         }
     }
+    
+    
+    private void RemoveAttacker()
+    {
+        
+    }
+
+    public void RegisterAttacker(VoidCallback attackerCallback)
+    {
+        onRemove += attackerCallback;
+    }
+
 
     public bool CanGuard()
     {
@@ -129,9 +143,11 @@ public class OperatorAttack : MonoBehaviour
         }
         }
     }
+    
+    
 
 
-    private void GenerateAttackTiles(Direction dir)
+    public void GenerateAttackTiles(Direction dir)
     {
 
 
@@ -143,7 +159,6 @@ public class OperatorAttack : MonoBehaviour
         int x = Mathf.RoundToInt(_range.x);
         int y = Mathf.RoundToInt(_range.y);
 
-        Debug.Log(x + ", " + y);
         int startX, endX, startY, endY;
         
         switch (dir)
@@ -204,7 +219,6 @@ public class OperatorAttack : MonoBehaviour
 
     private void HorizontalAttack(int startX, int endX, int startY,int endY)
     {
-        Debug.Log(startX +"," + endX + ", " + startY + ", " + endY);
 
         for (int x = startX; x <= endX; x++)
         {
@@ -236,5 +250,11 @@ public class OperatorAttack : MonoBehaviour
     public Vector2[] GetRange()
     {
         return attackTiles.ToArray();
+    }
+
+    private void OnDisable()
+    {
+        onRemove?.Invoke();
+        guardableUnitNum = maxGuardableUnitNum;
     }
 }

@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu]
 public class OperatorData : UnitData
 {
+
+    public VoidCallback onHealthChange;
+    private int currentHealth;
     public DeployLocationType locationType;
     public float deployTime;
     public int deployCost;
@@ -12,4 +15,26 @@ public class OperatorData : UnitData
     public Archetype archtetype;
     public Projectile projectile;
 
+    public void RestoreHealthToMax()
+    {
+        currentHealth = health;
+    }
+
+    public int CurrentHealth
+    {
+        set
+        {
+            onHealthChange?.Invoke();
+            Debug.Log("HEALTH CHANGED");
+            currentHealth = value;
+        }
+
+        get
+        {
+            return currentHealth;
+        }
+    }
+
+    
+    
 }

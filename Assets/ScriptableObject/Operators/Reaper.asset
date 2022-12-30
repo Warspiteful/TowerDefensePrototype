@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e31da1e6dc4f504bb8e3f3671238f8c, type: 3}
   m_Name: Reaper
   m_EditorClassIdentifier: 
+  AttackSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   name: Reaper
-  atkPower: 6
+  atkPower: 1
   def: 7
   health: 18
   range: {x: 1, y: 1}
@@ -23,6 +30,7 @@ MonoBehaviour:
     - AttackPlaceholder
     m_values:
     - {fileID: 7400000, guid: 720f20440a75d3c4b8bc6b6172e71f5d, type: 2}
+  currentHealth: 7
   locationType: 0
   deployTime: 6
   deployCost: 6

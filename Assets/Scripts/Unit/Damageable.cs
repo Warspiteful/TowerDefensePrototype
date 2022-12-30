@@ -6,20 +6,22 @@ using UnityEngine;
 public class Damageable : MonoBehaviour
 {
 
-    [SerializeField] private float currHealth;
-    [SerializeField] private float maxHealth;
+    [SerializeField] private int currHealth;
+    [SerializeField] private int maxHealth;
 
     private VoidCallback _damageTaken;
     private VoidCallback _healthHealed;
     
     private VoidCallback _onDeath;
 
+    private VoidIntInitCallback _onHealthChange;
+
 
     private void OnDestroy()
     {
-        _damageTaken = null;
-        _healthHealed = null;
-        _onDeath = null;
+        _damageTaken = delegate {  } ;
+        _healthHealed = delegate {  };
+        _onDeath = delegate {  };
     }
 
     public void RegisterDamageTakenCallback(VoidCallback damageCallback)
@@ -38,48 +40,74 @@ public class Damageable : MonoBehaviour
         _healthHealed += healthChangeCallback;
         _damageTaken += healthChangeCallback;
     }
+
+
+    public void RegisterHealthTrackingCallback(VoidIntInitCallback callback)
+    {
+        _onHealthChange += callback;
+    }
     
     public void RegisterOnDeathCallback(VoidCallback deathCallback)
     {
+
         _onDeath += deathCallback;
     }
 
+    public void ResetOnDeathCallback()
+    {
+        Debug.Log("RESET DEATH CALLBACK");
+        _onDeath = () => { };
+    }
+
     
-    public void Initialize(float health)
+    public void Initialize(int health)
     {
         maxHealth = health;
         currHealth = maxHealth;
     }
 
-    public float GetCurrentHealth()
+    public int GetCurrentHealth()
     {
         return currHealth;
     }
     
-        public float GetMaxHealth()
+        public int GetMaxHealth()
         {
             return maxHealth;
         }
         
     
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
-   
-        currHealth -= damage;
-        Debug.Log("Damage taken by Damageable");
+
+        currHealth  = Mathf.Clamp(currHealth - damage, 0, currHealth);
+        
         _damageTaken?.Invoke();
+        _onHealthChange?.Invoke(currHealth, maxHealth);
 
         if (currHealth <= 0)
         {
+            Debug.Log("On DEATHHHHHH");
+
             _onDeath?.Invoke();
         }
-        
     }
 
-    public void Heal(float health)
+    public void SetHealth(int health)
+    {
+        
+        currHealth = Mathf.Clamp(health, 0, maxHealth);
+        if (currHealth <= 0)
+        {
+                _onDeath?.Invoke();
+        }
+    }
+
+    public void Heal(int health)
     {
         currHealth += health;
+        _onHealthChange?.Invoke(currHealth, maxHealth);
         _healthHealed.Invoke();
 
     }

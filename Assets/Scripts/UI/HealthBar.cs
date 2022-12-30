@@ -25,15 +25,29 @@ public class HealthBar : MonoBehaviour
 
    private void UpdateDisplay()
    {
+
+      float healthScale;
       Vector3 currScale = HealthIndicator.transform.localScale;
       if (healthbar.activeSelf != true)
       {
          healthbar.SetActive(true);
       }
+      
+      
 
+      if (_damageable.GetCurrentHealth() <= 0 || _damageable.GetMaxHealth() <= 0)
+      {
+         healthScale = 0;
+      }
+      else
+      {
+         healthScale = (float) _damageable.GetCurrentHealth() / _damageable.GetMaxHealth();
+      }
+   
+   
       HealthIndicator.transform.localScale =
          new Vector3(
-            _damageable.GetCurrentHealth() / _damageable.GetMaxHealth(),
+            healthScale,
             currScale.y,
             currScale.z
             );

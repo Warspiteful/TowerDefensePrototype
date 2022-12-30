@@ -6,9 +6,9 @@ public class CreditAutofill : MonoBehaviour
 {
 
     [SerializeField] IntVariable Credits;
-      [SerializeField] private float timeToIncrement;
-       [SerializeField] private float currentTime;
-       [SerializeField] private FloatVariable percent;
+    [SerializeField] private float timeToIncrement;
+    [SerializeField] private float currentTime;
+    [SerializeField] private FloatVariable percent;
 
        private void Start()
        {

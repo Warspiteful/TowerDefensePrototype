@@ -1,1 +1,5 @@
-public delegate void DeployableUnitCallback(DeployableUnit value);
+
+namespace DeploymentMenu
+{
+    public delegate void DeployableUnitCallback(DeployableUnit value);   
+}

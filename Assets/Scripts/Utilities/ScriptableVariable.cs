@@ -3,7 +3,7 @@ using UnityEngine;
 public class ScriptableVariable<T> : ScriptableObject
 {
     public OnValueChanged onValueChanged;
-    private T _value;
+  [SerializeField]  private T _value;
 
     public T Value
     {

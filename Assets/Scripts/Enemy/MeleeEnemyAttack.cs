@@ -14,14 +14,14 @@ public class MeleeEnemyAttack : MonoBehaviour
     private VoidBoolCallback isBlocked;
     private bool initialized = false;
     
-    private float _attackPower;
+    private int _attackPower;
 
 
     private OperatorAttack attack;
     
     [SerializeField] private Damageable targetEnemy;
     
-        private List<Damageable> inRangeEnemies;
+    private List<Damageable> inRangeEnemies;
 
 
     private void OnDestroy()
@@ -32,7 +32,7 @@ public class MeleeEnemyAttack : MonoBehaviour
         }
     }
 
-    public void Initialize(float attackPower)
+    public void Initialize(int attackPower)
     {
         _attackPower = attackPower;
         initialized = true;
@@ -44,14 +44,24 @@ public class MeleeEnemyAttack : MonoBehaviour
         {
             attack = collision.gameObject.GetComponentInParent<OperatorAttack>();
             if(attack != null && attack.CanGuard()){
-                if(targetEnemy == null){
+                if(targetEnemy == null || !targetEnemy.isActiveAndEnabled){
                     targetEnemy = collision.gameObject.GetComponent<Damageable>();
                     onAttack?.Invoke();
                     isBlocked?.Invoke(true);
+                    attack.RegisterAttacker(RemoveAttacker);
+                    
+                    
                 }
             }
         }
     }
+
+    private void RemoveAttacker()
+    {
+        targetEnemy = null;
+    }
+
+
 
     private void OnTriggerExit(Collider other)
     {
@@ -65,7 +75,7 @@ public class MeleeEnemyAttack : MonoBehaviour
     
     private void Attack()
     {
-        if (targetEnemy != null)
+        if (targetEnemy != null && targetEnemy.isActiveAndEnabled)
         {
             targetEnemy.TakeDamage(_attackPower);
         }

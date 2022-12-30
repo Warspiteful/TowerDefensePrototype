@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e31da1e6dc4f504bb8e3f3671238f8c, type: 3}
   m_Name: Sacramento
   m_EditorClassIdentifier: 
+  AttackSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   name: Sacramento
   atkPower: 8
   def: 6
@@ -23,6 +30,7 @@ MonoBehaviour:
     - AttackPlaceholder
     m_values:
     - {fileID: 7400000, guid: b098d68b2cf9ddf48bc9a2884a0d5d23, type: 2}
+  currentHealth: 16
   locationType: 0
   deployTime: 6
   deployCost: 6
