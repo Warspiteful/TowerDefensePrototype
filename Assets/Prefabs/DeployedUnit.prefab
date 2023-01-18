@@ -52,9 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e5e5309f392564f90ae5f0e39d267c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _direction: 0
   _spriteRenderer: {fileID: 7245456081761803481}
-  currentHealth: 0
+  unitLocation: {fileID: 11400000, guid: 78f6837d8d9456d4e99599b67b97ea3c, type: 2}
 --- !u!54 &1455796668532750501
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -83,7 +82,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21849b2bb796984db3e81cc4102e6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetEnemy: {fileID: 0}
   attackTilePrefab: {fileID: 5136808636049290329, guid: b951ab83d229e194f853213f02758f7b,
     type: 3}
 --- !u!114 &6986708195548792653

@@ -15,7 +15,7 @@ namespace  DeploymentMenu
         
         [SerializeField] private DeployableUnit currentUnitPanel;
 
-         private VoidIntCallback _balanceCallback;
+        private VoidIntCallback _balanceCallback;
 
         private PlayerControls _controls;
         

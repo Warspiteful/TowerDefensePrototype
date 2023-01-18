@@ -18,6 +18,8 @@ public class PlacementUnit : MonoBehaviour
 
     private VoidCallback onCancel;
 
+    [SerializeField] private Vector3Variable overlayLocator;
+
 
     public void RegisterOnCancelCallback(VoidCallback callback)
     {
@@ -46,6 +48,8 @@ public class PlacementUnit : MonoBehaviour
     public void Initialize(Sprite operatorSprite)
     {
   
+        overlayLocator.ToggleEnable(true);
+        overlayLocator.Value = transform.position;
         _input.enabled = true;
         _input.RegisterMousePositionCallback(CallbackType.DRAG, ChooseDirection);
         _input.RegisterOnElsewhereClickCallback(Cancel);
@@ -59,6 +63,7 @@ public class PlacementUnit : MonoBehaviour
     public void Cancel()
     {
         _directionCallback = null;
+        overlayLocator.ToggleEnable(false);
         
      
             onCancel?.Invoke();
@@ -109,6 +114,7 @@ public class PlacementUnit : MonoBehaviour
       _directionCallback?.Invoke(dir);
         _directionCallback = null;
         gameObject.SetActive(false);
+        overlayLocator.ToggleEnable(false);
 
     }
 

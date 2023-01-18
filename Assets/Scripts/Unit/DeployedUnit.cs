@@ -10,6 +10,7 @@ public class DeployedUnit : MonoBehaviour
 
     [SerializeField] private SpriteRenderer _spriteRenderer;
 
+    
     private OperatorData _operatorData;
 
 
@@ -48,8 +49,7 @@ public class DeployedUnit : MonoBehaviour
         _spriteRenderer.sprite = _operator.sprite;
         _operatorData = _operator;
         _animator.SetOverrides(_operator.animationOverrides);
-
-        
+      
         _damageable.Initialize(_operator.CurrentHealth);
         _damageable.RegisterDamageTakenCallback(_animator.PlayTakeDamage);
         _damageable.RegisterDamageTakenCallback(() => _operatorData.CurrentHealth = _damageable.GetCurrentHealth());
@@ -63,6 +63,7 @@ public class DeployedUnit : MonoBehaviour
 
     public void Deploy( Direction dir)
     {
+
         gameObject.SetActive(true);
         _attack.GenerateAttackTiles(dir);
 
