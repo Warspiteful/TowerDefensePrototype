@@ -15,7 +15,9 @@ namespace  DeploymentMenu
         
         [SerializeField] private DeployableUnit currentUnitPanel;
 
-         private VoidIntCallback _balanceCallback;
+        [SerializeField] private OperatorDataVariable _operator;
+
+        private VoidIntCallback _balanceCallback;
 
         private PlayerControls _controls;
         
@@ -173,6 +175,10 @@ namespace  DeploymentMenu
             unit.Deploy(dir);
 
             
+            
+            unit.RegisterOnClickCallback(() => _operator.Value = _operatorData);
+            unit.RegisterOnClickElsewhereCallback(() => _operator.Value = null);
+
             unit.RegisterOnDestroyCallback(currentUnitPanel.ChangeStateTo);
 
             selectedTile.DeployOperator(unit);

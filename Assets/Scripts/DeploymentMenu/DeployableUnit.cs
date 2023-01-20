@@ -99,6 +99,8 @@ namespace  DeploymentMenu
             }
             _deployedUnit = unit;
             _recallSystem.Initialize(_deployedUnit);
+            
+            
             _deployedUnit.RegisterHealthChange(_indicator.UpdateDisplay);
 
         }

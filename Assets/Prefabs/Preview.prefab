@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dir: 0
+  overlayLocator: {fileID: 11400000, guid: 78f6837d8d9456d4e99599b67b97ea3c, type: 2}
 --- !u!65 &7872348191136255069
 BoxCollider:
   m_ObjectHideFlags: 0
