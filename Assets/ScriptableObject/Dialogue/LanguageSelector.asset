@@ -13,8 +13,3 @@ MonoBehaviour:
   m_Name: LanguageSelector
   m_EditorClassIdentifier: 
   selectedLanguage: 0
-  dict:
-    m_keys: 0000000001000000
-    m_values:
-    - {fileID: 4900000, guid: b9ff6fab6f41a5845bff4a71f96f6a8b, type: 3}
-    - {fileID: 0}
