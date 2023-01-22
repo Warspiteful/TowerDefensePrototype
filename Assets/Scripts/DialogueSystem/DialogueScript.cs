@@ -12,17 +12,31 @@ namespace DialogueSystem
         [SerializeField]
         private TranslatedTextAsset text;
         [SerializeField] private TextAsset ConversationController;
+        private TextAsset translatedText;
 
-        // Start is called before the first frame update
+        [SerializeField] private CurrentDialogue dialogueSetter;
+
         void Start()
         {
-
+            
+            text.onLanguageUpdate = LoadDialogue;
+            LoadDialogue();
+            ConversationStruct s = JsonUtility.FromJson<ConversationStruct>(ConversationController.text);
+            Debug.Log(s);
+        }
+        private void LoadDialogue()
+        {
+            translatedText = text.GetTextAsset();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
+        private int conversationID;
 
+        public void LoadConversation(int id)
+        {
+            conversationID = id;
+
+
+            
         }
     }
 }

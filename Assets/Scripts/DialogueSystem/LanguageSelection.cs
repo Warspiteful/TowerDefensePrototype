@@ -11,11 +11,10 @@ namespace DialogueSystem
     
     [CreateAssetMenu(menuName="Dialogue/Language Selector")]
 
-    public class LanguageSelection : ScriptableObject
+    public class LanguageSelection : ScriptableVariable<Language>
     {
 
 
-        [SerializeField] private Language selectedLanguage;
         
     }
 }

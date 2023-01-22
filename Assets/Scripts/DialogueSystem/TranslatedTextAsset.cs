@@ -9,7 +9,18 @@ namespace DialogueSystem
 
     public class TranslatedTextAsset : ScriptableObject
     {
+        public OnValueChanged onLanguageUpdate;
         public LanguageOptionDictionary dict;
         [SerializeField] private LanguageSelection translation;
+
+        void Start()
+        {
+            translation.onValueChanged += onLanguageUpdate;
+        }
+
+        public TextAsset GetTextAsset()
+        {
+            return dict[translation.Value];
+        }
     }
 }

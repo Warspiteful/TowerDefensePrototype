@@ -4,38 +4,41 @@ using UnityEngine;
 using TMPro;
 
 
-public class DialogueController : MonoBehaviour
+namespace DialogueSystem
 {
-
-    [SerializeField] private GameObject speakerPrefab;
-    [SerializeField] private GameObject dialogueOverlay;
-
-    [SerializeField] private TextMeshProUGUI speakerText;
-    
-    [SerializeField] private TextMeshProUGUI dialogueText;
-    
-    [SerializeField] private Dictionary<string, GameObject> availableSpeakers;
-
-
-    // Start is called before the first frame update
-    void Start()
+    public class DialogueController : MonoBehaviour
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        [SerializeField] private GameObject speakerPrefab;
+        [SerializeField] private GameObject dialogueOverlay;
 
-    void ParseDialogue()
-    {
-        
-    }
+        [SerializeField] private TextMeshProUGUI speakerText;
 
-    void MoveImage(GameObject speake, int x, int y)
-    {
-        
+        [SerializeField] private TextMeshProUGUI dialogueText;
+
+        [SerializeField] private Dictionary<string, GameObject> availableSpeakers;
+
+
+        // Start is called before the first frame update
+        void Start()
+        {
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        void ParseDialogue(DialogueScript script)
+        {
+
+        }
+
+        void MoveImage(GameObject speake, int x, int y)
+        {
+
+        }
     }
 }

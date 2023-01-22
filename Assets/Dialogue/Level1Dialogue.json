@@ -1,34 +1,32 @@
 {
-    "dialogue": [{
         "Key": "001",
         "Lines": [{
 
-                "Speaker": "Constant",
-                "Line": "Loop 132...starting.",
-                "LeftSide": "",
-                "RightSide": "",
-                "LeftExpression": "",
-                "RightExpression": "",
-                "Sound": ""
-            },
-            {
-                "Speaker": "Constant",
-                "Line": "...",
-                "LeftSide": "",
-                "RightSide": "",
-                "LeftExpression": "",
-                "RightExpression": "",
-                "Sound": ""
-            },
-            {
-                "Speaker": "Constant",
-                "Line": "Wake up, commander,",
-                "LeftSide": "",
-                "RightSide": "",
-                "LeftExpression": "",
-                "RightExpression": "",
-                "Sound": ""
+          "Speaker": "Constant",
+          "LineID": "00001",
+          "LeftSide": "",
+          "RightSide": "",
+          "LeftExpression": "",
+          "RightExpression": "",
+          "Sound": ""
+        },
+          {
+            "Speaker": "Constant",
+            "LineID": "00002",
+            "LeftSide": "",
+            "RightSide": "",
+            "LeftExpression": "",
+            "RightExpression": "",
+            "Sound": ""
+          },
+          {
+            "Speaker": "Constant",
+            "LineID": "00003",
+            "LeftSide": "",
+            "RightSide": "",
+            "LeftExpression": "",
+            "RightExpression": "",
+            "Sound": ""
             }
         ]
-    }]
 }
