@@ -22,5 +22,11 @@ namespace DialogueSystem
         {
             return dict[translation.Value];
         }
+
+        public string GetLine(int id)
+        {
+            Debug.Log(GetTextAsset().text);
+            return " ";
+        }
     }
 }

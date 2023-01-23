@@ -16,5 +16,5 @@ MonoBehaviour:
     m_keys: 0100000000000000
     m_values:
     - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 4900000, guid: 3b68812a020039d49ba41e8dd5c570a7, type: 3}
   translation: {fileID: 11400000, guid: e494101a12ca77845b316ff1df3063ad, type: 2}

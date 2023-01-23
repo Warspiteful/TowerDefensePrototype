@@ -47,7 +47,7 @@ namespace DialogueSystem
             
                 foreach (DialogueStruct ds in conversation.Script[conversationID].Lines)
                 {
-                    Debug.Log(ds.Speaker +": " + ds.LineID);
+                    Debug.Log(ds.Speaker +": " + text.GetLine(ds.LineID));
                 }
             
 
