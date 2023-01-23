@@ -1,32 +1,68 @@
-{
-        "Key": "001",
-        "Lines": [{
-
-          "Speaker": "Constant",
-          "LineID": "00001",
-          "LeftSide": "",
-          "RightSide": "",
-          "LeftExpression": "",
-          "RightExpression": "",
-          "Sound": ""
-        },
-          {
-            "Speaker": "Constant",
-            "LineID": "00002",
-            "LeftSide": "",
-            "RightSide": "",
-            "LeftExpression": "",
-            "RightExpression": "",
-            "Sound": ""
-          },
-          {
-            "Speaker": "Constant",
-            "LineID": "00003",
-            "LeftSide": "",
-            "RightSide": "",
-            "LeftExpression": "",
-            "RightExpression": "",
-            "Sound": ""
-            }
-        ]
+{"Script": [
+  {
+    "Lines": [
+      {
+        "Speaker": "Constant",
+        "LineID": "00001",
+        "LeftSide": "",
+        "RightSide": "",
+        "LeftExpression": "",
+        "RightExpression": "",
+        "Sound": ""
+      },
+      {
+        "Speaker": "Constant",
+        "LineID": "00002",
+        "LeftSide": "",
+        "RightSide": "",
+        "LeftExpression": "",
+        "RightExpression": "",
+        "Sound": ""
+      },
+      {
+        "Speaker": "Constant",
+        "LineID": "00003",
+        "LeftSide": "",
+        "RightSide": "",
+        "LeftExpression": "",
+        "RightExpression": "",
+        "Sound": ""
+      }
+    ]
+  },
+  {
+    "Lines": [
+      {
+        "Speaker": "Constant",
+        "LineID": "00004",
+        "LeftSide": "",
+        "RightSide": "",
+        "LeftExpression": "",
+        "RightExpression": "",
+        "Sound": ""
+      },
+      {
+        "Speaker": "Constant",
+        "LineID": "00005",
+        "LeftSide": "",
+        "RightSide": "",
+        "LeftExpression": "",
+        "RightExpression": "",
+        "Sound": ""
+      },
+      {
+        "Speaker": "Constant",
+        "LineID": "00006",
+        "LeftSide": "",
+        "RightSide": "",
+        "LeftExpression": "",
+        "RightExpression": "",
+        "Sound": ""
+      }
+    ]
+  }
+]
 }
+
+
+

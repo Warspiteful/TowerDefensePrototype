@@ -15,28 +15,45 @@ namespace DialogueSystem
         private TextAsset translatedText;
 
         [SerializeField] private CurrentDialogue dialogueSetter;
+        
+        [SerializeField] private ScriptStruct conversation;
 
         void Start()
         {
             
             text.onLanguageUpdate = LoadDialogue;
             LoadDialogue();
-            ConversationStruct s = JsonUtility.FromJson<ConversationStruct>(ConversationController.text);
-            Debug.Log(s);
         }
+        
         private void LoadDialogue()
         {
-            translatedText = text.GetTextAsset();
+            
+            Debug.Log(ConversationController.text);
+            conversation = JsonUtility.FromJson<ScriptStruct>(ConversationController.text);
+
         }
 
         private int conversationID;
 
         public void LoadConversation(int id)
         {
+        
+                LoadDialogue();
+       
             conversationID = id;
-
-
             
+
+            Debug.Log(conversation.Script.Count);
+            
+                foreach (DialogueStruct ds in conversation.Script[conversationID].Lines)
+                {
+                    Debug.Log(ds.Speaker +": " + ds.LineID);
+                }
+            
+
+
+
+
         }
     }
 }

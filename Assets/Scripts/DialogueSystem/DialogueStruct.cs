@@ -3,10 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[Serializable]
+public class ScriptStruct
+{
+    public List<ConversationStruct> Script;
+}
 [Serializable]
 public class ConversationStruct
 {
-    public int Key;
     public List<DialogueStruct> Lines;
 }
 [Serializable]
