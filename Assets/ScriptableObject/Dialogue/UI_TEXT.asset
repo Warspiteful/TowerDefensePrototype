@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: UI_TEXT
   m_EditorClassIdentifier: 
   dict:
+    m_keys: 00000000
+    m_values:
+    - {fileID: 4900000, guid: ba61c7569f8295e429f860ada88ac010, type: 3}
+  translation: {fileID: 11400000, guid: e494101a12ca77845b316ff1df3063ad, type: 2}
+  dialogueTable:
     m_keys: 
     m_values: []
-  translation: {fileID: 11400000, guid: e494101a12ca77845b316ff1df3063ad, type: 2}
