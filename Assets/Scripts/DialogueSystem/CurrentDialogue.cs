@@ -6,7 +6,7 @@ namespace DialogueSystem
 {
 
     [CreateAssetMenu(menuName="Dialogue/Dialogue Variable")]
-    public class CurrentDialogue : ScriptableVariable<List<DialogueStruct>>
+    public class CurrentDialogue : ScriptableVariable<List<SpeechStruct>>
     {
         
     }

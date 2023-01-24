@@ -1,8 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-public class DialogueTable
+namespace DialogueSystem
 {
-    public Dictionary<int, string> lines;
+    [Serializable]
+    public class DialogueTable : SerializableDictionary<int, string>
+    {
+        
+    }
 }

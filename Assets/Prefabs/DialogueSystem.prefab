@@ -402,6 +402,7 @@ MonoBehaviour:
   dialogueOverlay: {fileID: 2288538708268889843}
   speakerText: {fileID: 2288538706790270518}
   dialogueText: {fileID: 2288538707979662421}
+  activeDialogue: {fileID: 11400000, guid: 7f941fdf375eeab408b0c1f9891734b6, type: 2}
 --- !u!1 &2288538708268889843
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,11 +44,16 @@ namespace DialogueSystem
             
 
             Debug.Log(conversation.Script.Count);
-            
+
+            List<SpeechStruct> speech = new List<SpeechStruct>();
                 foreach (DialogueStruct ds in conversation.Script[conversationID].Lines)
                 {
-                    Debug.Log(ds.Speaker +": " + text.GetLine(ds.LineID));
+                    speech.Add(new SpeechStruct(ds,text.GetLine(ds.LineID)));
+
                 }
+                
+                dialogueSetter.Value = speech;
+
             
 
 

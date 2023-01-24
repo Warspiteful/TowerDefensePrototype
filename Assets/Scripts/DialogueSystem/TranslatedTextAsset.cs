@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -12,10 +13,23 @@ namespace DialogueSystem
         public OnValueChanged onLanguageUpdate;
         public LanguageOptionDictionary dict;
         [SerializeField] private LanguageSelection translation;
-
-        void Start()
+        [SerializeField] private DialogueTable dialogueTable;
+        void OnEnable()
         {
             translation.onValueChanged += onLanguageUpdate;
+            LoadLanguage();
+        }
+
+        public void LoadLanguage()
+        {
+            dialogueTable = new DialogueTable();
+
+            string[] rows = GetTextAsset().text.Split("\n").Skip(1).ToArray();
+            foreach (string row in rows)
+            {
+                string[] columns = row.Split(",");
+                dialogueTable.Add(int.Parse(columns[0]), columns[1]);
+            }
         }
 
         public TextAsset GetTextAsset()
@@ -25,8 +39,8 @@ namespace DialogueSystem
 
         public string GetLine(int id)
         {
-            Debug.Log(GetTextAsset().text);
-            return " ";
+                       
+            return dialogueTable[id];
         }
     }
 }
