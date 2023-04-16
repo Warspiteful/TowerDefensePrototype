@@ -69,6 +69,11 @@ public class DeployedUnit : MonoBehaviour
 
     }
 
+    public OperatorData GetOperatorData()
+    {
+        return _operatorData;
+    }
+
 
 
     public Vector2[] GetRange()

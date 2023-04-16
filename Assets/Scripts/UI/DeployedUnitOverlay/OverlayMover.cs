@@ -21,6 +21,8 @@ public class OverlayMover : MonoBehaviour
         basePosition = transform.position;
         location.onValueChanged += UpdateLoction;
         location.EnableCallback += ToggleVisibility;
+        imageMask.gameObject.SetActive(false);
+
     }
     
     private void ToggleVisibility(bool value)

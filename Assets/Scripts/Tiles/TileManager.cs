@@ -85,17 +85,14 @@ public class TileManager : MonoBehaviour
 
     private void RenderAttack(Tile _tile)
     {
-        ResetDisplay();
         if (renderedTile != _tile)
         {
+            ResetDisplay();
+
             HandleAttackRender(_tile);
             renderedTile = _tile;
         }
-        else
-        {
-            renderedTile = null;
-
-        }
+  
     }
 
     private void RemoveDisplay()
