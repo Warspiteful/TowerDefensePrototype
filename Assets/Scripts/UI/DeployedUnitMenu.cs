@@ -17,6 +17,8 @@ namespace  DeploymentMenu
 
         [SerializeField] private OperatorDataVariable _operator;
 
+        [SerializeField] private Vector3Variable _displayPanelLocator;
+
         private VoidIntCallback _balanceCallback;
 
         private PlayerControls _controls;
@@ -176,10 +178,32 @@ namespace  DeploymentMenu
 
             
             
-            unit.RegisterOnClickCallback(() => _operator.Value = _operatorData);
-            unit.RegisterOnClickElsewhereCallback(() => _operator.Value = null);
+            unit.RegisterOnClickCallback(() => _operator.Value = unit.GetOperatorData());
+            unit.RegisterOnClickElsewhereCallback(() =>
+            {
+                _operator.Value = null;
+                Debug.Log("REMOVED DISPLAY");
+            });
 
             unit.RegisterOnDestroyCallback(currentUnitPanel.ChangeStateTo);
+            unit.RegisterOnDestroyCallback(
+            ()=>{
+                if (_operator.Value == unit.GetOperatorData())
+                {
+                    _operator.Value = null;
+                }
+            }
+            );
+
+            unit.RegisterOnClickCallback(() =>
+            {
+                _displayPanelLocator.EnableCallback(true);
+                _displayPanelLocator.Value = unit.transform.position;
+            }
+                );
+            unit.RegisterOnClickElsewhereCallback(() => _displayPanelLocator.ToggleEnable(false));
+            
+                
 
             selectedTile.DeployOperator(unit);
             _balance.Value -= _operatorData.deployCost;

@@ -26,7 +26,11 @@ public class DeployedUnitPanel : MonoBehaviour
     // Update is called once per frame
     void UpdateDisplay()
     {
-        if (currentData == data.Value || data.Value == null)
+    if(currentData == data.Value )
+    {
+        return;
+    }
+        if(data.Value == null)
         {
             panel.SetActive(false);
             currentData = null;

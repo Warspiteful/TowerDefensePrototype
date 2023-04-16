@@ -100,15 +100,18 @@ public class UnitInput : MonoBehaviour
 
 
     private void OnDestroy()
-    {   
+    {
+        if(_controls != null){
+        _controls.Gameplay.OnClick.started -= HandleClick;
+        _controls.Gameplay.MousePosition.performed -= MouseDrag;
+        _controls.Gameplay.OnClick.canceled -= HandleClick;
+        }
      OnDragVector3Callback = null;
     OnDragBeginVector3Callback = null;
     OnDragEndVector3Callback = null;
     OnClickVoidCallback = null;
     OnClickElsewhereVoidCallback = null;
-    _controls.Gameplay.OnClick.started -= HandleClick;
-    _controls.Gameplay.MousePosition.performed -= MouseDrag;
-    _controls.Gameplay.OnClick.canceled -= HandleClick;
+
     }
 
     public void HandleClick(InputAction.CallbackContext ctx)
